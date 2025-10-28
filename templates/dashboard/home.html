@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Linda Mama - Pregnancy Tracking & Support{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="display-4 fw-bold mb-4">Welcome to Linda Mama</h1>
+                <p class="lead mb-4">Your trusted companion for a healthy pregnancy journey. Track your progress, connect with healthcare providers, and get the support you need.</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    {% if not user.is_authenticated %}
+                    <a href="{% url 'users:register' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Get Started
+                    </a>
+                    <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                    {% else %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="{% static 'images/hero-illustration.svg' %}" alt="Pregnancy Tracking" class="img-fluid" style="max-height: 400px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col">
+                <h2 class="fw-bold">How Linda Mama Supports You</h2>
+                <p class="lead text-muted">Comprehensive care throughout your pregnancy journey</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="feature-icon bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-baby text-white fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">Pregnancy Tracking</h4>
+                        <p class="card-text">Week-by-week updates on your baby's development and personalized health insights.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="feature-icon bg-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-calendar-check text-white fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">Appointment Management</h4>
+                        <p class="card-text">Schedule and track all your prenatal appointments with automatic reminders.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="feature-icon bg-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-comments text-white fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">Expert Support</h4>
+                        <p class="card-text">Connect directly with healthcare providers for guidance and support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <h3 class="text-primary fw-bold">500+</h3>
+                <p class="text-muted">Mothers Supported</p>
+            </div>
+            <div class="col-md-3">
+                <h3 class="text-primary fw-bold">98%</h3>
+                <p class="text-muted">Satisfaction Rate</p>
+            </div>
+            <div class="col-md-3">
+                <h3 class="text-primary fw-bold">24/7</h3>
+                <p class="text-muted">Support Available</p>
+            </div>
+            <div class="col-md-3">
+                <h3 class="text-primary fw-bold">50+</h3>
+                <p class="text-muted">Healthcare Partners</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

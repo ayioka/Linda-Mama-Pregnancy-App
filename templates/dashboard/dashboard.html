@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Dashboard - Linda Mama{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="avatar-lg bg-primary mx-auto mb-3">
+                        {{ user.get_initials }}
+                    </div>
+                    <h5 class="card-title">{{ user.get_full_name|default:user.username }}</h5>
+                    <p class="text-muted">{{ user.get_user_type_display }}</p>
+                    
+                    {% if user.user_type == 'mother' and active_pregnancy %}
+                    <div class="p-3 bg-light rounded">
+                        <small class="text-muted d-block">Weeks Pregnant</small>
+                        <h4 class="text-primary mb-0">
+                            {{ active_pregnancy.get_weeks_pregnant.0 }}w {{ active_pregnancy.get_weeks_pregnant.1 }}d
+                        </h4>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h6 class="mb-0">Quick Actions</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {% if user.user_type == 'mother' %}
+                            {% if active_pregnancy %}
+                                <a href="{% url 'pregnancy:pregnancy_detail' pk=active_pregnancy.pk %}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-baby me-2"></i>My Pregnancy
+                                </a>
+                                <a href="{% url 'pregnancy:health_metrics_log' pregnancy_pk=active_pregnancy.pk %}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-heartbeat me-2"></i>Log Health
+                                </a>
+                            {% else %}
+                                <a href="{% url 'pregnancy:pregnancy_create' %}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus me-2"></i>Start Pregnancy Tracking
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                        <a href="{% url 'appointments:appointment_create' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-calendar-plus me-2"></i>New Appointment
+                        </a>
+                        <a href="{% url 'messaging:compose' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-envelope me-2"></i>New Message
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9 col-md-8">
+            <!-- Welcome Section -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card bg-gradient-primary text-white">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h3 class="card-title">Welcome back, {{ user.first_name }}! 👋</h3>
+                                    <p class="card-text">Here's your pregnancy journey overview</p>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-heart fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                {% if user.user_type == 'mother' and active_pregnancy %}
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card">
+                        <div class="card-body">
+                            <div class="stat-number">{{ active_pregnancy.get_weeks_pregnant.0 }}w {{ active_pregnancy.get_weeks_pregnant.1 }}d</div>
+                            <div class="stat-label">Weeks Pregnant</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card">
+                        <div class="card-body">
+                            <div class="stat-number">{{ active_pregnancy.get_days_to_go }}</div>
+                            <div class="stat-label">Days to Go</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card">
+                        <div class="card-body">
+                            <div class="stat-number">{{ active_pregnancy.get_progress_percentage }}%</div>
+                            <div class="stat-label">Progress</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card">
+                        <div class="card-body">
+                            <div class="stat-number">{{ unread_messages|default:0 }}</div>
+                            <div class="stat-label">Unread Messages</div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Pregnancy Progress -->
+            {% if user.user_type == 'mother' and active_pregnancy %}
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card pregnancy-progress">
+                        <div class="card-header">
+                            <h5 class="mb-0">Pregnancy Progress</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Progress Bar -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Week 1</span>
+                                    <span>Week 40</span>
+                                </div>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar" role="progressbar" 
+                                         style="width: {{ active_pregnancy.get_progress_percentage }}%"
+                                         aria-valuenow="{{ active_pregnancy.get_progress_percentage }}" 
+                                         aria-valuemin="0" aria-valuemax="100">
+                                        {{ active_pregnancy.get_progress_percentage }}%
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Trimester Indicator -->
+                            <div class="trimester-indicator">
+                                <div class="trimester {% if active_pregnancy.current_trimester == 1 %}active{% endif %}">
+                                    <strong>1st Trimester</strong>
+                                    <div class="small">Weeks 1-12</div>
+                                </div>
+                                <div class="trimester {% if active_pregnancy.current_trimester == 2 %}active{% endif %}">
+                                    <strong>2nd Trimester</strong>
+                                    <div class="small">Weeks 13-26</div>
+                                </div>
+                                <div class="trimester {% if active_pregnancy.current_trimester == 3 %}active{% endif %}">
+                                    <strong>3rd Trimester</strong>
+                                    <div class="small">Weeks 27-40</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Recent Activity -->
+            <div class="row">
+                <!-- Upcoming Appointments -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">Upcoming Appointments</h6>
+                            <a href="{% url 'appointments:appointment_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                        </div>
+                        <div class="card-body">
+                            {% if upcoming_appointments %}
+                                {% for appointment in upcoming_appointments %}
+                                <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar bg-primary text-white">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h6 class="mb-1">{{ appointment.get_appointment_type_display }}</h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-clock me-1"></i>
+                                            {{ appointment.date_time|date:"M j, Y" }} at {{ appointment.date_time|time }}
+                                        </small>
+                                    </div>
+                                    <span class="badge bg-{% if appointment.status == 'scheduled' %}warning{% elif appointment.status == 'confirmed' %}success{% else %}secondary{% endif %}">
+                                        {{ appointment.get_status_display }}
+                                    </span>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted text-center">No upcoming appointments</p>
+                                <div class="text-center">
+                                    <a href="{% url 'appointments:appointment_create' %}" class="btn btn-primary btn-sm">
+                                        Schedule Appointment
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Health Metrics -->
+                {% if user.user_type == 'mother' and recent_metrics %}
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h6 class="mb-0">Recent Health Metrics</h6>
+                        </div>
+                        <div class="card-body">
+                            {% for metric in recent_metrics %}
+                            <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                <div>
+                                    <strong>{{ metric.date_recorded|date:"M j" }}</strong>
+                                    <div class="small text-muted">
+                                        {% if metric.weight %}Weight: {{ metric.weight }}kg{% endif %}
+                                        {% if metric.blood_pressure_systolic %} • BP: {{ metric.get_blood_pressure }}{% endif %}
+                                    </div>
+                                </div>
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-heartbeat text-danger"></i>
+                                </span>
+                            </div>
+                            {% endfor %}
+                            {% if active_pregnancy %}
+                            <div class="text-center mt-3">
+                                <a href="{% url 'pregnancy:health_metrics_log' pregnancy_pk=active_pregnancy.pk %}" class="btn btn-outline-primary btn-sm">
+                                    Log New Metrics
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Quick Tips -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0">Pregnancy Tips</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="d-flex">
+                                        <i class="fas fa-utensils text-primary me-3 mt-1"></i>
+                                        <div>
+                                            <h6 class="mb-1">Nutrition</h6>
+                                            <p class="small text-muted mb-0">Eat plenty of fruits, vegetables, and lean proteins.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="d-flex">
+                                        <i class="fas fa-walking text-success me-3 mt-1"></i>
+                                        <div>
+                                            <h6 class="mb-1">Exercise</h6>
+                                            <p class="small text-muted mb-0">Stay active with 30 minutes of moderate exercise daily.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="d-flex">
+                                        <i class="fas fa-bed text-info me-3 mt-1"></i>
+                                        <div>
+                                            <h6 class="mb-1">Rest</h6>
+                                            <p class="small text-muted mb-0">Get 7-9 hours of sleep and listen to your body.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
