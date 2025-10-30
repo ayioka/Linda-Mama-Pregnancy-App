@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Django settings for linda_mama project.
 """
@@ -5,10 +6,15 @@ Django settings for linda_mama project.
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
+=======
+# linda_mama/settings.py
+import os
+from pathlib import Path
+>>>>>>> 3412d5bb19548ae5633638dd73829ab08f680517
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+<<<<<<< HEAD
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-your-secret-key-here-change-in-production'
 
@@ -16,8 +22,14 @@ SECRET_KEY = 'django-insecure-your-secret-key-here-change-in-production'
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'yourdomain.com']
+=======
+SECRET_KEY = 'your-secret-key-here'
 
-# Application definition
+DEBUG = True
+
+ALLOWED_HOSTS = []
+>>>>>>> 3412d5bb19548ae5633638dd73829ab08f680517
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'django.contrib.humanize',
     
     # Third party apps
@@ -33,6 +46,11 @@ INSTALLED_APPS = [
     
     # Local apps
     'pregnancy.apps.PregnancyConfig',
+=======
+    'pregnancy',
+    'crispy_forms',
+    'crispy_bootstrap5',
+>>>>>>> 3412d5bb19548ae5633638dd73829ab08f680517
 ]
 
 MIDDLEWARE = [
@@ -58,7 +76,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+<<<<<<< HEAD
                 'pregnancy.context_processors.global_settings',
+=======
+>>>>>>> 3412d5bb19548ae5633638dd73829ab08f680517
             ],
         },
     },
@@ -66,7 +87,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'linda_mama.wsgi.application'
 
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -74,7 +94,6 @@ DATABASES = {
     }
 }
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -90,24 +109,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Africa/Nairobi'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+<<<<<<< HEAD
 # Custom user model
 AUTH_USER_MODEL = 'pregnancy.User'
 
@@ -141,3 +157,10 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
+=======
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'home'
+>>>>>>> 3412d5bb19548ae5633638dd73829ab08f680517
