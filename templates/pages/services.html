@@ -1,0 +1,479 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Services - Linda Mama{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-success text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold">Our Services</h1>
+                <p class="lead">Comprehensive maternal healthcare support throughout your pregnancy journey</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Overview -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10 text-center">
+                <h2 class="section-title">Complete Pregnancy Support</h2>
+                <p class="section-subtitle">
+                    From conception to delivery and beyond, Linda Mama provides everything you need 
+                    for a healthy and informed pregnancy journey.
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Service 1 -->
+            <div class="col-lg-6">
+                <div class="service-card">
+                    <div class="service-icon bg-primary">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Pregnancy Progress Tracking</h3>
+                        <p>
+                            Track your baby's development week by week with personalized updates, 
+                            milestone tracking, and detailed information about each stage of pregnancy.
+                        </p>
+                        <ul class="service-features">
+                            <li>Week-by-week baby development updates</li>
+                            <li>Personalized pregnancy milestones</li>
+                            <li>Symptom and changes tracking</li>
+                            <li>Interactive pregnancy calendar</li>
+                            <li>Due date calculator and countdown</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="col-lg-6">
+                <div class="service-card">
+                    <div class="service-icon bg-success">
+                        <i class="fas fa-heartbeat fa-2x"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Health Monitoring</h3>
+                        <p>
+                            Monitor your vital signs, track symptoms, and receive personalized 
+                            health insights to ensure you and your baby stay healthy.
+                        </p>
+                        <ul class="service-features">
+                            <li>Vital signs tracking (weight, BP, temperature)</li>
+                            <li>Symptom logging and analysis</li>
+                            <li>Medication and supplement reminders</li>
+                            <li>Personalized health recommendations</li>
+                            <li>Progress reports for healthcare providers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="col-lg-6">
+                <div class="service-card">
+                    <div class="service-icon bg-info">
+                        <i class="fas fa-calendar-check fa-2x"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Appointment Management</h3>
+                        <p>
+                            Schedule, manage, and track all your prenatal appointments with 
+                            automatic reminders and direct communication with providers.
+                        </p>
+                        <ul class="service-features">
+                            <li>Easy appointment scheduling</li>
+                            <li>Automatic SMS and email reminders</li>
+                            <li>Direct provider communication</li>
+                            <li>Appointment history and records</li>
+                            <li>Integration with local healthcare facilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="col-lg-6">
+                <div class="service-card">
+                    <div class="service-icon bg-warning">
+                        <i class="fas fa-graduation-cap fa-2x"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Educational Resources</h3>
+                        <p>
+                            Access comprehensive educational content, articles, videos, and 
+                            guides tailored to each stage of your pregnancy journey.
+                        </p>
+                        <ul class="service-features">
+                            <li>Weekly educational articles</li>
+                            <li>Video tutorials and demonstrations</li>
+                            <li>Nutrition and exercise guides</li>
+                            <li>Labor and delivery preparation</li>
+                            <li>Postpartum care information</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="col-lg-6">
+                <div class="service-card">
+                    <div class="service-icon bg-danger">
+                        <i class="fas fa-comments fa-2x"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Secure Messaging</h3>
+                        <p>
+                            Communicate directly with healthcare providers, ask questions, 
+                            and get timely responses in a secure, private environment.
+                        </p>
+                        <ul class="service-features">
+                            <li>Direct messaging with healthcare providers</li>
+                            <li>Secure and encrypted communication</li>
+                            <li>Quick response guarantee</li>
+                            <li>Message history and tracking</li>
+                            <li>Photo and file sharing capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 6 -->
+            <div class="col-lg-6">
+                <div class="service-card">
+                    <div class="service-icon bg-purple">
+                        <i class="fas fa-shield-alt fa-2x"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Emergency Support</h3>
+                        <p>
+                            24/7 emergency alert system connecting you directly with 
+                            healthcare providers when you need immediate assistance.
+                        </p>
+                        <ul class="service-features">
+                            <li>24/7 emergency alert system</li>
+                            <li>Direct connection to healthcare providers</li>
+                            <li>Location-based emergency services</li>
+                            <li>Rapid response guarantee</li>
+                            <li>Emergency contact integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title">How Linda Mama Works</h2>
+                <p class="section-subtitle">Simple steps to get started with our comprehensive services</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="steps-timeline">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Create Your Account</h4>
+                            <p>Sign up and provide basic information about your pregnancy to personalize your experience.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Set Up Your Profile</h4>
+                            <p>Enter your pregnancy details, medical history, and preferences to tailor our services to your needs.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Start Tracking</h4>
+                            <p>Begin tracking your pregnancy progress, logging vitals, and accessing educational resources.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Connect with Providers</h4>
+                            <p>Schedule appointments, message healthcare providers, and access emergency support when needed.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Stay Informed & Supported</h4>
+                            <p>Continue using our tools throughout your pregnancy journey with ongoing support and updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title">Accessible for All Mothers</h2>
+                <p class="section-subtitle">Quality maternal healthcare support should be available to everyone</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="pricing-card free-tier text-center">
+                    <div class="pricing-header">
+                        <h3>Free Basic Access</h3>
+                        <div class="price">
+                            <span class="currency">KES</span>
+                            <span class="amount">0</span>
+                            <span class="period">/ forever</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>Basic pregnancy tracking</li>
+                            <li>Weekly development updates</li>
+                            <li>Educational content access</li>
+                            <li>Appointment reminders</li>
+                            <li>Community support forums</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        {% if not user.is_authenticated %}
+                        <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started Free</a>
+                        {% else %}
+                        <span class="text-success">You're already enrolled!</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="premium-features mt-5">
+                    <h4 class="text-center mb-4">Premium Features (Coming Soon)</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-crown text-warning me-3"></i>
+                                <span>Priority messaging with healthcare providers</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-crown text-warning me-3"></i>
+                                <span>Advanced health analytics and insights</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-crown text-warning me-3"></i>
+                                <span>Personalized nutrition plans</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-crown text-warning me-3"></i>
+                                <span>Video consultations with specialists</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-crown text-warning me-3"></i>
+                                <span>Offline content access</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-crown text-warning me-3"></i>
+                                <span>Birth planning tools</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2 class="section-title">Ready to Start Your Journey?</h2>
+                <p class="lead mb-4">
+                    Join thousands of mothers who trust Linda Mama for their pregnancy journey. 
+                    Get the support, information, and care you deserve.
+                </p>
+                <div class="cta-buttons">
+                    {% if not user.is_authenticated %}
+                    <a href="{% url 'register' %}" class="btn btn-light btn-lg me-3">
+                        <i class="fas fa-baby me-2"></i>Sign Up Free
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-question-circle me-2"></i>Have Questions?
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.page-header {
+    background: linear-gradient(135deg, var(--success-color), var(--teal-color));
+}
+
+.service-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.service-content {
+    flex: 1;
+}
+
+.service-features {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1.5rem;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.service-features li:before {
+    content: "✓";
+    color: var(--success-color);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.steps-timeline {
+    position: relative;
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 2rem;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+    padding-top: 0.5rem;
+}
+
+.pricing-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border: 3px solid var(--primary-color);
+}
+
+.pricing-header {
+    margin-bottom: 2rem;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.currency {
+    font-size: 1.5rem;
+    vertical-align: super;
+}
+
+.period {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+.pricing-features ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.pricing-features li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.pricing-features li:last-child {
+    border-bottom: none;
+}
+
+.pricing-footer {
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .step-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .step-number {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .service-card {
+        padding: 2rem 1.5rem;
+    }
+}
+</style>
+{% endblock %}
