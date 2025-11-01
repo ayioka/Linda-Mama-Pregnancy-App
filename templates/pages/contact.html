@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Contact Us - Linda Mama{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-info text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold">Contact Us</h1>
+                <p class="lead">We're here to help you throughout your pregnancy journey</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="contact-info-card text-center">
+                    <div class="contact-icon bg-primary">
+                        <i class="fas fa-phone fa-2x"></i>
+                    </div>
+                    <h4>Emergency Hotline</h4>
+                    <p class="contact-detail">119</p>
+                    <p class="text-muted">24/7 emergency support for urgent medical concerns</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="contact-info-card text-center">
+                    <div class="contact-icon bg-success">
+                        <i class="fas fa-envelope fa-2x"></i>
+                    </div>
+                    <h4>Email Support</h4>
+                    <p class="contact-detail">support@lindamama.org</p>
+                    <p class="text-muted">General inquiries and non-urgent support</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="contact-info-card text-center">
+                    <div class="contact-icon bg-warning">
+                        <i class="fas fa-clock fa-2x"></i>
+                    </div>
+                    <h4>Response Time</h4>
+                    <p class="contact-detail">Within 24 Hours</p>
+                    <p class="text-muted">We respond to all non-urgent inquiries promptly</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form & Information -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="contact-form-card">
+                    <h2 class="mb-4">Send Us a Message</h2>
+                    <p class="text-muted mb-4">
+                        Have questions, suggestions, or need assistance? Fill out the form below 
+                        and our team will get back to you as soon as possible.
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="contact-sidebar">
+                    <div class="office-info mb-5">
+                        <h4 class="mb-3">Our Office</h4>
+                        <div class="office-detail">
+                            <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                            <div>
+                                <strong>Linda Mama Headquarters</strong><br>
+                                Mama Lucy Kibaki Hospital<br>
+                                Nairobi, Kenya
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="business-hours mb-5">
+                        <h4 class="mb-3">Support Hours</h4>
+                        <div class="hours-list">
+                            <div class="hour-item d-flex justify-content-between">
+                                <span>Emergency Support</span>
+                                <span class="text-success">24/7</span>
+                            </div>
+                            <div class="hour-item d-flex justify-content-between">
+                                <span>Phone Support</span>
+                                <span>8:00 AM - 8:00 PM</span>
+                            </div>
+                            <div class="hour-item d-flex justify-content-between">
+                                <span>Email Support</span>
+                                <span>24/7</span>
+                            </div>
+                            <div class="hour-item d-flex justify-content-between">
+                                <span>Weekend Support</span>
+                                <span>Limited</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-help">
+                        <h4 class="mb-3">Quick Help</h4>
+                        <div class="help-links">
+                            <a href="#" class="help-link">
+                                <i class="fas fa-question-circle me-2"></i>FAQs
+                            </a>
+                            <a href="#" class="help-link">
+                                <i class="fas fa-book me-2"></i>User Guide
+                            </a>
+                            <a href="#" class="help-link">
+                                <i class="fas fa-download me-2"></i>Download App
+                            </a>
+                            <a href="#" class="help-link">
+                                <i class="fas fa-comments me-2"></i>Live Chat
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Quick answers to common questions</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="accordion" id="faqAccordion">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Is Linda Mama completely free to use?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes! Our basic services are completely free for all expectant mothers. 
+                                We believe that access to maternal healthcare information and support 
+                                should be available to everyone. Some premium features may be introduced 
+                                in the future, but core functionality will always remain free.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                How does the emergency alert system work?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                When you trigger an emergency alert, our system immediately notifies 
+                                available healthcare providers in your area. They can see your symptoms, 
+                                location, and contact information to provide immediate assistance. 
+                                For critical emergencies, we recommend also calling the national 
+                                emergency number (119) directly.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Can I use Linda Mama without internet access?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Some features like tracking vitals and viewing downloaded content 
+                                work offline. However, most features require internet connection. 
+                                We're working on offline functionality for more features. For emergency 
+                                situations without internet, please use the direct emergency number.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                How do I connect with healthcare providers?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can connect with healthcare providers through our secure messaging 
+                                system, schedule appointments directly through the platform, or use 
+                                our emergency alert system for urgent concerns. All providers on our 
+                                platform are verified healthcare professionals.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                Is my personal health information secure?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Absolutely. We take data privacy and security very seriously. All your 
+                                personal and health information is encrypted and stored securely. 
+                                We comply with all relevant data protection regulations and only 
+                                share information with healthcare providers when you explicitly 
+                                give permission.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Emergency CTA -->
+<section class="emergency-cta-section bg-danger text-white py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                    <div>
+                        <h4 class="mb-0">Medical Emergency?</h4>
+                        <p class="mb-0">Don't wait - get immediate help</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end">
+                {% if user.is_authenticated and user.role == 'mother' %}
+                <a href="{% url 'emergency_alert' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-phone me-2"></i>Emergency Alert
+                </a>
+                {% else %}
+                <a href="tel:119" class="btn btn-light btn-lg">
+                    <i class="fas fa-phone me-2"></i>Call 119
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.page-header {
+    background: linear-gradient(135deg, var(--info-color), #20c997);
+}
+
+.contact-info-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    height: 100%;
+}
+
+.contact-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+}
+
+.contact-detail {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.contact-form-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.contact-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+.office-detail {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.hours-list {
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.hour-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    background: white;
+}
+
+.hour-item:last-child {
+    border-bottom: none;
+}
+
+.help-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.help-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--dark-color);
+    transition: all 0.3s ease;
+}
+
+.help-link:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateX(5px);
+}
+
+.accordion-button {
+    font-weight: 600;
+    padding: 1.25rem 1.5rem;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    color: var(--primary-color);
+}
+
+.emergency-cta-section {
+    background: linear-gradient(135deg, var(--danger-color), #c82333);
+}
+</style>
+{% endblock %}
