@@ -1,0 +1,78 @@
+<footer class="footer bg-dark text-light pt-5 pb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="footer-brand mb-3">
+                    <i class="fas fa-baby-carriage text-primary me-2"></i>
+                    Linda Mama
+                </h5>
+                <p class="footer-text">
+                    Your trusted companion throughout the pregnancy journey. 
+                    Empowering mothers with knowledge, support, and access to quality healthcare.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h5 class="footer-title mb-3">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'home' %}" class="footer-link">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="footer-link">About Us</a></li>
+                    <li><a href="{% url 'services' %}" class="footer-link">Services</a></li>
+                    <li><a href="{% url 'educational_content' %}" class="footer-link">Resources</a></li>
+                    <li><a href="{% url 'contact' %}" class="footer-link">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="footer-title mb-3">Services</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="footer-link">Pregnancy Tracking</a></li>
+                    <li><a href="#" class="footer-link">Health Monitoring</a></li>
+                    <li><a href="#" class="footer-link">Appointment Scheduling</a></li>
+                    <li><a href="#" class="footer-link">Emergency Support</a></li>
+                    <li><a href="#" class="footer-link">Educational Resources</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="footer-title mb-3">Contact Info</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-phone text-primary me-2"></i>
+                        <span>Emergency: 119</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-envelope text-primary me-2"></i>
+                        <span>support@lindamama.org</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                        <span>Nairobi, Kenya</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-clock text-primary me-2"></i>
+                        <span>24/7 Support Available</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <hr class="bg-light my-4">
+        
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; {{ current_year }} Linda Mama. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="footer-link me-3">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
