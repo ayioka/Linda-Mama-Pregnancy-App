@@ -1,0 +1,451 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Track Progress - Linda Mama{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="progress-header">
+                <h1 class="h2 mb-2">Pregnancy Progress Tracker</h1>
+                <p class="text-muted mb-0">
+                    {% if pregnancy_profile %}
+                    You are <strong>{{ weeks_pregnant }} weeks pregnant</strong> - Track your baby's development week by week
+                    {% else %}
+                    Complete your pregnancy profile to start tracking
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {% if pregnancy_profile %}
+    <!-- Week Navigation -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="week-navigation">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">Week {{ weeks_pregnant }}</h5>
+                            <div class="week-controls">
+                                <button class="btn btn-outline-primary btn-sm" id="prevWeek">
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" id="nextWeek">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="week-selector">
+                            <div class="week-scroll">
+                                {% for week in "x"|rjust:"42" %}
+                                <button class="week-btn {% if forloop.counter == weeks_pregnant %}active{% endif %}" 
+                                        data-week="{{ forloop.counter }}">
+                                    {{ forloop.counter }}
+                                </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week Information -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="weekInfo">
+                        <div class="week-content">
+                            <div class="week-header text-center mb-4">
+                                <div class="week-badge">Week {{ week_info.week }}</div>
+                                <h3 class="mt-2">Your Baby is the Size of a {{ week_info.baby_size }}!</h3>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="development-section mb-4">
+                                        <h4 class="section-title">
+                                            <i class="fas fa-baby text-primary me-2"></i>Baby's Development
+                                        </h4>
+                                        <ul class="development-list">
+                                            {% for development in week_info.developments %}
+                                            <li>{{ development }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mother-section mb-4">
+                                        <h4 class="section-title">
+                                            <i class="fas fa-female text-success me-2"></i>Changes You Might Notice
+                                        </h4>
+                                        <ul class="mother-changes-list">
+                                            {% for change in week_info.mother_changes %}
+                                            <li>{{ change }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="baby-stats-card">
+                                        <div class="stats-header">
+                                            <h5>Baby's Stats</h5>
+                                        </div>
+                                        <div class="stats-body">
+                                            <div class="stat-item">
+                                                <i class="fas fa-ruler-vertical text-primary"></i>
+                                                <div>
+                                                    <strong>Length</strong>
+                                                    <span>{{ week_info.baby_length }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="stat-item">
+                                                <i class="fas fa-weight text-success"></i>
+                                                <div>
+                                                    <strong>Weight</strong>
+                                                    <span>{{ week_info.baby_weight }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tips-section mt-4">
+                                        <h4 class="section-title">
+                                            <i class="fas fa-lightbulb text-warning me-2"></i>This Week's Tips
+                                        </h4>
+                                        <ul class="tips-list">
+                                            {% for tip in week_info.tips %}
+                                            <li>{{ tip }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    
+                                    {% if week_info.medical_checkups %}
+                                    <div class="medical-section mt-4">
+                                        <h4 class="section-title">
+                                            <i class="fas fa-stethoscope text-danger me-2"></i>Medical Checkups
+                                        </h4>
+                                        <ul class="medical-list">
+                                            {% for checkup in week_info.medical_checkups %}
+                                            <li>{{ checkup }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Milestones -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Pregnancy Milestones</h5>
+                </div>
+                <div class="card-body">
+                    <div class="milestones-tracker">
+                        {% for milestone in milestones %}
+                        <div class="milestone-item {% if weeks_pregnant >= milestone.week %}completed{% endif %}">
+                            <div class="milestone-checkbox">
+                                <i class="fas fa-{% if weeks_pregnant >= milestone.week %}check-circle text-success{% else %}circle text-muted{% endif %}"></i>
+                            </div>
+                            <div class="milestone-content">
+                                <h6 class="mb-1">{{ milestone.title }}</h6>
+                                <p class="text-muted mb-0">{{ milestone.description }}</p>
+                                <small class="text-muted">Week {{ milestone.week }}</small>
+                            </div>
+                            <div class="milestone-status">
+                                {% if weeks_pregnant >= milestone.week %}
+                                <span class="badge bg-success">Completed</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Upcoming</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if not forloop.last %}<hr>{% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Visualization -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Pregnancy Timeline</h5>
+                </div>
+                <div class="card-body">
+                    <div class="pregnancy-timeline">
+                        <div class="timeline-visual" id="progressChart">
+                            <!-- SVG timeline will be inserted here by JavaScript -->
+                        </div>
+                        
+                        <div class="timeline-stats mt-4">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="stat">
+                                        <h4 class="text-primary">{{ weeks_pregnant }}</h4>
+                                        <p class="text-muted mb-0">Weeks Completed</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat">
+                                        <h4 class="text-success">{{ 40|add:-weeks_pregnant }}</h4>
+                                        <p class="text-muted mb-0">Weeks Remaining</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat">
+                                        <h4 class="text-info">{{ pregnancy_profile.current_trimester|title }}</h4>
+                                        <p class="text-muted mb-0">Current Trimester</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat">
+                                        <h4 class="text-warning">{{ days_until_due }}</h4>
+                                        <p class="text-muted mb-0">Days Until Due</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- Empty State -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-baby fa-4x text-muted mb-3"></i>
+                    <h3>Complete Your Pregnancy Profile</h3>
+                    <p class="text-muted mb-4">
+                        To track your pregnancy progress, we need some basic information about your pregnancy.
+                    </p>
+                    <a href="{% url 'profile' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Complete Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.progress-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.week-navigation {
+    background: white;
+}
+
+.week-selector {
+    overflow-x: auto;
+    padding: 1rem 0;
+}
+
+.week-scroll {
+    display: flex;
+    gap: 0.5rem;
+    min-width: max-content;
+}
+
+.week-btn {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #e9ecef;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--dark-color);
+}
+
+.week-btn:hover, .week-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+.week-badge {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.section-title {
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.development-list, .mother-changes-list, .tips-list, .medical-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.development-list li, .mother-changes-list li, .tips-list li, .medical-list li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.development-list li:before {
+    content: "👶";
+    position: absolute;
+    left: 0;
+}
+
+.mother-changes-list li:before {
+    content: "💁";
+    position: absolute;
+    left: 0;
+}
+
+.tips-list li:before {
+    content: "💡";
+    position: absolute;
+    left: 0;
+}
+
+.medical-list li:before {
+    content: "🏥";
+    position: absolute;
+    left: 0;
+}
+
+.baby-stats-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.stat-item i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    width: 40px;
+}
+
+.stat-item div {
+    flex: 1;
+}
+
+.stat-item strong {
+    display: block;
+    color: var(--dark-color);
+}
+
+.stat-item span {
+    color: #6c757d;
+}
+
+.milestone-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.milestone-checkbox {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.milestone-content {
+    flex: 1;
+}
+
+.milestone-status {
+    margin-left: 1rem;
+}
+
+.milestone-item.completed .milestone-content h6 {
+    color: var(--success-color);
+    text-decoration: line-through;
+}
+
+.timeline-visual {
+    height: 200px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timeline-stats .stat {
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .progress-header {
+        padding: 1.5rem;
+    }
+    
+    .week-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.875rem;
+    }
+    
+    .milestone-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .milestone-checkbox {
+        margin-bottom: 0.5rem;
+    }
+    
+    .milestone-status {
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/progress-tracker.js' %}"></script>
+{% endblock %}
