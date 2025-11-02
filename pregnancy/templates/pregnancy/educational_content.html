@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Educational Resources - Linda Mama{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="content-header">
+                <h1 class="h2 mb-2">Educational Resources</h1>
+                <p class="text-muted mb-0">
+                    Curated content to guide you through every stage of your pregnancy journey
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="trimesterFilter" class="form-label">Filter by Trimester</label>
+                            <select class="form-select" id="trimesterFilter" onchange="filterContent()">
+                                <option value="all" {% if selected_trimester == 'all' %}selected{% endif %}>All Trimesters</option>
+                                <option value="first" {% if selected_trimester == 'first' %}selected{% endif %}>First Trimester</option>
+                                <option value="second" {% if selected_trimester == 'second' %}selected{% endif %}>Second Trimester</option>
+                                <option value="third" {% if selected_trimester == 'third' %}selected{% endif %}>Third Trimester</option>
+                                <option value="postpartum" {% if selected_trimester == 'postpartum' %}selected{% endif %}>Postpartum</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="typeFilter" class="form-label">Filter by Content Type</label>
+                            <select class="form-select" id="typeFilter" onchange="filterContent()">
+                                <option value="all" {% if selected_type == 'all' %}selected{% endif %}>All Types</option>
+                                <option value="article" {% if selected_type == 'article' %}selected{% endif %}>Articles</option>
+                                <option value="video" {% if selected_type == 'video' %}selected{% endif %}>Videos</option>
+                                <option value="infographic" {% if selected_type == 'infographic' %}selected{% endif %}>Infographics</option>
+                                <option value="tip" {% if selected_type == 'tip' %}selected{% endif %}>Daily Tips</option>
+                                <option value="guide" {% if selected_type == 'guide' %}selected{% endif %}>Guides</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Content -->
+    {% if featured_content %}
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="section-header mb-4">
+                <h3 class="h4">
+                    <i class="fas fa-star text-warning me-2"></i>Featured Content
+                </h3>
+                <p class="text-muted mb-0">Handpicked resources for your current stage</p>
+            </div>
+            
+            <div class="row g-4">
+                {% for content in featured_content %}
+                <div class="col-lg-6">
+                    <div class="featured-content-card">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <div class="featured-image">
+                                    {% if content.featured_image %}
+                                    <img src="{{ content.featured_image.url }}" class="img-fluid" alt="{{ content.title }}">
+                                    {% else %}
+                                    <img src="{% static 'images/default-article.jpg' %}" class="img-fluid" alt="Default image">
+                                    {% endif %}
+                                    <div class="featured-badge">
+                                        <i class="fas fa-star"></i> Featured
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="featured-body">
+                                    <div class="content-meta mb-2">
+                                        <span class="content-type-badge badge bg-{{ content.content_type }}">
+                                            {{ content.get_content_type_display }}
+                                        </span>
+                                        <span class="trimester-badge">{{ content.get_trimester_target_display }}</span>
+                                    </div>
+                                    <h5 class="content-title">
+                                        <a href="{% url 'content_detail' content.slug %}" class="text-decoration-none">
+                                            {{ content.title }}
+                                        </a>
+                                    </h5>
+                                    <p class="content-excerpt">{{ content.summary|truncatewords:25 }}</p>
+                                    <div class="content-footer">
+                                        <div class="read-info">
+                                            <i class="far fa-clock me-1"></i>
+                                            {{ content.read_time_minutes }} min read
+                                        </div>
+                                        <a href="{% url 'content_detail' content.slug %}" class="btn btn-sm btn-primary">
+                                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- All Content -->
+    <div class="row">
+        <div class="col-12">
+            <div class="section-header mb-4">
+                <h3 class="h4">All Resources</h3>
+                <p class="text-muted mb-0">{{ educational_content.count }} resources available</p>
+            </div>
+
+            {% if educational_content %}
+            <div class="row g-4" id="contentGrid">
+                {% for content in educational_content %}
+                <div class="col-xl-4 col-lg-6 content-item" 
+                     data-trimester="{{ content.trimester_target }}"
+                     data-type="{{ content.content_type }}">
+                    <div class="content-card h-100">
+                        <div class="content-image">
+                            {% if content.featured_image %}
+                            <img src="{{ content.featured_image.url }}" class="card-img-top" alt="{{ content.title }}">
+                            {% else %}
+                            <img src="{% static 'images/default-article.jpg' %}" class="card-img-top" alt="Default image">
+                            {% endif %}
+                            <span class="content-badge badge bg-{{ content.content_type }}">
+                                {{ content.get_content_type_display }}
+                            </span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta
