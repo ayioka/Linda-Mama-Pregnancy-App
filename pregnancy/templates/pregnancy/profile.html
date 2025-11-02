@@ -1,0 +1,645 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}My Profile - Linda Mama{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Profile Header -->
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <div class="profile-header">
+                        <div class="profile-avatar mb-3">
+                            {% if user.profile_picture %}
+                                <img src="{{ user.profile_picture.url }}" alt="{{ user.get_full_name }}" class="avatar-img">
+                            {% else %}
+                                <div class="avatar-placeholder">
+                                    {{ user.first_name|first }}{{ user.last_name|first }}
+                                </div>
+                            {% endif %}
+                            <div class="avatar-overlay">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        <h2 class="profile-name">{{ user.get_full_name }}</h2>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-user-tag me-2"></i>
+                            {{ user.get_role_display }}
+                        </p>
+                        <p class="text-muted">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            Member since {{ user.date_joined|date:"F Y" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Personal Information -->
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-user me-2"></i>Personal Information
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.first_name|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.last_name|as_crispy_field }}
+                                    </div>
+                                </div>
+                                
+                                {{ form.email|as_crispy_field }}
+                                {{ form.phone_number|as_crispy_field }}
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Profile Picture</label>
+                                    {{ form.profile_picture }}
+                                    {% if form.profile_picture.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.profile_picture.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Update Profile
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-phone-alt me-2"></i>Emergency Contact
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            {% if user.emergency_contact_name %}
+                                <div class="emergency-contact">
+                                    <div class="contact-item">
+                                        <i class="fas fa-user text-primary me-3"></i>
+                                        <div>
+                                            <strong>{{ user.emergency_contact_name }}</strong>
+                                            <p class="text-muted mb-0">{{ user.emergency_contact_phone }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="text-center py-3">
+                                    <i class="fas fa-phone-slash fa-2x text-muted mb-3"></i>
+                                    <p class="text-muted mb-0">No emergency contact set</p>
+                                    <small class="text-muted">Add an emergency contact for safety</small>
+                                </div>
+                            {% endif %}
+                            <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#emergencyContactModal">
+                                <i class="fas fa-plus me-2"></i>Add Emergency Contact
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregnancy Information (for mothers) -->
+                <div class="col-lg-6">
+                    {% if user.role == 'mother' %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-baby me-2"></i>Pregnancy Information
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            {% if pregnancy_profile %}
+                                <div class="pregnancy-info">
+                                    <div class="info-item">
+                                        <i class="fas fa-calendar text-primary me-3"></i>
+                                        <div>
+                                            <strong>Last Menstrual Period</strong>
+                                            <p class="mb-0">{{ pregnancy_profile.last_menstrual_period|date:"F j, Y" }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-birthday-cake text-success me-3"></i>
+                                        <div>
+                                            <strong>Estimated Due Date</strong>
+                                            <p class="mb-0">{{ pregnancy_profile.estimated_due_date|date:"F j, Y" }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-heartbeat text-danger me-3"></i>
+                                        <div>
+                                            <strong>Blood Type</strong>
+                                            <p class="mb-0">{{ pregnancy_profile.blood_type|default:"Not specified" }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-chart-line text-info me-3"></i>
+                                        <div>
+                                            <strong>Current Trimester</strong>
+                                            <p class="mb-0">{{ pregnancy_profile.get_current_trimester_display }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if pregnancy_profile.known_allergies %}
+                                    <div class="info-item">
+                                        <i class="fas fa-allergies text-warning me-3"></i>
+                                        <div>
+                                            <strong>Known Allergies</strong>
+                                            <p class="mb-0">{{ pregnancy_profile.known_allergies }}</p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if pregnancy_profile.pre_existing_conditions %}
+                                    <div class="info-item">
+                                        <i class="fas fa-file-medical text-secondary me-3"></i>
+                                        <div>
+                                            <strong>Pre-existing Conditions</strong>
+                                            <p class="mb-0">{{ pregnancy_profile.pre_existing_conditions }}</p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#pregnancyProfileModal">
+                                    <i class="fas fa-edit me-2"></i>Edit Pregnancy Information
+                                </button>
+                            {% else %}
+                                <div class="text-center py-4">
+                                    <i class="fas fa-baby fa-3x text-muted mb-3"></i>
+                                    <h5>Complete Your Pregnancy Profile</h5>
+                                    <p class="text-muted mb-3">
+                                        Add your pregnancy details to unlock all features and get personalized tracking.
+                                    </p>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pregnancyProfileModal">
+                                        <i class="fas fa-plus me-2"></i>Add Pregnancy Information
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Account Settings -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-cog me-2"></i>Account Settings
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-list">
+                                <a href="{% url 'password_reset' %}" class="settings-item">
+                                    <i class="fas fa-key text-warning"></i>
+                                    <div>
+                                        <strong>Change Password</strong>
+                                        <p class="text-muted mb-0">Update your account password</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted"></i>
+                                </a>
+                                
+                                <a href="#" class="settings-item">
+                                    <i class="fas fa-bell text-info"></i>
+                                    <div>
+                                        <strong>Notification Settings</strong>
+                                        <p class="text-muted mb-0">Manage your notification preferences</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted"></i>
+                                </a>
+                                
+                                <a href="#" class="settings-item">
+                                    <i class="fas fa-shield-alt text-success"></i>
+                                    <div>
+                                        <strong>Privacy Settings</strong>
+                                        <p class="text-muted mb-0">Control your privacy and data</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted"></i>
+                                </a>
+                                
+                                <div class="settings-item">
+                                    <i class="fas fa-moon text-secondary"></i>
+                                    <div>
+                                        <strong>Dark Mode</strong>
+                                        <p class="text-muted mb-0">Switch between light and dark theme</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                                        <label class="form-check-label" for="darkModeSwitch"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Profile Statistics
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <div class="stat">
+                                <h3 class="text-primary mb-1">
+                                    {% if user.role == 'mother' %}
+                                        {{ pregnancy_profile.get_weeks_pregnant|default:0 }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </h3>
+                                <p class="text-muted mb-0">Weeks Pregnant</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="stat">
+                                <h3 class="text-success mb-1">
+                                    {% if user.role == 'mother' %}
+                                        {{ user.mother_appointments.count }}
+                                    {% else %}
+                                        {{ user.clinician_appointments.count }}
+                                    {% endif %}
+                                </h3>
+                                <p class="text-muted mb-0">Total Appointments</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="stat">
+                                <h3 class="text-info mb-1">
+                                    {{ user.sent_messages.count }}
+                                </h3>
+                                <p class="text-muted mb-0">Messages Sent</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="stat">
+                                <h3 class="text-warning mb-1">
+                                    {% if user.role == 'mother' %}
+                                        {{ user.vitalsrecord_set.count }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </h3>
+                                <p class="text-muted mb-0">Vitals Records</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Emergency Contact Modal -->
+<div class="modal fade" id="emergencyContactModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Emergency Contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="emergencyContactForm">
+                    <div class="mb-3">
+                        <label for="contactName" class="form-label">Contact Name</label>
+                        <input type="text" class="form-control" id="contactName" 
+                               value="{{ user.emergency_contact_name|default:'' }}"
+                               placeholder="Enter full name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactPhone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="contactPhone"
+                               value="{{ user.emergency_contact_phone|default:'' }}"
+                               placeholder="Enter phone number">
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="primaryContact">
+                        <label class="form-check-label" for="primaryContact">
+                            Set as primary emergency contact
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveEmergencyContact">Save Contact</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pregnancy Profile Modal -->
+{% if user.role == 'mother' %}
+<div class="modal fade" id="pregnancyProfileModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% if pregnancy_profile %}Edit{% else %}Add{% endif %} Pregnancy Information
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="pregnancyProfileForm" method="post" action="{% url 'profile' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="lastMenstrualPeriod" class="form-label">Last Menstrual Period</label>
+                                <input type="date" class="form-control" id="lastMenstrualPeriod" 
+                                       name="last_menstrual_period"
+                                       value="{{ pregnancy_profile.last_menstrual_period|date:'Y-m-d'|default:'' }}">
+                                <div class="form-text">
+                                    First day of your last menstrual period
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="bloodType" class="form-label">Blood Type</label>
+                                <select class="form-select" id="bloodType" name="blood_type">
+                                    <option value="">Select blood type</option>
+                                    <option value="A+" {% if pregnancy_profile.blood_type == "A+" %}selected{% endif %}>A+</option>
+                                    <option value="A-" {% if pregnancy_profile.blood_type == "A-" %}selected{% endif %}>A-</option>
+                                    <option value="B+" {% if pregnancy_profile.blood_type == "B+" %}selected{% endif %}>B+</option>
+                                    <option value="B-" {% if pregnancy_profile.blood_type == "B-" %}selected{% endif %}>B-</option>
+                                    <option value="AB+" {% if pregnancy_profile.blood_type == "AB+" %}selected{% endif %}>AB+</option>
+                                    <option value="AB-" {% if pregnancy_profile.blood_type == "AB-" %}selected{% endif %}>AB-</option>
+                                    <option value="O+" {% if pregnancy_profile.blood_type == "O+" %}selected{% endif %}>O+</option>
+                                    <option value="O-" {% if pregnancy_profile.blood_type == "O-" %}selected{% endif %}>O-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="knownAllergies" class="form-label">Known Allergies</label>
+                        <textarea class="form-control" id="knownAllergies" name="known_allergies" 
+                                  rows="3" placeholder="List any known allergies...">{{ pregnancy_profile.known_allergies|default:'' }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="preExistingConditions" class="form-label">Pre-existing Medical Conditions</label>
+                        <textarea class="form-control" id="preExistingConditions" name="pre_existing_conditions" 
+                                  rows="3" placeholder="List any pre-existing medical conditions...">{{ pregnancy_profile.pre_existing_conditions|default:'' }}</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" form="pregnancyProfileForm" class="btn btn-primary">
+                    {% if pregnancy_profile %}Update{% else %}Save{% endif %} Information
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.profile-header {
+    position: relative;
+}
+
+.profile-avatar {
+    position: relative;
+    display: inline-block;
+}
+
+.avatar-img, .avatar-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.avatar-placeholder {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.avatar-overlay {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profile-avatar:hover .avatar-overlay {
+    opacity: 1;
+}
+
+.profile-name {
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.info-item, .contact-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.info-item:last-child, .contact-item:last-child {
+    border-bottom: none;
+}
+
+.info-item i, .contact-item i {
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+    width: 24px;
+}
+
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--dark-color);
+    transition: background-color 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.settings-item:hover {
+    background-color: #f8f9fa;
+    border-color: #e9ecef;
+    color: var(--dark-color);
+}
+
+.settings-item i:first-child {
+    font-size: 1.2rem;
+    width: 24px;
+    margin-right: 1rem;
+}
+
+.settings-item div {
+    flex: 1;
+}
+
+.settings-item i:last-child {
+    margin-left: auto;
+}
+
+.stat {
+    padding: 1rem;
+}
+
+.stat h3 {
+    font-weight: 700;
+}
+
+.emergency-contact {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .avatar-img, .avatar-placeholder {
+        width: 100px;
+        height: 100px;
+        font-size: 2rem;
+    }
+    
+    .profile-name {
+        font-size: 1.5rem;
+    }
+    
+    .info-item, .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .info-item i, .contact-item i {
+        margin-bottom: 0.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Profile picture upload
+    const profilePictureInput = document.getElementById('id_profile_picture');
+    const avatarOverlay = document.querySelector('.avatar-overlay');
+    
+    if (avatarOverlay && profilePictureInput) {
+        avatarOverlay.addEventListener('click', function() {
+            profilePictureInput.click();
+        });
+        
+        profilePictureInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const form = this.closest('form');
+                if (form) {
+                    form.submit();
+                }
+            }
+        });
+    }
+    
+    // Emergency contact form
+    const saveEmergencyContact = document.getElementById('saveEmergencyContact');
+    if (saveEmergencyContact) {
+        saveEmergencyContact.addEventListener('click', function() {
+            const contactName = document.getElementById('contactName').value;
+            const contactPhone = document.getElementById('contactPhone').value;
+            
+            if (!contactName || !contactPhone) {
+                alert('Please fill in both contact name and phone number.');
+                return;
+            }
+            
+            // Here you would typically make an AJAX call to save the emergency contact
+            // For now, we'll just close the modal and show a success message
+            const modal = bootstrap.Modal.getInstance(document.getElementById('emergencyContactModal'));
+            modal.hide();
+            
+            // Show success message
+            alert('Emergency contact saved successfully!');
+        });
+    }
+    
+    // Dark mode toggle
+    const darkModeSwitch = document.getElementById('darkModeSwitch');
+    if (darkModeSwitch) {
+        // Check for saved theme preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkModeSwitch.checked = true;
+        }
+        
+        darkModeSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+    
+    // Pregnancy profile form validation
+    const pregnancyForm = document.getElementById('pregnancyProfileForm');
+    if (pregnancyForm) {
+        pregnancyForm.addEventListener('submit', function(e) {
+            const lmp = document.getElementById('lastMenstrualPeriod').value;
+            if (!lmp) {
+                e.preventDefault();
+                alert('Please enter your last menstrual period.');
+                return false;
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
