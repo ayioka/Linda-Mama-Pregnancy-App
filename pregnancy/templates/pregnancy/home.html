@@ -1,811 +1,273 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Linda Mama - Pregnancy Tracking & Maternal Health Support{% endblock %}
-
-{% block content %}
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="container">
-        <div class="row align-items-center min-vh-100">
-            <div class="col-lg-6">
-                <h1 class="hero-title animate-fade-in">
-                    Your Pregnancy Journey, 
-                    <span class="text-primary">Beautifully Tracked</span>
-                </h1>
-                <p class="hero-subtitle lead animate-fade-in-delay">
-                    Linda Mama provides comprehensive support for expectant mothers in Kenya. 
-                    Track your pregnancy progress, connect with healthcare providers, and access 
-                    vital resources - all in one place.
-                </p>
-                <div class="hero-buttons animate-fade-in-delay-2">
-                    {% if not user.is_authenticated %}
-                    <a href="{% url 'register' %}" class="btn btn-primary btn-lg me-3">
-                        <i class="fas fa-baby me-2"></i>Start Your Journey
-                    </a>
-                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
-                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                    </a>
-                    {% else %}
-                    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg me-3">
-                        <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
-                    </a>
-                    <a href="{% url 'track_progress' %}" class="btn btn-outline-primary btn-lg">
-                        <i class="fas fa-chart-line me-2"></i>Track Progress
-                    </a>
-                    {% endif %}
-                </div>
-                <div class="hero-stats mt-5 animate-fade-in-delay-3">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="stat-item">
-                                <h3 class="stat-number">5,000+</h3>
-                                <p class="stat-label">Mothers Supported</p>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="stat-item">
-                                <h3 class="stat-number">200+</h3>
-                                <p class="stat-label">Healthcare Partners</p>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="stat-item">
-                                <h3 class="stat-number">24/7</h3>
-                                <p class="stat-label">Emergency Support</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="hero-image animate-slide-in-right">
-                    <img src="{% static 'images/hero-pregnancy.svg' %}" alt="Pregnancy Journey" class="img-fluid">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="hero-wave">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
-            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
-            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
-        </svg>
-    </div>
-</section>
-
-<!-- Features Section -->
-<section class="features-section py-5">
-    <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <h2 class="section-title">How Linda Mama Supports You</h2>
-                <p class="section-subtitle">Comprehensive tools and resources for a healthy pregnancy journey</p>
-            </div>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-card">
-                    <div class="feature-icon bg-primary">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h4 class="feature-title">Progress Tracking</h4>
-                    <p class="feature-description">
-                        Week-by-week updates on your baby's development with personalized 
-                        insights and milestone tracking.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-success me-2"></i>Baby development updates</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Personalized milestones</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Symptom tracking</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-card">
-                    <div class="feature-icon bg-success">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h4 class="feature-title">Health Monitoring</h4>
-                    <p class="feature-description">
-                        Track vital signs, log symptoms, and receive personalized health 
-                        recommendations from professionals.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-success me-2"></i>Vital signs tracking</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Symptom logging</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Health insights</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-card">
-                    <div class="feature-icon bg-info">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <h4 class="feature-title">Appointment Management</h4>
-                    <p class="feature-description">
-                        Schedule and manage prenatal visits with automatic reminders 
-                        and direct communication with providers.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-success me-2"></i>Appointment scheduling</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Automatic reminders</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Provider communication</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-card">
-                    <div class="feature-icon bg-warning">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="feature-title">Educational Resources</h4>
-                    <p class="feature-description">
-                        Access curated educational content, articles, and guides tailored 
-                        to each stage of your pregnancy.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-success me-2"></i>Weekly articles</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Video tutorials</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Expert advice</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-card">
-                    <div class="feature-icon bg-danger">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h4 class="feature-title">Secure Messaging</h4>
-                    <p class="feature-description">
-                        Communicate directly with healthcare providers, ask questions, 
-                        and get timely responses.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-success me-2"></i>Direct provider contact</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Secure messaging</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Quick responses</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-card">
-                    <div class="feature-icon bg-purple">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h4 class="feature-title">Emergency Support</h4>
-                    <p class="feature-description">
-                        24/7 emergency alert system connecting you directly with 
-                        healthcare providers when you need immediate assistance.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-success me-2"></i>24/7 emergency alerts</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Quick response system</li>
-                        <li><i class="fas fa-check text-success me-2"></i>Direct provider contact</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Weekly Development Section -->
-<section class="development-section bg-light py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <div class="development-content">
-                    <h2 class="section-title">Track Your Baby's Development</h2>
-                    <p class="section-subtitle">
-                        Follow your baby's growth week by week with detailed information 
-                        about development milestones and changes in your body.
-                    </p>
-                    
-                    <div class="development-highlight">
-                        <div class="week-badge">Week {{ current_week }}</div>
-                        <h3 class="development-title">Your Baby is the Size of a Lime!</h3>
-                        
-                        <div class="development-stats">
-                            <div class="stat">
-                                <strong>Length:</strong> 5.4 cm
-                            </div>
-                            <div class="stat">
-                                <strong>Weight:</strong> 14 grams
-                            </div>
-                        </div>
-                        
-                        <div class="development-details">
-                            <h5>This Week's Developments:</h5>
-                            <ul>
-                                <li>Reflexes are developing - baby will start moving</li>
-                                <li>Fingers and toes are fully separated</li>
-                                <li>Baby is starting to make sucking motions</li>
-                                <li>Critical organs are fully formed</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="mother-changes">
-                            <h5>Changes You Might Notice:</h5>
-                            <ul>
-                                <li>Nausea may start to improve</li>
-                                <li>Increased energy levels</li>
-                                <li>Visible baby bump may appear</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    {% if user.is_authenticated and user.role == 'mother' %}
-                    <a href="{% url 'track_progress' %}" class="btn btn-primary mt-4">
-                        <i class="fas fa-chart-line me-2"></i>Track Your Progress
-                    </a>
-                    {% elif not user.is_authenticated %}
-                    <a href="{% url 'register' %}" class="btn btn-primary mt-4">
-                        <i class="fas fa-baby me-2"></i>Start Tracking Today
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-            
-            <div class="col-lg-6">
-                <div class="development-visual">
-                    <div class="pregnancy-progress">
-                        <div class="trimester first-trimester active">
-                            <div class="trimester-label">1st Trimester</div>
-                            <div class="weeks">Weeks 1-12</div>
-                        </div>
-                        <div class="trimester second-trimester">
-                            <div class="trimester-label">2nd Trimester</div>
-                            <div class="weeks">Weeks 13-26</div>
-                        </div>
-                        <div class="trimester third-trimester">
-                            <div class="trimester-label">3rd Trimester</div>
-                            <div class="weeks">Weeks 27-40</div>
-                        </div>
-                    </div>
-                    
-                    <div class="baby-development-image text-center mt-4">
-                        <img src="{% static 'images/baby-development-week12.svg' %}" 
-                             alt="Baby Development Week 12" 
-                             class="img-fluid rounded shadow">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Educational Content Preview -->
-<section class="content-preview-section py-5">
-    <div class="container">
-        <div class="row justify-content-between align-items-center mb-5">
-            <div class="col-lg-8">
-                <h2 class="section-title">Educational Resources</h2>
-                <p class="section-subtitle">
-                    Curated content to guide you through every stage of pregnancy
-                </p>
-            </div>
-            <div class="col-lg-4 text-lg-end">
-                <a href="{% url 'educational_content' %}" class="btn btn-outline-primary">
-                    View All Resources <i class="fas fa-arrow-right ms-2"></i>
-                </a>
-            </div>
-        </div>
-        
-        <div class="row g-4">
-            {% for content in featured_content %}
-            <div class="col-lg-4 col-md-6">
-                <div class="content-card">
-                    <div class="content-image">
-                        {% if content.featured_image %}
-                        <img src="{{ content.featured_image.url }}" class="card-img-top" alt="{{ content.title }}">
-                        {% else %}
-                        <img src="{% static 'images/default-article.jpg' %}" class="card-img-top" alt="Default image">
-                        {% endif %}
-                        <span class="content-badge badge bg-{{ content.content_type }}">
-                            {{ content.get_content_type_display }}
-                        </span>
-                    </div>
-                    <div class="content-body">
-                        <div class="content-meta">
-                            <span class="trimester-badge">{{ content.get_trimester_target_display }}</span>
-                            <span class="read-time"><i class="far fa-clock me-1"></i>{{ content.read_time_minutes }} min read</span>
-                        </div>
-                        <h5 class="content-title">{{ content.title }}</h5>
-                        <p class="content-excerpt">{{ content.summary|truncatewords:20 }}</p>
-                        <div class="content-footer">
-                            <a href="{% url 'content_detail' content.slug %}" class="btn btn-sm btn-outline-primary">
-                                Read More <i class="fas fa-arrow-right ms-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12 text-center">
-                <div class="empty-state">
-                    <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
-                    <h4>No Content Available</h4>
-                    <p class="text-muted">Educational content will be available soon.</p>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonials-section py-5 bg-light">
-    <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <h2 class="section-title">What Mothers Say</h2>
-                <p class="section-subtitle">Real stories from mothers who used Linda Mama</p>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-12">
-                <div class="testimonials-slider">
-                    <div class="testimonial-item">
-                        <div class="testimonial-content">
-                            <div class="testimonial-text">
-                                "Linda Mama helped me track my pregnancy and connected me with 
-                                amazing healthcare providers. The emergency alert feature gave 
-                                me peace of mind throughout my journey."
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="{% static 'images/testimonial1.jpg' %}" alt="Sarah M." class="author-image">
-                                <div class="author-info">
-                                    <h5 class="author-name">Sarah M.</h5>
-                                    <p class="author-role">First-time Mother, Nairobi</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-item">
-                        <div class="testimonial-content">
-                            <div class="testimonial-text">
-                                "As a healthcare provider, I appreciate how Linda Mama bridges 
-                                the gap between mothers and medical professionals. It's making 
-                                maternal healthcare more accessible in Kenya."
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="{% static 'images/testimonial2.jpg' %}" alt="Dr. Wanjiku" class="author-image">
-                                <div class="author-info">
-                                    <h5 class="author-name">Dr. Wanjiku</h5>
-                                    <p class="author-role">Obstetrician, Kenyatta Hospital</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Emergency CTA Section -->
-<section class="emergency-cta-section bg-danger text-white py-4">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
-                    <div>
-                        <h4 class="mb-0">24/7 Emergency Assistance Available</h4>
-                        <p class="mb-0">Immediate connection to healthcare providers when you need it most</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-md-end">
-                {% if user.is_authenticated and user.role == 'mother' %}
-                <a href="{% url 'emergency_alert' %}" class="btn btn-light btn-lg">
-                    <i class="fas fa-phone me-2"></i>Emergency Alert
-                </a>
-                {% else %}
-                <a href="tel:119" class="btn btn-light btn-lg">
-                    <i class="fas fa-phone me-2"></i>Call 119
-                </a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock %}
-
-{% block extra_css %}
-<style>
-.hero-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    position: relative;
-    padding: 120px 0 80px;
-}
-
-.hero-wave {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-}
-
-.hero-wave svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 80px;
-}
-
-.hero-wave .shape-fill {
-    fill: #FFFFFF;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-
-.hero-subtitle {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-}
-
-.hero-stats {
-    border-top: 1px solid rgba(255,255,255,0.2);
-    padding-top: 2rem;
-}
-
-.stat-item {
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-.feature-card {
-    background: white;
-    padding: 2.5rem 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    height: 100%;
-    transition: transform 0.3s ease;
-    text-align: center;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-}
-
-.feature-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    font-size: 2rem;
-    color: white;
-}
-
-.feature-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--dark-color);
-}
-
-.feature-description {
-    color: #6c757d;
-    margin-bottom: 1.5rem;
-}
-
-.feature-list {
-    list-style: none;
-    text-align: left;
-    padding-left: 0;
-}
-
-.feature-list li {
-    padding: 0.3rem 0;
-    color: #495057;
-}
-
-.development-highlight {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-.week-badge {
-    background: var(--primary-color);
-    color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 25px;
-    display: inline-block;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.development-title {
-    color: var(--dark-color);
-    margin-bottom: 1.5rem;
-}
-
-.development-stats {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.stat {
-    font-size: 1.1rem;
-}
-
-.development-details, .mother-changes {
-    margin-bottom: 2rem;
-}
-
-.development-details h5, .mother-changes h5 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.development-details ul, .mother-changes ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.development-details li, .mother-changes li {
-    padding: 0.3rem 0;
-    position: relative;
-    padding-left: 1.5rem;
-}
-
-.development-details li:before, .mother-changes li:before {
-    content: "✓";
-    color: var(--success-color);
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-}
-
-.pregnancy-progress {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.trimester {
-    padding: 1.5rem;
-    border-radius: 10px;
-    background: #f8f9fa;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.trimester.active {
-    background: rgba(102, 126, 234, 0.1);
-    border-left: 4px solid var(--primary-color);
-    transform: scale(1.02);
-}
-
-.trimester-label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
-
-.weeks {
-    font-size: 0.9rem;
-    color: #6c757d;
-}
-
-.content-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-    height: 100%;
-}
-
-.content-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-}
-
-.content-image {
-    position: relative;
-    overflow: hidden;
-}
-
-.content-image img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.content-card:hover .content-image img {
-    transform: scale(1.1);
-}
-
-.content-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    font-weight: 600;
-}
-
-.content-body {
-    padding: 1.5rem;
-}
-
-.content-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    font-size: 0.8rem;
-}
-
-.trimester-badge {
-    background: var(--light-color);
-    color: var(--dark-color);
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-weight: 500;
-}
-
-.read-time {
-    color: #6c757d;
-}
-
-.content-title {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: var(--dark-color);
-    line-height: 1.4;
-}
-
-.content-excerpt {
-    color: #6c757d;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.testimonial-item {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    margin: 0 1rem;
-}
-
-.testimonial-text {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    color: #495057;
-    font-style: italic;
-}
-
-.testimonial-author {
-    display: flex;
-    align-items: center;
-}
-
-.author-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 1rem;
-}
-
-.author-name {
-    margin-bottom: 0.2rem;
-    color: var(--dark-color);
-}
-
-.author-role {
-    color: #6c757d;
-    margin: 0;
-    font-size: 0.9rem;
-}
-
-.emergency-cta-section {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-}
-
-.empty-state {
-    padding: 3rem 1rem;
-    text-align: center;
-}
-
-.empty-state i {
-    opacity: 0.5;
-}
-
-@media (max-width: 768px) {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LindaMama - Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #e83e8c !important;
+    }
+    .hero-section {
+      padding: 4rem 0;
+    }
     .hero-title {
-        font-size: 2.5rem;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #212529;
+      margin-bottom: 1.5rem;
     }
-    
-    .hero-subtitle {
-        font-size: 1.1rem;
+    .hero-title span {
+      color: #e83e8c;
     }
-    
-    .hero-buttons .btn {
-        display: block;
-        width: 100%;
-        margin-bottom: 1rem;
+    .lead {
+      font-size: 1.25rem;
+      color: #6c757d;
+      margin-bottom: 2rem;
     }
-    
-    .hero-buttons .btn:last-child {
-        margin-bottom: 0;
+    .btn-primary {
+      background-color: #e83e8c;
+      border-color: #e83e8c;
+      padding: 12px 30px;
+      font-weight: 500;
+      font-size: 1.1rem;
     }
-    
-    .development-stats {
-        flex-direction: column;
-        gap: 1rem;
+    .btn-primary:hover {
+      background-color: #d81b7e;
+      border-color: #d81b7e;
     }
-    
-    .testimonial-author {
-        flex-direction: column;
-        text-align: center;
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+      padding: 12px 30px;
+      font-weight: 500;
+      font-size: 1.1rem;
     }
-    
-    .author-image {
-        margin-right: 0;
-        margin-bottom: 1rem;
+    .btn-outline-secondary {
+      padding: 12px 30px;
+      font-weight: 500;
+      font-size: 1.1rem;
     }
-}
-
-@media (max-width: 576px) {
-    .hero-title {
-        font-size: 2rem;
-    }
-    
     .feature-card {
-        padding: 2rem 1rem;
+      border: none;
+      border-radius: 12px;
+      transition: transform 0.3s;
+      height: 100%;
     }
-    
-    .development-highlight {
-        padding: 1.5rem;
+    .feature-card:hover {
+      transform: translateY(-5px);
     }
-    
-    .content-meta {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: start;
+    .feature-icon {
+      font-size: 2.5rem;
+      color: #e83e8c;
+      margin-bottom: 1rem;
     }
-}
-</style>
-{% endblock %}
+    .divider {
+      margin: 4rem 0;
+      border-top: 1px solid #dee2e6;
+    }
+    .testimonial-card {
+      border: none;
+      border-radius: 12px;
+      background-color: #f8f9fa;
+    }
+    .testimonial-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    .stats-section {
+      background: linear-gradient(135deg, #f9f0ff 0%, #e6f3ff 100%);
+      border-radius: 15px;
+      padding: 3rem 2rem;
+    }
+  </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">LindaMama</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <!-- Simulating logged out state -->
+        <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
+        <!-- Uncomment below to simulate logged in state -->
+        <!--
+        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+        -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <!-- Hero Section -->
+  <div class="row align-items-center hero-section">
+    <div class="col-md-6">
+      <h1 class="hero-title">Your Pregnancy <span>Companion</span></h1>
+      <p class="lead">Track pregnancy milestones, appointments, records and get timely guidance tailored to your journey.</p>
+      
+      <!-- Simulating logged out state -->
+      <div class="d-grid gap-2 d-md-block">
+        <a href="#" class="btn btn-success me-2 mb-2">Get Started</a>
+        <a href="#" class="btn btn-outline-secondary mb-2">Sign In</a>
+      </div>
+      
+      <!-- Uncomment to simulate logged in state -->
+      <!--
+      <a href="#" class="btn btn-primary">Go to Dashboard</a>
+      -->
+    </div>
+    <div class="col-md-6">
+      <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="img-fluid rounded shadow" alt="Happy pregnant woman">
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Features Section -->
+  <div class="row mt-4">
+    <div class="col-md-4 mb-4">
+      <div class="card feature-card shadow-sm p-4">
+        <div class="feature-icon">📅</div>
+        <h5>Track Milestones</h5>
+        <p class="card-text">Week-by-week baby development, personalized tips and timely alerts for each stage of your pregnancy.</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card feature-card shadow-sm p-4">
+        <div class="feature-icon">📊</div>
+        <h5>Vitals & Notes</h5>
+        <p class="card-text">Record weight, blood pressure, symptoms and save everything securely for your healthcare providers.</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card feature-card shadow-sm p-4">
+        <div class="feature-icon">⏰</div>
+        <h5>Appointments & Reminders</h5>
+        <p class="card-text">Schedule prenatal visits and receive helpful reminders via email or SMS so you never miss an appointment.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-section text-center my-5">
+    <div class="row">
+      <div class="col-md-3">
+        <h3 class="fw-bold">10,000+</h3>
+        <p class="text-muted">Expecting Mothers</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="fw-bold">280+</h3>
+        <p class="text-muted">Weeks of Content</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="fw-bold">98%</h3>
+        <p class="text-muted">Satisfaction Rate</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="fw-bold">24/7</h3>
+        <p class="text-muted">Support Available</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Features -->
+  <div class="row my-5">
+    <div class="col-md-6 mb-4">
+      <div class="card feature-card shadow-sm p-4 h-100">
+        <div class="feature-icon">🍎</div>
+        <h5>Nutrition Guidance</h5>
+        <p class="card-text">Get personalized meal plans and nutrition advice for each trimester to support you and your baby's health.</p>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="card feature-card shadow-sm p-4 h-100">
+        <div class="feature-icon">👥</div>
+        <h5>Community Support</h5>
+        <p class="card-text">Connect with other expecting mothers, share experiences, and get advice from our supportive community.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="row my-5">
+    <div class="col-12 text-center mb-4">
+      <h2>What Mothers Say</h2>
+      <p class="lead text-muted">Hear from mothers who used LindaMama during their pregnancy journey</p>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card testimonial-card p-4">
+        <div class="d-flex align-items-center mb-3">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" class="testimonial-avatar me-3" alt="Sarah">
+          <div>
+            <h6 class="mb-0">Sarah J.</h6>
+            <small class="text-muted">First-time mom</small>
+          </div>
+        </div>
+        <p class="mb-0">"LindaMama helped me feel prepared and informed throughout my entire pregnancy. The week-by-week updates were my favorite!"</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card testimonial-card p-4">
+        <div class="d-flex align-items-center mb-3">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" class="testimonial-avatar me-3" alt="Maria">
+          <div>
+            <h6 class="mb-0">Maria L.</h6>
+            <small class="text-muted">Second pregnancy</small>
+          </div>
+        </div>
+        <p class="mb-0">"The symptom tracker was a lifesaver during my second pregnancy. I could easily share records with my doctor at appointments."</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card testimonial-card p-4">
+        <div class="d-flex align-items-center mb-3">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" class="testimonial-avatar me-3" alt="Jessica">
+          <div>
+            <h6 class="mb-0">Jessica T.</h6>
+            <small class="text-muted">Mom of twins</small>
+          </div>
+        </div>
+        <p class="mb-0">"As an expecting mom of twins, LindaMama provided specialized guidance that was incredibly helpful for my unique journey."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="row my-5 py-4 text-center">
+    <div class="col-md-8 mx-auto">
+      <h2>Start Your Journey Today</h2>
+      <p class="lead mb-4">Join thousands of mothers who trust LindaMama to guide them through pregnancy</p>
+      <a href="#" class="btn btn-primary btn-lg">Create Your Free Account</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container text-center">
+    <p>&copy; 2023 LindaMama. All rights reserved.</p>
+    <p class="text-muted">Your trusted pregnancy companion</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
