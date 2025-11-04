@@ -1,20 +1,20 @@
 services:
   - type: web
-    name: pregnancy-tracker
+    name: linda-mama-app
     env: python
     plan: free
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn pregnancy_tracker.wsgi:application"
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: pregnancy-tracker-db
+          name: linda-mama-db
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
-      - key: WEB_CONCURRENCY
-        value: 4
+      - key: FLASK_ENV
+        value: production
 
 databases:
-  - name: pregnancy-tracker-db
+  - name: linda-mama-db
     plan: free
