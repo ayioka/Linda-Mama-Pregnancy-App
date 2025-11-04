@@ -1,3 +1,4 @@
+# pregnancy/apps.py
 from django.apps import AppConfig
 
 
@@ -7,4 +8,12 @@ class PregnancyConfig(AppConfig):
     verbose_name = 'Pregnancy Management'
     
     def ready(self):
-        import pregnancy.signals
+        """
+        Import signals and perform any other initialization when the app is ready.
+        This method is called once Django starts.
+        """
+        try:
+            import pregnancy.signals  # noqa: F401
+        except ImportError:
+            # Signals module doesn't exist yet, which is fine during initial setup
+            pass
