@@ -6,7 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'linda_mama.settings')
+    # Set the default Django settings module
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lindamama.settings')
+    
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -15,6 +17,8 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    
+    # Execute the command line
     execute_from_command_line(sys.argv)
 
 
