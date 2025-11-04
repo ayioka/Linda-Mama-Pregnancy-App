@@ -1,469 +1,280 @@
-{% extends 'base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LindaMama - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #e83e8c !important;
+    }
+    .btn-primary {
+      background-color: #e83e8c;
+      border-color: #e83e8c;
+    }
+    .btn-primary:hover {
+      background-color: #d81b7e;
+      border-color: #d81b7e;
+    }
+    .dashboard-card {
+      border: none;
+      border-radius: 12px;
+      transition: transform 0.2s;
+      height: 100%;
+    }
+    .dashboard-card:hover {
+      transform: translateY(-3px);
+    }
+    .progress {
+      height: 8px;
+    }
+    .progress-bar {
+      background-color: #e83e8c;
+    }
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .week-indicator {
+      background: linear-gradient(135deg, #e83e8c, #ff9ec0);
+      color: white;
+      border-radius: 20px;
+      padding: 5px 15px;
+      font-weight: 500;
+    }
+    .quick-action {
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .quick-action:hover {
+      background-color: #f8f9fa;
+      transform: scale(1.05);
+    }
+    .symptom-item {
+      border-left: 3px solid #e83e8c;
+      padding-left: 1rem;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">LindaMama</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-{% block title %}Dashboard - Linda Mama{% endblock %}
-
-{% block content %}
-<div class="container-fluid py-4">
-    <!-- Welcome Section -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="dashboard-welcome">
-                <h1 class="h2 mb-1">Welcome back, {{ user.first_name }}! 👋</h1>
-                <p class="text-muted mb-0">
-                    {% if pregnancy_profile %}
-                    You are <strong>{{ weeks_pregnant }} weeks pregnant</strong> 
-                    {% if days_until_due %}
-                    - {{ days_until_due }} days until your due date
-                    {% endif %}
-                    {% else %}
-                    Complete your pregnancy profile to get started
-                    {% endif %}
-                </p>
-            </div>
+<div class="container py-4">
+  <!-- Welcome section -->
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <h3>Welcome, Sarah!</h3>
+      <p class="lead">Here's your pregnancy at a glance</p>
+      
+      <!-- Pregnancy progress -->
+      <div class="card dashboard-card shadow-sm mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">Your Pregnancy Progress</h5>
+            <span class="week-indicator">Week 18</span>
+          </div>
+          <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="d-flex justify-content-between text-muted small">
+            <span>Week 1</span>
+            <span>2nd Trimester</span>
+            <span>Week 40</span>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card dashboard-card shadow-sm">
+        <div class="card-body text-center">
+          <div style="font-size: 4rem; color: #e83e8c;">👶</div>
+          <h5>Baby Development</h5>
+          <p class="small">Your baby is about the size of a bell pepper this week!</p>
+          <button class="btn btn-outline-primary btn-sm">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="row mb-4">
+    <div class="col-md-4 mb-3">
+      <div class="card dashboard-card shadow-sm h-100">
+        <div class="card-body">
+          <div class="feature-icon">📅</div>
+          <h5>Trimester</h5>
+          <p class="card-text">2nd Trimester</p>
+          <small class="text-muted">You're in the golden trimester!</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card dashboard-card shadow-sm h-100">
+        <div class="card-body">
+          <div class="feature-icon">🏥</div>
+          <h5>Next Appointment</h5>
+          <p class="card-text">Oct 15, 2023</p>
+          <small class="text-muted">With Dr. Johnson at 2:30 PM</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card dashboard-card shadow-sm h-100">
+        <div class="card-body">
+          <div class="feature-icon">⏰</div>
+          <h5>Reminders</h5>
+          <p class="card-text">3 active</p>
+          <small class="text-muted">Take prenatal vitamin today</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Left column - Tools and tracking -->
+    <div class="col-md-8">
+      <!-- Quick actions -->
+      <h5 class="mb-3">Quick Actions</h5>
+      <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+          <div class="quick-action">
+            <div style="font-size: 2rem; color: #e83e8c;">📝</div>
+            <span class="d-block mt-2">Symptom Tracker</span>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="quick-action">
+            <div style="font-size: 2rem; color: #e83e8c;">🥗</div>
+            <span class="d-block mt-2">Nutrition</span>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="quick-action">
+            <div style="font-size: 2rem; color: #e83e8c;">💪</div>
+            <span class="d-block mt-2">Exercise</span>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="quick-action">
+            <div style="font-size: 2rem; color: #e83e8c;">📚</div>
+            <span class="d-block mt-2">Resources</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent symptoms -->
+      <div class="card dashboard-card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Recent Symptoms</h5>
+          <div class="symptom-item mb-3">
+            <div class="d-flex justify-content-between">
+              <strong>Back pain</strong>
+              <small class="text-muted">2 days ago</small>
+            </div>
+            <p class="mb-0 small">Mild lower back discomfort in the evenings</p>
+          </div>
+          <div class="symptom-item mb-3">
+            <div class="d-flex justify-content-between">
+              <strong>Increased appetite</strong>
+              <small class="text-muted">Today</small>
+            </div>
+            <p class="mb-0 small">Noticing hunger more frequently throughout the day</p>
+          </div>
+          <div class="symptom-item">
+            <div class="d-flex justify-content-between">
+              <strong>Baby movements</strong>
+              <small class="text-muted">Today</small>
+            </div>
+            <p class="mb-0 small">Feeling light flutters in the lower abdomen</p>
+          </div>
+          <button class="btn btn-outline-primary btn-sm mt-3">Log New Symptom</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Quick Stats -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card stat-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-primary">
-                            <i class="fas fa-baby"></i>
-                        </div>
-                        <div class="ms-3">
-                            <h4 class="mb-0">{{ weeks_pregnant }}</h4>
-                            <p class="text-muted mb-0">Weeks Pregnant</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Right column - Image and tips -->
+    <div class="col-md-4">
+      <div class="card dashboard-card shadow-sm mb-4">
+        <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Pregnant woman">
+        <div class="card-body">
+          <h5 class="card-title">Weekly Tip</h5>
+          <p class="card-text">Stay hydrated! Drinking plenty of water can help reduce swelling and prevent urinary tract infections.</p>
+          <button class="btn btn-primary btn-sm">More Tips</button>
         </div>
-        
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card stat-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-success">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div class="ms-3">
-                            <h4 class="mb-0">{{ upcoming_appointments|length }}</h4>
-                            <p class="text-muted mb-0">Upcoming Appointments</p>
-                        </div>
-                    </div>
-                </div>
+      </div>
+
+      <!-- Community updates -->
+      <div class="card dashboard-card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Community</h5>
+          <div class="d-flex mb-3">
+            <div style="width: 40px; height: 40px; background-color: #e83e8c; border-radius: 50%;" class="d-flex align-items-center justify-content-center text-white me-3">
+              A
             </div>
-        </div>
-        
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card stat-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-info">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="ms-3">
-                            <h4 class="mb-0">{{ unread_messages }}</h4>
-                            <p class="text-muted mb-0">Unread Messages</p>
-                        </div>
-                    </div>
-                </div>
+            <div>
+              <p class="mb-0 small"><strong>Anna</strong> shared a new recipe</p>
+              <small class="text-muted">2 hours ago</small>
             </div>
-        </div>
-        
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card stat-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-warning">
-                            <i class="fas fa-weight"></i>
-                        </div>
-                        <div class="ms-3">
-                            <h4 class="mb-0">{{ recent_vitals|length }}</h4>
-                            <p class="text-muted mb-0">Vitals Records</p>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="d-flex mb-3">
+            <div style="width: 40px; height: 40px; background-color: #6f42c1; border-radius: 50%;" class="d-flex align-items-center justify-content-center text-white me-3">
+              M
             </div>
+            <div>
+              <p class="mb-0 small"><strong>Maria</strong> asked about sleep positions</p>
+              <small class="text-muted">5 hours ago</small>
+            </div>
+          </div>
+          <button class="btn btn-outline-primary btn-sm w-100">Join Conversation</button>
         </div>
+      </div>
     </div>
-
-    <!-- Main Content -->
-    <div class="row">
-        <!-- Left Column -->
-        <div class="col-lg-8">
-            <!-- Quick Actions -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Quick Actions</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-sm-6 col-md-4">
-                            <a href="{% url 'log_vitals' %}" class="quick-action-btn">
-                                <div class="action-icon bg-primary">
-                                    <i class="fas fa-weight"></i>
-                                </div>
-                                <span>Log Vitals</span>
-                            </a>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <a href="{% url 'create_appointment' %}" class="quick-action-btn">
-                                <div class="action-icon bg-success">
-                                    <i class="fas fa-calendar-plus"></i>
-                                </div>
-                                <span>Schedule Appointment</span>
-                            </a>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <a href="{% url 'track_progress' %}" class="quick-action-btn">
-                                <div class="action-icon bg-info">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                                <span>Track Progress</span>
-                            </a>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <a href="{% url 'messaging' %}" class="quick-action-btn">
-                                <div class="action-icon bg-warning">
-                                    <i class="fas fa-comments"></i>
-                                </div>
-                                <span>Send Message</span>
-                            </a>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <a href="{% url 'educational_content' %}" class="quick-action-btn">
-                                <div class="action-icon bg-purple">
-                                    <i class="fas fa-book-medical"></i>
-                                </div>
-                                <span>Learn</span>
-                            </a>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <a href="{% url 'emergency_alert' %}" class="quick-action-btn emergency">
-                                <div class="action-icon bg-danger">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                </div>
-                                <span>Emergency Alert</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pregnancy Progress -->
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Pregnancy Progress</h5>
-                    <a href="{% url 'track_progress' %}" class="btn btn-sm btn-outline-primary">View Details</a>
-                </div>
-                <div class="card-body">
-                    {% if pregnancy_profile %}
-                    <div class="progress-container">
-                        <div class="trimester-progress">
-                            <div class="trimester {% if weeks_pregnant < 13 %}active{% endif %}">
-                                <div class="trimester-label">1st Trimester</div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: {% if weeks_pregnant < 13 %}{{ weeks_pregnant|divisibleby:13|floatformat:2 }}{% else %}100{% endif %}%"></div>
-                                </div>
-                                <div class="weeks">Weeks 1-12</div>
-                            </div>
-                            <div class="trimester {% if weeks_pregnant >= 13 and weeks_pregnant < 27 %}active{% endif %}">
-                                <div class="trimester-label">2nd Trimester</div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: {% if weeks_pregnant >= 13 and weeks_pregnant < 27 %}{{ weeks_pregnant|add:"-13"|divisibleby:14|floatformat:2 }}{% elif weeks_pregnant >= 27 %}100{% else %}0{% endif %}%"></div>
-                                </div>
-                                <div class="weeks">Weeks 13-26</div>
-                            </div>
-                            <div class="trimester {% if weeks_pregnant >= 27 %}active{% endif %}">
-                                <div class="trimester-label">3rd Trimester</div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: {% if weeks_pregnant >= 27 %}{{ weeks_pregnant|add:"-27"|divisibleby:14|floatformat:2 }}{% else %}0{% endif %}%"></div>
-                                </div>
-                                <div class="weeks">Weeks 27-40</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <div class="pregnancy-info">
-                                <h6>Due Date</h6>
-                                <p class="mb-1">{{ pregnancy_profile.estimated_due_date|date:"F j, Y" }}</p>
-                                <small class="text-muted">{{ days_until_due }} days to go</small>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="pregnancy-info">
-                                <h6>Current Trimester</h6>
-                                <p class="mb-1">{{ pregnancy_profile.get_current_trimester_display }}</p>
-                                <small class="text-muted">{{ weeks_pregnant }} weeks completed</small>
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
-                    <div class="text-center py-4">
-                        <i class="fas fa-baby fa-3x text-muted mb-3"></i>
-                        <h5>Complete Your Pregnancy Profile</h5>
-                        <p class="text-muted">Add your pregnancy details to start tracking your progress</p>
-                        <a href="{% url 'profile' %}" class="btn btn-primary">Complete Profile</a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Column -->
-        <div class="col-lg-4">
-            <!-- Upcoming Appointments -->
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Upcoming Appointments</h5>
-                    <a href="{% url 'appointments' %}" class="btn btn-sm btn-outline-primary">View All</a>
-                </div>
-                <div class="card-body">
-                    {% if upcoming_appointments %}
-                    <div class="appointments-list">
-                        {% for appointment in upcoming_appointments %}
-                        <div class="appointment-item">
-                            <div class="appointment-info">
-                                <h6 class="mb-1">{{ appointment.get_appointment_type_display }}</h6>
-                                <p class="text-muted mb-1">
-                                    <i class="fas fa-calendar me-1"></i>
-                                    {{ appointment.scheduled_date|date:"M j, Y" }}
-                                </p>
-                                <p class="text-muted mb-0">
-                                    <i class="fas fa-clock me-1"></i>
-                                    {{ appointment.scheduled_date|time:"g:i A" }}
-                                </p>
-                                <small class="text-muted">With {{ appointment.clinician.get_full_name }}</small>
-                            </div>
-                        </div>
-                        {% if not forloop.last %}<hr>{% endif %}
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <div class="text-center py-3">
-                        <i class="fas fa-calendar-times fa-2x text-muted mb-2"></i>
-                        <p class="text-muted mb-0">No upcoming appointments</p>
-                        <a href="{% url 'create_appointment' %}" class="btn btn-sm btn-primary mt-2">Schedule One</a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Recent Vitals -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Recent Vitals</h5>
-                </div>
-                <div class="card-body">
-                    {% if recent_vitals %}
-                    <div class="vitals-list">
-                        {% for vital in recent_vitals %}
-                        <div class="vital-item">
-                            <div class="vital-date">{{ vital.record_date|date:"M j" }}</div>
-                            <div class="vital-details">
-                                {% if vital.weight_kg %}
-                                <span class="vital-stat">Weight: {{ vital.weight_kg }} kg</span>
-                                {% endif %}
-                                {% if vital.blood_pressure_systolic and vital.blood_pressure_diastolic %}
-                                <span class="vital-stat">BP: {{ vital.blood_pressure_systolic }}/{{ vital.blood_pressure_diastolic }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        {% if not forloop.last %}<hr>{% endif %}
-                        {% endfor %}
-                    </div>
-                    <div class="text-center mt-3">
-                        <a href="{% url 'log_vitals' %}" class="btn btn-sm btn-outline-primary">Log New Vitals</a>
-                    </div>
-                    {% else %}
-                    <div class="text-center py-3">
-                        <i class="fas fa-weight fa-2x text-muted mb-2"></i>
-                        <p class="text-muted mb-0">No vitals recorded yet</p>
-                        <a href="{% url 'log_vitals' %}" class="btn btn-sm btn-primary mt-2">Log First Vitals</a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Educational Content -->
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Recommended Reading</h5>
-                </div>
-                <div class="card-body">
-                    {% if recent_content %}
-                    <div class="content-list">
-                        {% for content in recent_content %}
-                        <div class="content-item">
-                            <h6 class="mb-1">
-                                <a href="{% url 'content_detail' content.slug %}" class="text-decoration-none">
-                                    {{ content.title }}
-                                </a>
-                            </h6>
-                            <p class="text-muted mb-2">{{ content.summary|truncatewords:15 }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">{{ content.get_content_type_display }}</small>
-                                <small class="text-muted">{{ content.read_time_minutes }} min read</small>
-                            </div>
-                        </div>
-                        {% if not forloop.last %}<hr>{% endif %}
-                        {% endfor %}
-                    </div>
-                    <div class="text-center mt-3">
-                        <a href="{% url 'educational_content' %}" class="btn btn-sm btn-outline-primary">View All</a>
-                    </div>
-                    {% else %}
-                    <div class="text-center py-3">
-                        <i class="fas fa-book-medical fa-2x text-muted mb-2"></i>
-                        <p class="text-muted mb-0">No content available</p>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
-{% endblock %}
 
-{% block extra_css %}
-<style>
-.dashboard-welcome {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 2rem;
-    border-radius: 15px;
-    margin-bottom: 2rem;
-}
+<footer class="footer">
+  <div class="container text-center">
+    <p>&copy; 2023 LindaMama. All rights reserved.</p>
+    <p class="text-muted">Your trusted pregnancy companion</p>
+  </div>
+</footer>
 
-.stat-card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-}
-
-.quick-action-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem 1rem;
-    border: 2px solid #e9ecef;
-    border-radius: 15px;
-    text-decoration: none;
-    color: var(--dark-color);
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.quick-action-btn:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-3px);
-    color: var(--primary-color);
-}
-
-.quick-action-btn.emergency:hover {
-    border-color: var(--danger-color);
-    color: var(--danger-color);
-}
-
-.action-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-}
-
-.trimester-progress {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.trimester {
-    padding: 1rem;
-    border-radius: 10px;
-    background: #f8f9fa;
-}
-
-.trimester.active {
-    background: rgba(102, 126, 234, 0.1);
-    border-left: 4px solid var(--primary-color);
-}
-
-.trimester-label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.weeks {
-    font-size: 0.875rem;
-    color: #6c757d;
-    margin-top: 0.5rem;
-}
-
-.appointment-item, .vital-item, .content-item {
-    padding: 0.75rem 0;
-}
-
-.vital-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.vital-date {
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.vital-stat {
-    background: #e9ecef;
-    padding: 0.25rem 0.5rem;
-    border-radius: 5px;
-    font-size: 0.875rem;
-    margin-right: 0.5rem;
-}
-
-@media (max-width: 768px) {
-    .dashboard-welcome {
-        padding: 1.5rem;
-    }
-    
-    .quick-action-btn {
-        padding: 1rem 0.5rem;
-    }
-    
-    .action-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-}
-</style>
-{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Simple interaction for quick actions
+  document.querySelectorAll('.quick-action').forEach(action => {
+    action.addEventListener('click', function() {
+      const actionName = this.querySelector('span').textContent;
+      alert(`Opening ${actionName} tool...`);
+    });
+  });
+</script>
+</body>
+</html>
