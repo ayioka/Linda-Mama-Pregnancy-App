@@ -1,128 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linda Mama - Pregnancy Tracking Platform</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-    {% block extra_css %}{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LindaMama - Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles to replace the static CSS file */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #e83e8c !important;
+    }
+    .hero-section {
+      background: linear-gradient(135deg, #f9f0ff 0%, #e6f3ff 100%);
+      border-radius: 15px;
+      padding: 3rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .feature-card {
+      border: none;
+      border-radius: 12px;
+      transition: transform 0.3s;
+      height: 100%;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      color: #e83e8c;
+      margin-bottom: 1rem;
+    }
+    .btn-primary {
+      background-color: #e83e8c;
+      border-color: #e83e8c;
+    }
+    .btn-primary:hover {
+      background-color: #d81b7e;
+      border-color: #d81b7e;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+  </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <i class="fas fa-baby text-primary"></i>
-                <strong>Linda Mama</strong>
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'track_progress' %}">Track Progress</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'educational_content' %}">Learn</a>
-                        </li>
-                    {% endif %}
-                </ul>
-                
-                <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                <i class="fas fa-user-circle"></i> {{ user.username }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="{% url 'log_vitals' %}">Log Vitals</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                            </ul>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="btn btn-outline-primary me-2" href="{% url 'login' %}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-primary" href="{% url 'register' %}">Sign Up</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">LindaMama</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <!-- Simulating logged out state -->
+        <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
+        <!-- Uncomment below to simulate logged in state -->
+        <!--
+        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+        -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
+  <!-- Messages block - showing a sample success message -->
+  <div class="alert alert-success">Welcome to LindaMama! Your pregnancy companion.</div>
+  
+  <!-- Main content block -->
+  <div class="hero-section text-center">
+    <h1 class="display-4 fw-bold mb-4">Welcome to LindaMama</h1>
+    <p class="lead mb-4">Your trusted companion throughout your pregnancy journey</p>
+    <a href="#" class="btn btn-primary btn-lg">Get Started</a>
+  </div>
+  
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card feature-card shadow-sm">
+        <div class="card-body text-center p-4">
+          <div class="feature-icon">📅</div>
+          <h5 class="card-title">Pregnancy Tracker</h5>
+          <p class="card-text">Track your pregnancy week by week with personalized insights and milestones.</p>
         </div>
-    </nav>
-
-    <!-- Messages -->
-    {% if messages %}
-        <div class="container mt-3">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card feature-card shadow-sm">
+        <div class="card-body text-center p-4">
+          <div class="feature-icon">🍎</div>
+          <h5 class="card-title">Nutrition Guide</h5>
+          <p class="card-text">Get personalized nutrition advice and meal plans for each trimester.</p>
         </div>
-    {% endif %}
-
-    <!-- Main Content -->
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-5 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Linda Mama</h5>
-                    <p>Your trusted companion throughout the pregnancy journey. Empowering mothers with knowledge and support.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-light">Home</a></li>
-                        <li><a href="{% url 'educational_content' %}" class="text-light">Educational Content</a></li>
-                        <li><a href="#" class="text-light">About Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contact</h5>
-                    <p><i class="fas fa-phone"></i> Emergency: 119</p>
-                    <p><i class="fas fa-envelope"></i> support@lindamama.org</p>
-                </div>
-            </div>
-            <hr>
-            <div class="text-center">
-                <p>&copy; 2024 Linda Mama. All rights reserved.</p>
-            </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card feature-card shadow-sm">
+        <div class="card-body text-center p-4">
+          <div class="feature-icon">💬</div>
+          <h5 class="card-title">Community Support</h5>
+          <p class="card-text">Connect with other expecting mothers and share experiences.</p>
         </div>
-    </footer>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row align-items-center mb-5">
+    <div class="col-md-6">
+      <h2>Personalized For Your Journey</h2>
+      <p>LindaMama adapts to your specific pregnancy needs, providing relevant information and resources based on your due date, health profile, and preferences.</p>
+      <ul>
+        <li>Week-by-week fetal development updates</li>
+        <li>Personalized exercise recommendations</li>
+        <li>Symptom tracker and when to consult your doctor</li>
+        <li>Preparation checklist for each trimester</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <img src="https://via.placeholder.com/500x300/f8f9fa/6c757d?text=Pregnancy+Journey" alt="Pregnancy journey" class="img-fluid rounded">
+    </div>
+  </div>
+</div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{% static 'js/script.js' %}"></script>
-    
-    {% block extra_js %}{% endblock %}
+<footer class="footer">
+  <div class="container text-center">
+    <p>&copy; 2025 LindaMama. All rights reserved.</p>
+    <p class="text-muted">Your trusted pregnancy companion</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
