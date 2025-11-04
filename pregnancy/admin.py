@@ -261,4 +261,128 @@ class EmergencyAlertAdmin(admin.ModelAdmin):
     symptoms_preview.short_description = 'Symptoms'
     
     def response_time(self, obj):
-        if obj.responded_at and
+        if obj.responded_at and obj.created_at:
+            return obj.responded_at - obj.created_at
+        return None
+    response_time.short_description = 'Response Time'
+    
+    def mark_as_responded(self, request, queryset):
+        from django.utils import timezone
+        updated = queryset.update(is_responded=True, responded_at=timezone.now())
+        self.message_user(request, f'{updated} alerts were marked as responded.')
+    
+    def mark_as_high_urgency(self, request, queryset):
+        updated = queryset.update(urgency_level='high')
+        self.message_user(request, f'{updated} alerts were marked as high urgency.')
+    
+    mark_as_responded.short_description = "Mark selected alerts as responded"
+    mark_as_high_urgency.short_description = "Mark selected alerts as high urgency"
+
+class EducationalContentAdmin(admin.ModelAdmin):
+    list_display = [
+        'title', 
+        'content_type_badge', 
+        'trimester_target', 
+        'is_featured', 
+        'is_active',
+        'read_time',
+        'created_at'
+    ]
+    list_filter = ['content_type', 'trimester_target', 'is_featured', 'is_active', 'created_at']
+    search_fields = ['title', 'summary', 'content', 'tags']
+    readonly_fields = ['created_at', 'updated_at', 'view_count']
+    prepopulated_fields = {'slug': ('title',)}
+    date_hierarchy = 'created_at'
+    actions = ['mark_as_featured', 'mark_as_active', 'mark_as_inactive']
+    
+    def content_type_badge(self, obj):
+        colors = {
+            'article': 'blue',
+            'video': 'red',
+            'infographic': 'green',
+            'tip': 'orange',
+            'guide': 'purple'
+        }
+        color = colors.get(obj.content_type, 'gray')
+        return format_html(
+            '<span style="background-color: {}; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px;">{}</span>',
+            color,
+            obj.get_content_type_display()
+        )
+    content_type_badge.short_description = 'Content Type'
+    
+    def mark_as_featured(self, request, queryset):
+        updated = queryset.update(is_featured=True)
+        self.message_user(request, f'{updated} content items were marked as featured.')
+    
+    def mark_as_active(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, f'{updated} content items were activated.')
+    
+    def mark_as_inactive(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, f'{updated} content items were deactivated.')
+    
+    mark_as_featured.short_description = "Mark selected content as featured"
+    mark_as_active.short_description = "Activate selected content"
+    mark_as_inactive.short_description = "Deactivate selected content"
+
+# Custom Admin Site with Dashboard
+class LindaMamaAdminSite(admin.AdminSite):
+    site_header = "LindaMama Administration"
+    site_title = "LindaMama Admin Portal"
+    index_title = "Welcome to LindaMama Administration"
+    
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('dashboard/', self.admin_view(self.dashboard_view), name='lindamama_dashboard'),
+        ]
+        return custom_urls + urls
+    
+    def dashboard_view(self, request):
+        # Statistics for the dashboard
+        context = {
+            **self.each_context(request),
+            'total_users': User.objects.count(),
+            'total_mothers': User.objects.filter(role='mother').count(),
+            'total_clinicians': User.objects.filter(role='clinician').count(),
+            'active_pregnancies': PregnancyProfile.objects.count(),
+            'today_appointments': Appointment.objects.filter(
+                scheduled_date__date=date.today()
+            ).count(),
+            'pending_alerts': EmergencyAlert.objects.filter(is_responded=False).count(),
+            'recent_messages': Message.objects.filter(created_at__date=date.today()).count(),
+            'user_stats': User.objects.aggregate(
+                total=Count('id'),
+                active=Count('id', filter=models.Q(is_active=True)),
+                staff=Count('id', filter=models.Q(is_staff=True))
+            ),
+            'appointment_stats': Appointment.objects.aggregate(
+                total=Count('id'),
+                scheduled=Count('id', filter=models.Q(status='scheduled')),
+                confirmed=Count('id', filter=models.Q(status='confirmed')),
+                completed=Count('id', filter=models.Q(status='completed'))
+            )
+        }
+        return render(request, 'admin/lindamama_dashboard.html', context)
+
+# Register models with custom admin site
+lindamama_admin = LindaMamaAdminSite(name='lindamama_admin')
+
+lindamama_admin.register(User, CustomUserAdmin)
+lindamama_admin.register(PregnancyProfile, PregnancyProfileAdmin)
+lindamama_admin.register(VitalsRecord, VitalsRecordAdmin)
+lindamama_admin.register(Appointment, AppointmentAdmin)
+lindamama_admin.register(Message, MessageAdmin)
+lindamama_admin.register(EmergencyAlert, EmergencyAlertAdmin)
+lindamama_admin.register(EducationalContent, EducationalContentAdmin)
+
+# Also register with default admin for backward compatibility
+admin.site.register(User, CustomUserAdmin)
+admin.site.register(PregnancyProfile, PregnancyProfileAdmin)
+admin.site.register(VitalsRecord, VitalsRecordAdmin)
+admin.site.register(Appointment, AppointmentAdmin)
+admin.site.register(Message, MessageAdmin)
+admin.site.register(EmergencyAlert, EmergencyAlertAdmin)
+admin.site.register(EducationalContent, EducationalContentAdmin)
