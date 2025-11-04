@@ -1,10 +1,54 @@
+# === Django Core ===
 Django==4.2.7
-Pillow==10.0.1
+Pillow==10.0.1  # Image processing
+
+# === Database ===
+psycopg2-binary==2.9.7  # PostgreSQL adapter
+
+# === Forms & UI ===
 django-crispy-forms==2.0
 crispy-bootstrap5==0.7
-python-decouple==3.8
-whitenoise==6.5.0
-gunicorn==21.2.0
-psycopg2-binary==2.9.7
-django-htmx==1.16.0
+django-htmx==1.16.0  # Modern frontend interactions
+
+# === Development & Debugging ===
 django-extensions==3.2.3
+django-debug-toolbar==4.2.0  # Debugging panel
+ipython==8.17.2  # Enhanced shell
+
+# === Configuration ===
+python-decouple==3.8  # Environment variables
+
+# === Production ===
+gunicorn==21.2.0  # WSGI server
+whitenoise==6.5.0  # Static files
+python-dotenv==1.0.0  # Environment file support
+
+# === API (Optional) ===
+djangorestframework==3.14.0  # REST API
+django-cors-headers==4.3.1  # CORS for API
+django-filter==23.3  # API filtering
+
+# === Email & Notifications ===
+django-anymail==10.1  # Email service integration
+celery==5.3.4  # Background tasks
+redis==5.0.1  # Celery broker & caching
+
+# === Security ===
+django-axes==6.0.0  # Security and login protection
+django-admin-honeypot==1.1.0  # Security for admin
+
+# === Testing ===
+pytest==7.4.2
+pytest-django==4.5.2
+pytest-cov==4.1.0
+factory-boy==3.3.0
+Faker==19.9.0
+
+# === Documentation ===
+django-docutils==0.9.1  # Documentation integration
+mkdocs==1.5.2  # Project documentation
+
+# === Utility ===
+python-dateutil==2.8.2  # Date parsing
+humanize==4.8.0  # Human-readable data
+requests==2.31.0  HTTP requests
