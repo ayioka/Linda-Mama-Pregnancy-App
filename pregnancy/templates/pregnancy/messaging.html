@@ -1,17 +1,267 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LindaMama - Messages</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #e83e8c !important;
+    }
+    .btn-primary {
+      background-color: #e83e8c;
+      border-color: #e83e8c;
+    }
+    .btn-primary:hover {
+      background-color: #d81b7e;
+      border-color: #d81b7e;
+    }
+    .page-header {
+      background: linear-gradient(135deg, #e83e8c 0%, #ff9ec0 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+    }
+    .conversations-list {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    .conversation-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #e9ecef;
+      text-decoration: none;
+      color: inherit;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+    .conversation-item:last-child {
+      border-bottom: none;
+    }
+    .conversation-item:hover {
+      background-color: #f8f9fa;
+      text-decoration: none;
+      color: inherit;
+    }
+    .conversation-item.unread {
+      background-color: rgba(232, 62, 140, 0.05);
+      border-left: 4px solid #e83e8c;
+    }
+    .conversation-avatar {
+      position: relative;
+      margin-right: 1rem;
+    }
+    .avatar-img, .avatar-placeholder {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .avatar-placeholder {
+      background: #e83e8c;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .unread-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #dc3545;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .conversation-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .conversation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.25rem;
+    }
+    .conversation-header h6 {
+      margin-bottom: 0;
+    }
+    .conversation-preview {
+      font-size: 0.875rem;
+      line-height: 1.4;
+    }
+    .quick-contact-card {
+      text-align: center;
+      padding: 1.5rem;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .quick-contact-card:hover {
+      border-color: #e83e8c;
+      transform: translateY(-2px);
+    }
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      margin: 0 auto 1rem;
+    }
+    .bg-primary {
+      background-color: #e83e8c !important;
+    }
+    .bg-success {
+      background-color: #198754 !important;
+    }
+    .tips-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .tip-item {
+      display: flex;
+      align-items: center;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    /* Message thread styles */
+    .message-thread {
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+    .message {
+      margin-bottom: 1.5rem;
+      display: flex;
+    }
+    .message.sent {
+      justify-content: flex-end;
+    }
+    .message.received {
+      justify-content: flex-start;
+    }
+    .message-bubble {
+      max-width: 70%;
+      padding: 1rem;
+      border-radius: 18px;
+      position: relative;
+    }
+    .message.sent .message-bubble {
+      background: #e83e8c;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .message.received .message-bubble {
+      background: #f1f3f5;
+      color: #212529;
+      border-bottom-left-radius: 4px;
+    }
+    .message-time {
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      opacity: 0.7;
+    }
+    .message-input-container {
+      border-top: 1px solid #e9ecef;
+      padding: 1rem;
+    }
+    /* Scrollbar styling */
+    .conversations-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .conversations-list::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .conversations-list::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px;
+    }
+    .conversations-list::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 1.5rem;
+      }
+      .conversation-item {
+        padding: 0.75rem;
+      }
+      .avatar-img, .avatar-placeholder {
+        width: 40px;
+        height: 40px;
+      }
+      .conversation-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .conversation-header small {
+        margin-top: 0.25rem;
+      }
+      .quick-contact-card {
+        margin-bottom: 1rem;
+      }
+      .message-bubble {
+        max-width: 85%;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">LindaMama</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Progress</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">Messages</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-{% block title %}Messages - Linda Mama{% endblock %}
-
-{% block content %}
 <div class="container py-4">
     <!-- Header -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="page-header">
                 <h1 class="h2 mb-2">Messages</h1>
-                <p class="text-muted mb-0">Communicate securely with your healthcare providers</p>
+                <p class="mb-0">Communicate securely with your healthcare providers</p>
             </div>
         </div>
     </div>
@@ -27,111 +277,200 @@
                     </button>
                 </div>
                 <div class="card-body p-0">
-                    {% if conversations %}
                     <div class="conversations-list">
-                        {% for conversation in conversations %}
-                        <a href="{% url 'conversation' conversation.user.id %}" 
-                           class="conversation-item {% if conversation.unread_count > 0 %}unread{% endif %}">
+                        <!-- Conversation 1 -->
+                        <div class="conversation-item unread" data-conversation="dr-johnson">
                             <div class="conversation-avatar">
-                                {% if conversation.user.profile_picture %}
-                                <img src="{{ conversation.user.profile_picture.url }}" alt="{{ conversation.user.get_full_name }}" class="avatar-img">
-                                {% else %}
                                 <div class="avatar-placeholder">
-                                    {{ conversation.user.first_name|first }}{{ conversation.user.last_name|first }}
+                                    DJ
                                 </div>
-                                {% endif %}
-                                {% if conversation.unread_count > 0 %}
-                                <span class="unread-badge">{{ conversation.unread_count }}</span>
-                                {% endif %}
+                                <span class="unread-badge">3</span>
                             </div>
                             <div class="conversation-content">
                                 <div class="conversation-header">
-                                    <h6 class="mb-0">{{ conversation.user.get_full_name }}</h6>
-                                    <small class="text-muted">{{ conversation.last_message.timestamp|timesince }} ago</small>
+                                    <h6 class="mb-0">Dr. Johnson</h6>
+                                    <small class="text-muted">2 hours ago</small>
                                 </div>
                                 <p class="conversation-preview text-muted mb-0">
-                                    {{ conversation.last_message.content|truncatewords:10 }}
+                                    Your test results are in. Let's discuss them at your next appointment.
                                 </p>
-                                {% if conversation.last_message.is_urgent %}
                                 <span class="badge bg-danger badge-sm">Urgent</span>
-                                {% endif %}
                             </div>
-                        </a>
-                        {% endfor %}
+                        </div>
+                        
+                        <!-- Conversation 2 -->
+                        <div class="conversation-item" data-conversation="nurse-miller">
+                            <div class="conversation-avatar">
+                                <div class="avatar-placeholder">
+                                    NM
+                                </div>
+                            </div>
+                            <div class="conversation-content">
+                                <div class="conversation-header">
+                                    <h6 class="mb-0">Nurse Miller</h6>
+                                    <small class="text-muted">1 day ago</small>
+                                </div>
+                                <p class="conversation-preview text-muted mb-0">
+                                    Just following up on your blood pressure readings from last week...
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Conversation 3 -->
+                        <div class="conversation-item" data-conversation="support-team">
+                            <div class="conversation-avatar">
+                                <div class="avatar-placeholder">
+                                    ST
+                                </div>
+                            </div>
+                            <div class="conversation-content">
+                                <div class="conversation-header">
+                                    <h6 class="mb-0">Support Team</h6>
+                                    <small class="text-muted">3 days ago</small>
+                                </div>
+                                <p class="conversation-preview text-muted mb-0">
+                                    Thank you for your question about nutrition. Here's some information...
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Conversation 4 -->
+                        <div class="conversation-item" data-conversation="dr-patel">
+                            <div class="conversation-avatar">
+                                <div class="avatar-placeholder">
+                                    DP
+                                </div>
+                            </div>
+                            <div class="conversation-content">
+                                <div class="conversation-header">
+                                    <h6 class="mb-0">Dr. Patel</h6>
+                                    <small class="text-muted">1 week ago</small>
+                                </div>
+                                <p class="conversation-preview text-muted mb-0">
+                                    The ultrasound results look great! Baby is developing perfectly.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    {% else %}
-                    <div class="text-center py-5">
-                        <i class="fas fa-comments fa-3x text-muted mb-3"></i>
-                        <h5>No Messages Yet</h5>
-                        <p class="text-muted">Start a conversation with your healthcare provider</p>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newMessageModal">
-                            <i class="fas fa-plus me-2"></i>Start Conversation
-                        </button>
-                    </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Message Area -->
         <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body text-center py-5">
-                    <i class="fas fa-comment-dots fa-4x text-muted mb-3"></i>
-                    <h4>Select a Conversation</h4>
-                    <p class="text-muted">Choose a conversation from the list to start messaging</p>
-                    
-                    <!-- Quick Actions -->
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <div class="quick-contact-card">
-                                <div class="contact-icon bg-primary">
-                                    <i class="fas fa-user-md"></i>
+            <!-- Default State - No conversation selected -->
+            <div id="defaultMessageState">
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-comment-dots fa-4x text-muted mb-3"></i>
+                        <h4>Select a Conversation</h4>
+                        <p class="text-muted">Choose a conversation from the list to start messaging</p>
+                        
+                        <!-- Quick Actions -->
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="quick-contact-card">
+                                    <div class="contact-icon bg-primary">
+                                        <i class="fas fa-user-md"></i>
+                                    </div>
+                                    <h6>Primary Doctor</h6>
+                                    <p class="text-muted small">Your main healthcare provider</p>
+                                    <button class="btn btn-sm btn-outline-primary" data-contact="dr-johnson">Message</button>
                                 </div>
-                                <h6>Primary Doctor</h6>
-                                <p class="text-muted small">Your main healthcare provider</p>
-                                <button class="btn btn-sm btn-outline-primary">Message</button>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="quick-contact-card">
+                                    <div class="contact-icon bg-success">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <h6>Support Team</h6>
+                                    <p class="text-muted small">General questions and support</p>
+                                    <button class="btn btn-sm btn-outline-success" data-contact="support-team">Message</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="quick-contact-card">
-                                <div class="contact-icon bg-success">
-                                    <i class="fas fa-headset"></i>
-                                </div>
-                                <h6>Support Team</h6>
-                                <p class="text-muted small">General questions and support</p>
-                                <button class="btn btn-sm btn-outline-success">Message</button>
+                    </div>
+                </div>
+
+                <!-- Message Tips -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-lightbulb me-2"></i>Messaging Tips
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="tips-list">
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Be clear and specific about your concerns</span>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Include relevant symptoms and their duration</span>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>For emergencies, use the emergency alert system</span>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Response time is typically within 24 hours</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Message Tips -->
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-lightbulb me-2"></i>Messaging Tips
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="tips-list">
-                        <div class="tip-item">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>Be clear and specific about your concerns</span>
+            <!-- Active Conversation State (hidden by default) -->
+            <div id="activeConversation" class="d-none">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="conversation-avatar me-3">
+                                <div class="avatar-placeholder" id="activeAvatar">
+                                    DJ
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="mb-0" id="activeContactName">Dr. Johnson</h5>
+                                <small class="text-muted" id="activeContactRole">Primary Doctor</small>
+                            </div>
                         </div>
-                        <div class="tip-item">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>Include relevant symptoms and their duration</span>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>View Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-bell me-2"></i>Mute Notifications</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-times me-2"></i>End Conversation</a></li>
+                            </ul>
                         </div>
-                        <div class="tip-item">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>For emergencies, use the emergency alert system</span>
-                        </div>
-                        <div class="tip-item">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>Response time is typically within 24 hours</span>
-                        </div>
+                    </div>
+                    
+                    <!-- Message Thread -->
+                    <div class="message-thread" id="messageThread">
+                        <!-- Messages will be dynamically inserted here -->
+                    </div>
+                    
+                    <!-- Message Input -->
+                    <div class="message-input-container">
+                        <form id="messageForm">
+                            <div class="input-group">
+                                <textarea class="form-control" id="messageInput" placeholder="Type your message..." rows="1" style="resize: none;"></textarea>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-shield-alt me-1"></i>
+                                    Your messages are secure and encrypted
+                                </small>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -148,308 +487,270 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form method="post" id="newMessageForm">
-                    {% csrf_token %}
-                    {{ form|crispy }}
+                <form id="newMessageForm">
+                    <div class="mb-3">
+                        <label for="recipientSelect" class="form-label">Recipient</label>
+                        <select class="form-select" id="recipientSelect">
+                            <option value="">Select a recipient</option>
+                            <option value="dr-johnson">Dr. Johnson - Primary Doctor</option>
+                            <option value="nurse-miller">Nurse Miller - Nursing Team</option>
+                            <option value="dr-patel">Dr. Patel - Ultrasound Specialist</option>
+                            <option value="support-team">Support Team - General Inquiries</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="messageSubject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="messageSubject" placeholder="Enter message subject">
+                    </div>
+                    <div class="mb-3">
+                        <label for="messageContent" class="form-label">Message</label>
+                        <textarea class="form-control" id="messageContent" rows="4" placeholder="Type your message here..."></textarea>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="urgentMessage">
+                        <label class="form-check-label" for="urgentMessage">
+                            Mark as urgent
+                        </label>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" form="newMessageForm" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" id="sendNewMessage">
                     <i class="fas fa-paper-plane me-2"></i>Send Message
                 </button>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_css %}
-<style>
-.page-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 2rem;
-    border-radius: 15px;
-}
+<footer class="footer">
+  <div class="container text-center">
+    <p>&copy; 2023 LindaMama. All rights reserved.</p>
+    <p class="text-muted">Your trusted pregnancy companion</p>
+  </div>
+</footer>
 
-.conversations-list {
-    max-height: 600px;
-    overflow-y: auto;
-}
-
-.conversation-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #e9ecef;
-    text-decoration: none;
-    color: inherit;
-    transition: background-color 0.3s ease;
-}
-
-.conversation-item:last-child {
-    border-bottom: none;
-}
-
-.conversation-item:hover {
-    background-color: #f8f9fa;
-    text-decoration: none;
-    color: inherit;
-}
-
-.conversation-item.unread {
-    background-color: rgba(102, 126, 234, 0.05);
-    border-left: 4px solid var(--primary-color);
-}
-
-.conversation-avatar {
-    position: relative;
-    margin-right: 1rem;
-}
-
-.avatar-img, .avatar-placeholder {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-.avatar-placeholder {
-    background: var(--primary-color);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.unread-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: var(--danger-color);
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.conversation-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.conversation-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 0.25rem;
-}
-
-.conversation-header h6 {
-    margin-bottom: 0;
-}
-
-.conversation-preview {
-    font-size: 0.875rem;
-    line-height: 1.4;
-}
-
-.quick-contact-card {
-    text-align: center;
-    padding: 1.5rem;
-    border: 2px solid #e9ecef;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
-
-.quick-contact-card:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-}
-
-.contact-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    margin: 0 auto 1rem;
-}
-
-.tips-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.tip-item {
-    display: flex;
-    align-items: center;
-}
-
-/* Modal styling */
-.modal-header {
-    border-bottom: 1px solid #e9ecef;
-}
-
-.modal-footer {
-    border-top: 1px solid #e9ecef;
-}
-
-/* Scrollbar styling */
-.conversations-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-.conversations-list::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.conversations-list::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 3px;
-}
-
-.conversations-list::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .page-header {
-        padding: 1.5rem;
-    }
-    
-    .conversation-item {
-        padding: 0.75rem;
-    }
-    
-    .avatar-img, .avatar-placeholder {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .conversation-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .conversation-header small {
-        margin-top: 0.25rem;
-    }
-    
-    .quick-contact-card {
-        margin-bottom: 1rem;
-    }
-}
-</style>
-{% endblock %}
-
-{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Auto-refresh conversations
-    function refreshConversations() {
-        // In a real implementation, this would fetch updated conversations via AJAX
-        console.log('Refreshing conversations...');
-    }
+    // Sample message data
+    const conversations = {
+        'dr-johnson': {
+            name: 'Dr. Johnson',
+            role: 'Primary Doctor',
+            avatar: 'DJ',
+            messages: [
+                {
+                    id: 1,
+                    content: 'Hello Sarah, I wanted to check in on how you\'re feeling this week.',
+                    sender: 'dr-johnson',
+                    timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
+                    read: true
+                },
+                {
+                    id: 2,
+                    content: 'Hi Dr. Johnson, I\'ve been feeling good overall. Just some mild back pain in the evenings.',
+                    sender: 'user',
+                    timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hours ago
+                    read: true
+                },
+                {
+                    id: 3,
+                    content: 'That\'s normal at this stage. Are you doing the stretches we discussed?',
+                    sender: 'dr-johnson',
+                    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+                    read: true
+                },
+                {
+                    id: 4,
+                    content: 'Yes, I\'ve been doing them daily. They do help!',
+                    sender: 'user',
+                    timestamp: new Date(Date.now() - 90 * 60 * 1000), // 90 minutes ago
+                    read: true
+                },
+                {
+                    id: 5,
+                    content: 'Great to hear. Your test results are in. Let\'s discuss them at your next appointment.',
+                    sender: 'dr-johnson',
+                    timestamp: new Date(Date.now() - 60 * 60 * 1000), // 1 hour ago
+                    read: false
+                }
+            ]
+        },
+        'nurse-miller': {
+            name: 'Nurse Miller',
+            role: 'Nursing Team',
+            avatar: 'NM',
+            messages: [
+                {
+                    id: 1,
+                    content: 'Hello Sarah, just following up on your blood pressure readings from last week.',
+                    sender: 'nurse-miller',
+                    timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+                    read: true
+                },
+                {
+                    id: 2,
+                    content: 'Hi Nurse Miller, my readings have been stable around 115/75.',
+                    sender: 'user',
+                    timestamp: new Date(Date.now() - 20 * 60 * 60 * 1000), // 20 hours ago
+                    read: true
+                }
+            ]
+        }
+    };
+
+    // Conversation selection
+    const conversationItems = document.querySelectorAll('.conversation-item');
+    const defaultState = document.getElementById('defaultMessageState');
+    const activeConversation = document.getElementById('activeConversation');
+    const messageThread = document.getElementById('messageThread');
     
-    // Refresh every 30 seconds
-    setInterval(refreshConversations, 30000);
-    
-    // Mark conversation as read when clicked
-    const conversationLinks = document.querySelectorAll('.conversation-item');
-    conversationLinks.forEach(link => {
-        link.addEventListener('click', function() {
+    conversationItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const conversationId = this.dataset.conversation;
+            openConversation(conversationId);
+            
+            // Mark as read
+            this.classList.remove('unread');
             const unreadBadge = this.querySelector('.unread-badge');
             if (unreadBadge) {
-                // Send AJAX request to mark messages as read
-                const userId = this.getAttribute('href').split('/').pop();
-                markMessagesAsRead(userId);
+                unreadBadge.remove();
             }
         });
     });
-    
-    function markMessagesAsRead(userId) {
-        // This would make an API call to mark messages as read
-        fetch(`/api/mark-conversation-read/${userId}/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken'),
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                // Update UI
-                const unreadBadge = document.querySelector(`.conversation-item[href*="${userId}"] .unread-badge`);
-                if (unreadBadge) {
-                    unreadBadge.remove();
-                }
-                const conversationItem = document.querySelector(`.conversation-item[href*="${userId}"]`);
-                if (conversationItem) {
-                    conversationItem.classList.remove('unread');
-                }
-            }
-        })
-        .catch(error => console.error('Error marking messages as read:', error));
-    }
-    
-    // Utility function to get CSRF token
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    
-    // New message form handling
-    const newMessageForm = document.getElementById('newMessageForm');
-    if (newMessageForm) {
-        newMessageForm.addEventListener('submit', function(e) {
-            const receiver = document.getElementById('id_receiver').value;
-            const subject = document.getElementById('id_subject').value;
-            const content = document.getElementById('id_content').value;
-            
-            if (!receiver || !subject || !content) {
-                e.preventDefault();
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
-        });
-    }
-    
+
     // Quick contact buttons
     const quickContactButtons = document.querySelectorAll('.quick-contact-card .btn');
     quickContactButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const contactType = this.closest('.quick-contact-card').querySelector('h6').textContent;
-            alert(`This would open a new message to ${contactType}. In a real implementation, this would pre-fill the recipient.`);
+            const contactId = this.dataset.contact;
+            openConversation(contactId);
         });
     });
+
+    function openConversation(conversationId) {
+        const conversation = conversations[conversationId];
+        if (!conversation) return;
+
+        // Update active conversation UI
+        document.getElementById('activeContactName').textContent = conversation.name;
+        document.getElementById('activeContactRole').textContent = conversation.role;
+        document.getElementById('activeAvatar').textContent = conversation.avatar;
+
+        // Load messages
+        loadMessages(conversation.messages);
+
+        // Switch views
+        defaultState.classList.add('d-none');
+        activeConversation.classList.remove('d-none');
+        
+        // Scroll to bottom of message thread
+        messageThread.scrollTop = messageThread.scrollHeight;
+    }
+
+    function loadMessages(messages) {
+        messageThread.innerHTML = '';
+        
+        messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.className = `message ${message.sender === 'user' ? 'sent' : 'received'}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerHTML = `
+                <div>${message.content}</div>
+                <div class="message-time">${formatTime(message.timestamp)}</div>
+            `;
+            
+            messageElement.appendChild(bubble);
+            messageThread.appendChild(messageElement);
+        });
+    }
+
+    function formatTime(timestamp) {
+        return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Send message functionality
+    const messageForm = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+
+    messageForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const content = messageInput.value.trim();
+        if (!content) return;
+
+        // Add new message to thread
+        const newMessage = {
+            id: Date.now(),
+            content: content,
+            sender: 'user',
+            timestamp: new Date(),
+            read: true
+        };
+
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message sent';
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble';
+        bubble.innerHTML = `
+            <div>${content}</div>
+            <div class="message-time">${formatTime(new Date())}</div>
+        `;
+        
+        messageElement.appendChild(bubble);
+        messageThread.appendChild(messageElement);
+        
+        // Clear input and scroll to bottom
+        messageInput.value = '';
+        messageThread.scrollTop = messageThread.scrollHeight;
+
+        // In a real app, you would send the message to the server here
+        console.log('Sending message:', content);
+    });
+
+    // Auto-resize textarea
+    messageInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+
+    // New message modal functionality
+    const sendNewMessageBtn = document.getElementById('sendNewMessage');
+    
+    sendNewMessageBtn.addEventListener('click', function() {
+        const recipient = document.getElementById('recipientSelect').value;
+        const subject = document.getElementById('messageSubject').value;
+        const content = document.getElementById('messageContent').value;
+        const isUrgent = document.getElementById('urgentMessage').checked;
+
+        if (!recipient || !subject || !content) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        // Close modal and show success message
+        const modal = bootstrap.Modal.getInstance(document.getElementById('newMessageModal'));
+        modal.hide();
+        
+        // Reset form
+        document.getElementById('newMessageForm').reset();
+        
+        // Show success message
+        alert('Message sent successfully!');
+        
+        // In a real app, you would send the data to the server and update the UI
+    });
+
+    // Auto-refresh conversations (simulated)
+    setInterval(() => {
+        console.log('Refreshing conversations...');
+    }, 30000);
 });
 </script>
-{% endblock %}
+</body>
+</html>
