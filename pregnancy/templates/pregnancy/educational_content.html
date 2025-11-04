@@ -1,47 +1,284 @@
-{% extends 'base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LindaMama - Educational Resources</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #e83e8c !important;
+    }
+    .btn-primary {
+      background-color: #e83e8c;
+      border-color: #e83e8c;
+    }
+    .btn-primary:hover {
+      background-color: #d81b7e;
+      border-color: #d81b7e;
+    }
+    .content-header {
+      background: linear-gradient(135deg, #e83e8c 0%, #ff9ec0 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+    }
+    .section-header {
+      border-bottom: 2px solid #e9ecef;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .featured-content-card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .featured-content-card:hover {
+      transform: translateY(-5px);
+    }
+    .featured-image {
+      position: relative;
+      height: 100%;
+      min-height: 200px;
+    }
+    .featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .featured-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ffc107;
+      color: #212529;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .featured-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .content-type-badge {
+      font-size: 0.75rem;
+    }
+    .trimester-badge {
+      background: #6c757d;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.75rem;
+    }
+    .content-title {
+      margin-bottom: 0.75rem;
+    }
+    .content-title a {
+      color: #212529;
+      text-decoration: none;
+    }
+    .content-title a:hover {
+      color: #e83e8c;
+    }
+    .content-excerpt {
+      color: #6c757d;
+      flex-grow: 1;
+      margin-bottom: 1rem;
+    }
+    .content-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .read-info {
+      color: #6c757d;
+      font-size: 0.875rem;
+    }
+    .content-card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      height: 100%;
+    }
+    .content-card:hover {
+      transform: translateY(-5px);
+    }
+    .content-image {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    .content-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .content-card:hover .content-image img {
+      transform: scale(1.05);
+    }
+    .content-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .content-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 200px);
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    .category-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .category-card:hover {
+      border-color: #e83e8c;
+      transform: translateY(-3px);
+    }
+    .category-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 2rem;
+      color: white;
+    }
+    .bg-article { background-color: #e83e8c; }
+    .bg-video { background-color: #198754; }
+    .bg-infographic { background-color: #0dcaf0; }
+    .bg-tip { background-color: #ffc107; }
+    .bg-guide { background-color: #6f42c1; }
+    .content-item.hidden {
+      display: none;
+    }
+    .search-box {
+      position: relative;
+    }
+    .search-box .form-control {
+      padding-left: 2.5rem;
+    }
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+    }
+    @media (max-width: 768px) {
+      .content-header {
+        padding: 1.5rem;
+      }
+      .featured-content-card .row {
+        flex-direction: column;
+      }
+      .featured-image {
+        min-height: 150px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">LindaMama</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Progress</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Vitals</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">Resources</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-{% block title %}Educational Resources - Linda Mama{% endblock %}
-
-{% block content %}
 <div class="container py-4">
     <!-- Header -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="content-header">
                 <h1 class="h2 mb-2">Educational Resources</h1>
-                <p class="text-muted mb-0">
+                <p class="mb-0">
                     Curated content to guide you through every stage of your pregnancy journey
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- Filters -->
+    <!-- Search and Filters -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Search resources..." onkeyup="filterContent()">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <label for="trimesterFilter" class="form-label">Filter by Trimester</label>
                             <select class="form-select" id="trimesterFilter" onchange="filterContent()">
-                                <option value="all" {% if selected_trimester == 'all' %}selected{% endif %}>All Trimesters</option>
-                                <option value="first" {% if selected_trimester == 'first' %}selected{% endif %}>First Trimester</option>
-                                <option value="second" {% if selected_trimester == 'second' %}selected{% endif %}>Second Trimester</option>
-                                <option value="third" {% if selected_trimester == 'third' %}selected{% endif %}>Third Trimester</option>
-                                <option value="postpartum" {% if selected_trimester == 'postpartum' %}selected{% endif %}>Postpartum</option>
+                                <option value="all">All Trimesters</option>
+                                <option value="first">First Trimester</option>
+                                <option value="second">Second Trimester</option>
+                                <option value="third">Third Trimester</option>
+                                <option value="postpartum">Postpartum</option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="typeFilter" class="form-label">Filter by Content Type</label>
                             <select class="form-select" id="typeFilter" onchange="filterContent()">
-                                <option value="all" {% if selected_type == 'all' %}selected{% endif %}>All Types</option>
-                                <option value="article" {% if selected_type == 'article' %}selected{% endif %}>Articles</option>
-                                <option value="video" {% if selected_type == 'video' %}selected{% endif %}>Videos</option>
-                                <option value="infographic" {% if selected_type == 'infographic' %}selected{% endif %}>Infographics</option>
-                                <option value="tip" {% if selected_type == 'tip' %}selected{% endif %}>Daily Tips</option>
-                                <option value="guide" {% if selected_type == 'guide' %}selected{% endif %}>Guides</option>
+                                <option value="all">All Types</option>
+                                <option value="article">Articles</option>
+                                <option value="video">Videos</option>
+                                <option value="infographic">Infographics</option>
+                                <option value="tip">Daily Tips</option>
+                                <option value="guide">Guides</option>
                             </select>
                         </div>
                     </div>
@@ -50,8 +287,74 @@
         </div>
     </div>
 
+    <!-- Content Categories -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="section-header mb-4">
+                <h3 class="h4">Browse by Category</h3>
+                <p class="text-muted mb-0">Explore different types of educational content</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-2 col-6">
+                    <div class="card category-card" data-type="article" onclick="setTypeFilter('article')">
+                        <div class="category-icon bg-article">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <h6>Articles</h6>
+                        <small class="text-muted">In-depth reading</small>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="card category-card" data-type="video" onclick="setTypeFilter('video')">
+                        <div class="category-icon bg-video">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h6>Videos</h6>
+                        <small class="text-muted">Visual guides</small>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="card category-card" data-type="infographic" onclick="setTypeFilter('infographic')">
+                        <div class="category-icon bg-infographic">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h6>Infographics</h6>
+                        <small class="text-muted">Quick visuals</small>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="card category-card" data-type="tip" onclick="setTypeFilter('tip')">
+                        <div class="category-icon bg-tip">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h6>Daily Tips</h6>
+                        <small class="text-muted">Quick advice</small>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="card category-card" data-type="guide" onclick="setTypeFilter('guide')">
+                        <div class="category-icon bg-guide">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h6>Guides</h6>
+                        <small class="text-muted">Step-by-step</small>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="card category-card" data-type="all" onclick="setTypeFilter('all')">
+                        <div class="category-icon bg-secondary">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <h6>All</h6>
+                        <small class="text-muted">View all</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Featured Content -->
-    {% if featured_content %}
     <div class="row mb-5">
         <div class="col-12">
             <div class="section-header mb-4">
@@ -62,17 +365,13 @@
             </div>
             
             <div class="row g-4">
-                {% for content in featured_content %}
+                <!-- Featured Content 1 -->
                 <div class="col-lg-6">
                     <div class="featured-content-card">
                         <div class="row g-0">
                             <div class="col-md-4">
                                 <div class="featured-image">
-                                    {% if content.featured_image %}
-                                    <img src="{{ content.featured_image.url }}" class="img-fluid" alt="{{ content.title }}">
-                                    {% else %}
-                                    <img src="{% static 'images/default-article.jpg' %}" class="img-fluid" alt="Default image">
-                                    {% endif %}
+                                    <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Nutrition Guide">
                                     <div class="featured-badge">
                                         <i class="fas fa-star"></i> Featured
                                     </div>
@@ -81,23 +380,20 @@
                             <div class="col-md-8">
                                 <div class="featured-body">
                                     <div class="content-meta mb-2">
-                                        <span class="content-type-badge badge bg-{{ content.content_type }}">
-                                            {{ content.get_content_type_display }}
-                                        </span>
-                                        <span class="trimester-badge">{{ content.get_trimester_target_display }}</span>
+                                        <span class="content-type-badge badge bg-article">Article</span>
+                                        <span class="trimester-badge">Second Trimester</span>
                                     </div>
                                     <h5 class="content-title">
-                                        <a href="{% url 'content_detail' content.slug %}" class="text-decoration-none">
-                                            {{ content.title }}
+                                        <a href="#" class="text-decoration-none">
+                                            Complete Nutrition Guide for Second Trimester
                                         </a>
                                     </h5>
-                                    <p class="content-excerpt">{{ content.summary|truncatewords:25 }}</p>
+                                    <p class="content-excerpt">Essential nutrients, meal planning, and foods to support your baby's development during this crucial growth period.</p>
                                     <div class="content-footer">
                                         <div class="read-info">
-                                            <i class="far fa-clock me-1"></i>
-                                            {{ content.read_time_minutes }} min read
+                                            <i class="far fa-clock me-1"></i>8 min read
                                         </div>
-                                        <a href="{% url 'content_detail' content.slug %}" class="btn btn-sm btn-primary">
+                                        <a href="#" class="btn btn-sm btn-primary">
                                             Read More <i class="fas fa-arrow-right ms-1"></i>
                                         </a>
                                     </div>
@@ -106,36 +402,289 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+                
+                <!-- Featured Content 2 -->
+                <div class="col-lg-6">
+                    <div class="featured-content-card">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <div class="featured-image">
+                                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Exercise Guide">
+                                    <div class="featured-badge">
+                                        <i class="fas fa-star"></i> Featured
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="featured-body">
+                                    <div class="content-meta mb-2">
+                                        <span class="content-type-badge badge bg-guide">Guide</span>
+                                        <span class="trimester-badge">All Trimesters</span>
+                                    </div>
+                                    <h5 class="content-title">
+                                        <a href="#" class="text-decoration-none">
+                                            Safe Pregnancy Exercises for Every Trimester
+                                        </a>
+                                    </h5>
+                                    <p class="content-excerpt">Learn which exercises are safe, how to modify your routine, and stay active throughout your pregnancy journey.</p>
+                                    <div class="content-footer">
+                                        <div class="read-info">
+                                            <i class="far fa-clock me-1"></i>6 min read
+                                        </div>
+                                        <a href="#" class="btn btn-sm btn-primary">
+                                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    {% endif %}
 
-    <!-- All Content -->
+    <!-- All Resources -->
     <div class="row">
         <div class="col-12">
             <div class="section-header mb-4">
                 <h3 class="h4">All Resources</h3>
-                <p class="text-muted mb-0">{{ educational_content.count }} resources available</p>
+                <p class="text-muted mb-0"><span id="resourceCount">18</span> resources available</p>
             </div>
 
-            {% if educational_content %}
             <div class="row g-4" id="contentGrid">
-                {% for content in educational_content %}
-                <div class="col-xl-4 col-lg-6 content-item" 
-                     data-trimester="{{ content.trimester_target }}"
-                     data-type="{{ content.content_type }}">
+                <!-- Resource 1 -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="first" data-type="article">
                     <div class="content-card h-100">
                         <div class="content-image">
-                            {% if content.featured_image %}
-                            <img src="{{ content.featured_image.url }}" class="card-img-top" alt="{{ content.title }}">
-                            {% else %}
-                            <img src="{% static 'images/default-article.jpg' %}" class="card-img-top" alt="Default image">
-                            {% endif %}
-                            <span class="content-badge badge bg-{{ content.content_type }}">
-                                {{ content.get_content_type_display }}
-                            </span>
+                            <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="First Trimester">
+                            <span class="content-badge badge bg-article">Article</span>
                         </div>
                         <div class="content-body">
-                            <div class="content-meta
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">First Trimester</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Understanding Early Pregnancy Symptoms
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">Learn about common early pregnancy symptoms and when to contact your healthcare provider.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>5 min read
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource 2 -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="second" data-type="video">
+                    <div class="content-card h-100">
+                        <div class="content-image">
+                            <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Baby Development">
+                            <span class="content-badge badge bg-video">Video</span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">Second Trimester</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Baby's Development: Weeks 13-27
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">Watch how your baby grows and develops during the second trimester of pregnancy.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>12 min watch
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource 3 -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="third" data-type="infographic">
+                    <div class="content-card h-100">
+                        <div class="content-image">
+                            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Hospital Bag">
+                            <span class="content-badge badge bg-infographic">Infographic</span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">Third Trimester</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Hospital Bag Checklist
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">Everything you need to pack for your hospital stay - for you, your partner, and your baby.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>2 min read
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource 4 -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="all" data-type="tip">
+                    <div class="content-card h-100">
+                        <div class="content-image">
+                            <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Hydration">
+                            <span class="content-badge badge bg-tip">Daily Tip</span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">All Trimesters</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Staying Hydrated During Pregnancy
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">Why hydration is crucial and creative ways to ensure you're drinking enough water throughout the day.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>3 min read
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource 5 -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="postpartum" data-type="guide">
+                    <div class="content-card h-100">
+                        <div class="content-image">
+                            <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65db9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Postpartum Recovery">
+                            <span class="content-badge badge bg-guide">Guide</span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">Postpartum</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Postpartum Recovery Guide
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">What to expect in the first weeks after delivery and how to support your body's recovery.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>10 min read
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource 6 -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="first" data-type="article">
+                    <div class="content-card h-100">
+                        <div class="content-image">
+                            <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Prenatal Vitamins">
+                            <span class="content-badge badge bg-article">Article</span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">First Trimester</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Essential Prenatal Vitamins and Supplements
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">Understanding which vitamins are most important for your baby's development and your health.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>7 min read
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+  <div class="container text-center">
+    <p>&copy; 2023 LindaMama. All rights reserved.</p>
+    <p class="text-muted">Your trusted pregnancy companion</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initial filter application
+    filterContent();
+});
+
+function filterContent() {
+    const trimesterFilter = document.getElementById('trimesterFilter').value;
+    const typeFilter = document.getElementById('typeFilter').value;
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    
+    const contentItems = document.querySelectorAll('.content-item');
+    let visibleCount = 0;
+    
+    contentItems.forEach(item => {
+        const trimester = item.getAttribute('data-trimester');
+        const type = item.getAttribute('data-type');
+        const title = item.querySelector('.content-title a').textContent.toLowerCase();
+        const excerpt = item.querySelector('.content-excerpt').textContent.toLowerCase();
+        
+        const matchesTrimester = trimesterFilter === 'all' || trimester === trimesterFilter;
+        const matchesType = typeFilter === 'all' || type === typeFilter;
+        const matchesSearch = searchInput === '' || 
+                            title.includes(searchInput) || 
+                            excerpt.includes(searchInput);
+        
+        if (matchesTrimester && matchesType && matchesSearch) {
+            item.classList.remove('hidden');
+            visibleCount++;
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+    
+    // Update resource count
+    document.getElementById('resourceCount').textContent = visibleCount;
+    
+    // Show message if no results
+    const contentGrid = document.getElementById('contentGrid');
+    let noResultsMessage = contentGrid.querySelector('.no-results-message');
+    
+    if (visibleCount === 0) {
+        if (!noResultsMessage) {
+            noResultsMessage = document.createElement('div');
+            noResultsMessage.className = 'col-12 no-results-message text-center py-5';
+            noResultsMessage.innerHTML = `
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h4>No resources found</h4>
+                <p class="text-muted">Try adjusting your filters or search terms</p>
+            `;
+            contentGrid.appendChild(noResultsMessage);
+        }
+    } else if (noResultsMessage) {
+        noResultsMessage.remove();
+    }
+}
+
+function setTypeFilter(type) {
+    document.getElementById('typeFilter').value = type;
+    filterContent();
+}
+
+// Add event listeners for real-time search
+document.getElementById('searchInput').addEventListener('input', filterContent);
+</script>
+</body>
+</html>
