@@ -1,27 +1,271 @@
-{% extends 'base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LindaMama - Track Progress</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #e83e8c !important;
+    }
+    .btn-primary {
+      background-color: #e83e8c;
+      border-color: #e83e8c;
+    }
+    .btn-primary:hover {
+      background-color: #d81b7e;
+      border-color: #d81b7e;
+    }
+    .progress-header {
+      background: linear-gradient(135deg, #e83e8c 0%, #ff9ec0 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+    }
+    .week-navigation {
+      background: white;
+    }
+    .week-selector {
+      overflow-x: auto;
+      padding: 1rem 0;
+    }
+    .week-scroll {
+      display: flex;
+      gap: 0.5rem;
+      min-width: max-content;
+    }
+    .week-btn {
+      width: 50px;
+      height: 50px;
+      border: 2px solid #e9ecef;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: #212529;
+      cursor: pointer;
+    }
+    .week-btn:hover, .week-btn.active {
+      background: #e83e8c;
+      border-color: #e83e8c;
+      color: white;
+      transform: scale(1.1);
+    }
+    .week-badge {
+      background: #e83e8c;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .section-title {
+      color: #212529;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e9ecef;
+    }
+    .development-list, .mother-changes-list, .tips-list, .medical-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    .development-list li, .mother-changes-list li, .tips-list li, .medical-list li {
+      padding: 0.5rem 0;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    .development-list li:before {
+      content: "👶";
+      position: absolute;
+      left: 0;
+    }
+    .mother-changes-list li:before {
+      content: "💁";
+      position: absolute;
+      left: 0;
+    }
+    .tips-list li:before {
+      content: "💡";
+      position: absolute;
+      left: 0;
+    }
+    .medical-list li:before {
+      content: "🏥";
+      position: absolute;
+      left: 0;
+    }
+    .baby-stats-card {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 1.5rem;
+      border-left: 4px solid #e83e8c;
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .stat-item i {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      width: 40px;
+    }
+    .stat-item div {
+      flex: 1;
+    }
+    .stat-item strong {
+      display: block;
+      color: #212529;
+    }
+    .stat-item span {
+      color: #6c757d;
+    }
+    .milestone-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem 0;
+    }
+    .milestone-checkbox {
+      margin-right: 1rem;
+      font-size: 1.5rem;
+    }
+    .milestone-content {
+      flex: 1;
+    }
+    .milestone-status {
+      margin-left: 1rem;
+    }
+    .milestone-item.completed .milestone-content h6 {
+      color: #198754;
+      text-decoration: line-through;
+    }
+    .timeline-visual {
+      height: 200px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar-container {
+      width: 90%;
+      height: 20px;
+      background: #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #e83e8c, #ff9ec0);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    .trimester-markers {
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      margin-top: 10px;
+    }
+    .trimester-marker {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+    .current-week-marker {
+      position: absolute;
+      top: -25px;
+      transform: translateX(-50%);
+      background: #e83e8c;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    .timeline-stats .stat {
+      padding: 1rem;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    @media (max-width: 768px) {
+      .progress-header {
+        padding: 1.5rem;
+      }
+      .week-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.875rem;
+      }
+      .milestone-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+      .milestone-checkbox {
+        margin-bottom: 0.5rem;
+      }
+      .milestone-status {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">LindaMama</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">Progress</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-{% block title %}Track Progress - Linda Mama{% endblock %}
-
-{% block content %}
 <div class="container py-4">
     <!-- Header -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="progress-header">
                 <h1 class="h2 mb-2">Pregnancy Progress Tracker</h1>
-                <p class="text-muted mb-0">
-                    {% if pregnancy_profile %}
-                    You are <strong>{{ weeks_pregnant }} weeks pregnant</strong> - Track your baby's development week by week
-                    {% else %}
-                    Complete your pregnancy profile to start tracking
-                    {% endif %}
+                <p class="mb-0">
+                    You are <strong>18 weeks pregnant</strong> - Track your baby's development week by week
                 </p>
             </div>
         </div>
     </div>
 
-    {% if pregnancy_profile %}
     <!-- Week Navigation -->
     <div class="row mb-4">
         <div class="col-12">
@@ -29,7 +273,7 @@
                 <div class="card-body">
                     <div class="week-navigation">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="mb-0">Week {{ weeks_pregnant }}</h5>
+                            <h5 class="mb-0">Week 18</h5>
                             <div class="week-controls">
                                 <button class="btn btn-outline-primary btn-sm" id="prevWeek">
                                     <i class="fas fa-chevron-left"></i> Previous
@@ -42,12 +286,12 @@
                         
                         <div class="week-selector">
                             <div class="week-scroll">
-                                {% for week in "x"|rjust:"42" %}
-                                <button class="week-btn {% if forloop.counter == weeks_pregnant %}active{% endif %}" 
-                                        data-week="{{ forloop.counter }}">
-                                    {{ forloop.counter }}
-                                </button>
-                                {% endfor %}
+                                <!-- Generating 40 weeks of pregnancy -->
+                                <script>
+                                    for (let i = 1; i <= 40; i++) {
+                                        document.write(`<button class="week-btn ${i === 18 ? 'active' : ''}" data-week="${i}">${i}</button>`);
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -64,8 +308,8 @@
                     <div id="weekInfo">
                         <div class="week-content">
                             <div class="week-header text-center mb-4">
-                                <div class="week-badge">Week {{ week_info.week }}</div>
-                                <h3 class="mt-2">Your Baby is the Size of a {{ week_info.baby_size }}!</h3>
+                                <div class="week-badge">Week 18</div>
+                                <h3 class="mt-2">Your Baby is the Size of a Bell Pepper!</h3>
                             </div>
                             
                             <div class="row">
@@ -75,9 +319,11 @@
                                             <i class="fas fa-baby text-primary me-2"></i>Baby's Development
                                         </h4>
                                         <ul class="development-list">
-                                            {% for development in week_info.developments %}
-                                            <li>{{ development }}</li>
-                                            {% endfor %}
+                                            <li>Your baby's ears are now in their final position</li>
+                                            <li>Bones are hardening, especially the leg bones and inner ear</li>
+                                            <li>Your baby is practicing swallowing and sucking</li>
+                                            <li>The nervous system is rapidly maturing</li>
+                                            <li>Unique fingerprints are forming on fingertips</li>
                                         </ul>
                                     </div>
                                     
@@ -86,9 +332,11 @@
                                             <i class="fas fa-female text-success me-2"></i>Changes You Might Notice
                                         </h4>
                                         <ul class="mother-changes-list">
-                                            {% for change in week_info.mother_changes %}
-                                            <li>{{ change }}</li>
-                                            {% endfor %}
+                                            <li>You may start feeling your baby move (quickening)</li>
+                                            <li>Increased appetite as nausea typically subsides</li>
+                                            <li>Your uterus is now about the size of a cantaloupe</li>
+                                            <li>You might experience some lower back discomfort</li>
+                                            <li>Skin changes like the "pregnancy glow" may appear</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -103,14 +351,14 @@
                                                 <i class="fas fa-ruler-vertical text-primary"></i>
                                                 <div>
                                                     <strong>Length</strong>
-                                                    <span>{{ week_info.baby_length }}</span>
+                                                    <span>About 5.5 inches (14 cm)</span>
                                                 </div>
                                             </div>
                                             <div class="stat-item">
                                                 <i class="fas fa-weight text-success"></i>
                                                 <div>
                                                     <strong>Weight</strong>
-                                                    <span>{{ week_info.baby_weight }}</span>
+                                                    <span>About 7 ounces (200 grams)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,24 +369,24 @@
                                             <i class="fas fa-lightbulb text-warning me-2"></i>This Week's Tips
                                         </h4>
                                         <ul class="tips-list">
-                                            {% for tip in week_info.tips %}
-                                            <li>{{ tip }}</li>
-                                            {% endfor %}
+                                            <li>Start sleeping on your side to improve circulation</li>
+                                            <li>Consider prenatal yoga or gentle stretching exercises</li>
+                                            <li>Stay hydrated to help with swelling and digestion</li>
+                                            <li>Begin researching childbirth education classes</li>
+                                            <li>Track your baby's movements when you feel them</li>
                                         </ul>
                                     </div>
                                     
-                                    {% if week_info.medical_checkups %}
                                     <div class="medical-section mt-4">
                                         <h4 class="section-title">
                                             <i class="fas fa-stethoscope text-danger me-2"></i>Medical Checkups
                                         </h4>
                                         <ul class="medical-list">
-                                            {% for checkup in week_info.medical_checkups %}
-                                            <li>{{ checkup }}</li>
-                                            {% endfor %}
+                                            <li>Your mid-pregnancy ultrasound is typically between 18-22 weeks</li>
+                                            <li>Discuss any unusual symptoms with your healthcare provider</li>
+                                            <li>Monitor your blood pressure regularly</li>
                                         </ul>
                                     </div>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -157,26 +405,89 @@
                 </div>
                 <div class="card-body">
                     <div class="milestones-tracker">
-                        {% for milestone in milestones %}
-                        <div class="milestone-item {% if weeks_pregnant >= milestone.week %}completed{% endif %}">
+                        <div class="milestone-item completed">
                             <div class="milestone-checkbox">
-                                <i class="fas fa-{% if weeks_pregnant >= milestone.week %}check-circle text-success{% else %}circle text-muted{% endif %}"></i>
+                                <i class="fas fa-check-circle text-success"></i>
                             </div>
                             <div class="milestone-content">
-                                <h6 class="mb-1">{{ milestone.title }}</h6>
-                                <p class="text-muted mb-0">{{ milestone.description }}</p>
-                                <small class="text-muted">Week {{ milestone.week }}</small>
+                                <h6 class="mb-1">Positive Pregnancy Test</h6>
+                                <p class="text-muted mb-0">Confirmed your pregnancy</p>
+                                <small class="text-muted">Week 4</small>
                             </div>
                             <div class="milestone-status">
-                                {% if weeks_pregnant >= milestone.week %}
                                 <span class="badge bg-success">Completed</span>
-                                {% else %}
-                                <span class="badge bg-secondary">Upcoming</span>
-                                {% endif %}
                             </div>
                         </div>
-                        {% if not forloop.last %}<hr>{% endif %}
-                        {% endfor %}
+                        <hr>
+                        <div class="milestone-item completed">
+                            <div class="milestone-checkbox">
+                                <i class="fas fa-check-circle text-success"></i>
+                            </div>
+                            <div class="milestone-content">
+                                <h6 class="mb-1">First Ultrasound</h6>
+                                <p class="text-muted mb-0">Saw your baby for the first time</p>
+                                <small class="text-muted">Week 8</small>
+                            </div>
+                            <div class="milestone-status">
+                                <span class="badge bg-success">Completed</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="milestone-item completed">
+                            <div class="milestone-checkbox">
+                                <i class="fas fa-check-circle text-success"></i>
+                            </div>
+                            <div class="milestone-content">
+                                <h6 class="mb-1">End of First Trimester</h6>
+                                <p class="text-muted mb-0">Completed the first 12 weeks</p>
+                                <small class="text-muted">Week 12</small>
+                            </div>
+                            <div class="milestone-status">
+                                <span class="badge bg-success">Completed</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="milestone-item completed">
+                            <div class="milestone-checkbox">
+                                <i class="fas fa-check-circle text-success"></i>
+                            </div>
+                            <div class="milestone-content">
+                                <h6 class="mb-1">Feeling Baby Move</h6>
+                                <p class="text-muted mb-0">First sensations of baby movement</p>
+                                <small class="text-muted">Week 16-20</small>
+                            </div>
+                            <div class="milestone-status">
+                                <span class="badge bg-success">Completed</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="milestone-item">
+                            <div class="milestone-checkbox">
+                                <i class="fas fa-circle text-muted"></i>
+                            </div>
+                            <div class="milestone-content">
+                                <h6 class="mb-1">Anatomy Scan</h6>
+                                <p class="text-muted mb-0">Detailed ultrasound to check baby's development</p>
+                                <small class="text-muted">Week 20</small>
+                            </div>
+                            <div class="milestone-status">
+                                <span class="badge bg-secondary">Upcoming</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="milestone-item">
+                            <div class="milestone-checkbox">
+                                <i class="fas fa-circle text-muted"></i>
+                            </div>
+                            <div class="milestone-content">
+                                <h6 class="mb-1">Gestational Diabetes Test</h6>
+                                <p class="text-muted mb-0">Screening for gestational diabetes</p>
+                                <small class="text-muted">Week 24-28</small>
+                            </div>
+                            <div class="milestone-status">
+                                <span class="badge bg-secondary">Upcoming</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -193,32 +504,40 @@
                 <div class="card-body">
                     <div class="pregnancy-timeline">
                         <div class="timeline-visual" id="progressChart">
-                            <!-- SVG timeline will be inserted here by JavaScript -->
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 45%;"></div>
+                                <div class="current-week-marker" style="left: 45%;">Week 18</div>
+                            </div>
+                            <div class="trimester-markers">
+                                <div class="trimester-marker">1st Trimester<br>Weeks 1-12</div>
+                                <div class="trimester-marker">2nd Trimester<br>Weeks 13-27</div>
+                                <div class="trimester-marker">3rd Trimester<br>Weeks 28-40</div>
+                            </div>
                         </div>
                         
                         <div class="timeline-stats mt-4">
                             <div class="row text-center">
                                 <div class="col-md-3">
                                     <div class="stat">
-                                        <h4 class="text-primary">{{ weeks_pregnant }}</h4>
+                                        <h4 class="text-primary">18</h4>
                                         <p class="text-muted mb-0">Weeks Completed</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="stat">
-                                        <h4 class="text-success">{{ 40|add:-weeks_pregnant }}</h4>
+                                        <h4 class="text-success">22</h4>
                                         <p class="text-muted mb-0">Weeks Remaining</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="stat">
-                                        <h4 class="text-info">{{ pregnancy_profile.current_trimester|title }}</h4>
+                                        <h4 class="text-info">Second</h4>
                                         <p class="text-muted mb-0">Current Trimester</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="stat">
-                                        <h4 class="text-warning">{{ days_until_due }}</h4>
+                                        <h4 class="text-warning">154</h4>
                                         <p class="text-muted mb-0">Days Until Due</p>
                                     </div>
                                 </div>
@@ -229,223 +548,94 @@
             </div>
         </div>
     </div>
-    {% else %}
-    <!-- Empty State -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body text-center py-5">
-                    <i class="fas fa-baby fa-4x text-muted mb-3"></i>
-                    <h3>Complete Your Pregnancy Profile</h3>
-                    <p class="text-muted mb-4">
-                        To track your pregnancy progress, we need some basic information about your pregnancy.
-                    </p>
-                    <a href="{% url 'profile' %}" class="btn btn-primary btn-lg">
-                        <i class="fas fa-user-plus me-2"></i>Complete Profile
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 </div>
-{% endblock %}
 
-{% block extra_css %}
-<style>
-.progress-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 2rem;
-    border-radius: 15px;
-}
+<footer class="footer">
+  <div class="container text-center">
+    <p>&copy; 2023 LindaMama. All rights reserved.</p>
+    <p class="text-muted">Your trusted pregnancy companion</p>
+  </div>
+</footer>
 
-.week-navigation {
-    background: white;
-}
-
-.week-selector {
-    overflow-x: auto;
-    padding: 1rem 0;
-}
-
-.week-scroll {
-    display: flex;
-    gap: 0.5rem;
-    min-width: max-content;
-}
-
-.week-btn {
-    width: 50px;
-    height: 50px;
-    border: 2px solid #e9ecef;
-    border-radius: 50%;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: var(--dark-color);
-}
-
-.week-btn:hover, .week-btn.active {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
-    transform: scale(1.1);
-}
-
-.week-badge {
-    background: var(--primary-color);
-    color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 25px;
-    font-weight: 600;
-    display: inline-block;
-}
-
-.section-title {
-    color: var(--dark-color);
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #e9ecef;
-}
-
-.development-list, .mother-changes-list, .tips-list, .medical-list {
-    list-style: none;
-    padding-left: 0;
-}
-
-.development-list li, .mother-changes-list li, .tips-list li, .medical-list li {
-    padding: 0.5rem 0;
-    position: relative;
-    padding-left: 1.5rem;
-}
-
-.development-list li:before {
-    content: "👶";
-    position: absolute;
-    left: 0;
-}
-
-.mother-changes-list li:before {
-    content: "💁";
-    position: absolute;
-    left: 0;
-}
-
-.tips-list li:before {
-    content: "💡";
-    position: absolute;
-    left: 0;
-}
-
-.medical-list li:before {
-    content: "🏥";
-    position: absolute;
-    left: 0;
-}
-
-.baby-stats-card {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 1.5rem;
-    border-left: 4px solid var(--primary-color);
-}
-
-.stat-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.stat-item i {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    width: 40px;
-}
-
-.stat-item div {
-    flex: 1;
-}
-
-.stat-item strong {
-    display: block;
-    color: var(--dark-color);
-}
-
-.stat-item span {
-    color: #6c757d;
-}
-
-.milestone-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem 0;
-}
-
-.milestone-checkbox {
-    margin-right: 1rem;
-    font-size: 1.5rem;
-}
-
-.milestone-content {
-    flex: 1;
-}
-
-.milestone-status {
-    margin-left: 1rem;
-}
-
-.milestone-item.completed .milestone-content h6 {
-    color: var(--success-color);
-    text-decoration: line-through;
-}
-
-.timeline-visual {
-    height: 200px;
-    background: #f8f9fa;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.timeline-stats .stat {
-    padding: 1rem;
-}
-
-@media (max-width: 768px) {
-    .progress-header {
-        padding: 1.5rem;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Week navigation functionality
+    const weekButtons = document.querySelectorAll('.week-btn');
+    const prevWeekBtn = document.getElementById('prevWeek');
+    const nextWeekBtn = document.getElementById('nextWeek');
+    let currentWeek = 18;
+    
+    function updateWeekDisplay(week) {
+        // Update active week button
+        weekButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (parseInt(btn.dataset.week) === week) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Update week badge and title
+        document.querySelector('.week-badge').textContent = `Week ${week}`;
+        document.querySelector('.week-navigation h5').textContent = `Week ${week}`;
+        
+        // Update progress bar
+        const progressPercentage = (week / 40) * 100;
+        document.querySelector('.progress-bar').style.width = `${progressPercentage}%`;
+        document.querySelector('.current-week-marker').style.left = `${progressPercentage}%`;
+        document.querySelector('.current-week-marker').textContent = `Week ${week}`;
+        
+        // Update stats
+        document.querySelector('.timeline-stats .text-primary').textContent = week;
+        document.querySelector('.timeline-stats .text-success').textContent = 40 - week;
+        
+        // Update baby size based on week (simplified)
+        const babySizes = {
+            1: "Poppy Seed", 2: "Sesame Seed", 3: "Apple Seed", 4: "Blueberry",
+            5: "Sesame Seed", 6: "Lentil", 7: "Blueberry", 8: "Kidney Bean",
+            9: "Grape", 10: "Kumquat", 11: "Fig", 12: "Lime",
+            13: "Pea Pod", 14: "Lemon", 15: "Apple", 16: "Avocado",
+            17: "Pear", 18: "Bell Pepper", 19: "Mango", 20: "Banana",
+            21: "Carrot", 22: "Spaghetti Squash", 23: "Grapefruit", 24: "Corn",
+            25: "Rutabaga", 26: "Scallion", 27: "Cauliflower", 28: "Eggplant",
+            29: "Butternut Squash", 30: "Cabbage", 31: "Coconut", 32: "Jicama",
+            33: "Pineapple", 34: "Cantaloupe", 35: "Honeydew", 36: "Romaine Lettuce",
+            37: "Swiss Chard", 38: "Leek", 39: "Mini-Watermelon", 40: "Pumpkin"
+        };
+        
+        document.querySelector('.week-header h3').textContent = 
+            `Your Baby is the Size of a ${babySizes[week]}!`;
+        
+        // Update week info content would go here in a real application
+        console.log(`Updated to week ${week}`);
     }
     
-    .week-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 0.875rem;
-    }
+    // Week button click events
+    weekButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentWeek = parseInt(this.dataset.week);
+            updateWeekDisplay(currentWeek);
+        });
+    });
     
-    .milestone-item {
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-    }
+    // Previous/Next week buttons
+    prevWeekBtn.addEventListener('click', function() {
+        if (currentWeek > 1) {
+            currentWeek--;
+            updateWeekDisplay(currentWeek);
+        }
+    });
     
-    .milestone-checkbox {
-        margin-bottom: 0.5rem;
-    }
+    nextWeekBtn.addEventListener('click', function() {
+        if (currentWeek < 40) {
+            currentWeek++;
+            updateWeekDisplay(currentWeek);
+        }
+    });
     
-    .milestone-status {
-        margin-left: 0;
-        margin-top: 0.5rem;
-    }
-}
-</style>
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/progress-tracker.js' %}"></script>
-{% endblock %}
+    // Initialize the display
+    updateWeekDisplay(currentWeek);
+});
+</script>
+</body>
+</html>
