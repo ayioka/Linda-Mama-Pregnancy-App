@@ -1,10 +1,192 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LindaMama - My Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #e83e8c !important;
+    }
+    .btn-primary {
+      background-color: #e83e8c;
+      border-color: #e83e8c;
+    }
+    .btn-primary:hover {
+      background-color: #d81b7e;
+      border-color: #d81b7e;
+    }
+    .profile-header {
+      position: relative;
+    }
+    .profile-avatar {
+      position: relative;
+      display: inline-block;
+    }
+    .avatar-img, .avatar-placeholder {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .avatar-placeholder {
+      background: linear-gradient(135deg, #e83e8c, #ff9ec0);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+    .avatar-overlay {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      width: 35px;
+      height: 35px;
+      background: #e83e8c;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .profile-avatar:hover .avatar-overlay {
+      opacity: 1;
+    }
+    .profile-name {
+      color: #212529;
+      margin-bottom: 0.5rem;
+    }
+    .info-item, .contact-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .info-item:last-child, .contact-item:last-child {
+      border-bottom: none;
+    }
+    .info-item i, .contact-item i {
+      font-size: 1.2rem;
+      margin-top: 0.25rem;
+      width: 24px;
+    }
+    .settings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .settings-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #212529;
+      transition: background-color 0.3s ease;
+      border: 1px solid transparent;
+    }
+    .settings-item:hover {
+      background-color: #f8f9fa;
+      border-color: #e9ecef;
+      color: #212529;
+    }
+    .settings-item i:first-child {
+      font-size: 1.2rem;
+      width: 24px;
+      margin-right: 1rem;
+    }
+    .settings-item div {
+      flex: 1;
+    }
+    .settings-item i:last-child {
+      margin-left: auto;
+    }
+    .stat {
+      padding: 1rem;
+    }
+    .stat h3 {
+      font-weight: 700;
+    }
+    .emergency-contact {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .card-header {
+      background-color: white;
+      border-bottom: 1px solid #e9ecef;
+      padding: 1rem 1.5rem;
+    }
+    .card-title {
+      margin-bottom: 0;
+      color: #212529;
+    }
+    .form-control:focus {
+      border-color: #e83e8c;
+      box-shadow: 0 0 0 0.2rem rgba(232, 62, 140, 0.25);
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    @media (max-width: 768px) {
+      .avatar-img, .avatar-placeholder {
+        width: 100px;
+        height: 100px;
+        font-size: 2rem;
+      }
+      .profile-name {
+        font-size: 1.5rem;
+      }
+      .info-item, .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+      .info-item i, .contact-item i {
+        margin-bottom: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">LindaMama</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-{% block title %}My Profile - Linda Mama{% endblock %}
-
-{% block content %}
 <div class="container py-4">
     <div class="row">
         <div class="col-lg-8 mx-auto">
@@ -13,25 +195,22 @@
                 <div class="card-body text-center">
                     <div class="profile-header">
                         <div class="profile-avatar mb-3">
-                            {% if user.profile_picture %}
-                                <img src="{{ user.profile_picture.url }}" alt="{{ user.get_full_name }}" class="avatar-img">
-                            {% else %}
-                                <div class="avatar-placeholder">
-                                    {{ user.first_name|first }}{{ user.last_name|first }}
-                                </div>
-                            {% endif %}
+                            <!-- Placeholder for profile picture -->
+                            <div class="avatar-placeholder">
+                                SJ
+                            </div>
                             <div class="avatar-overlay">
                                 <i class="fas fa-camera"></i>
                             </div>
                         </div>
-                        <h2 class="profile-name">{{ user.get_full_name }}</h2>
+                        <h2 class="profile-name">Sarah Johnson</h2>
                         <p class="text-muted mb-2">
                             <i class="fas fa-user-tag me-2"></i>
-                            {{ user.get_role_display }}
+                            Expecting Mother
                         </p>
                         <p class="text-muted">
                             <i class="fas fa-calendar-alt me-2"></i>
-                            Member since {{ user.date_joined|date:"F Y" }}
+                            Member since March 2023
                         </p>
                     </div>
                 </div>
@@ -48,28 +227,31 @@
                         </div>
                         <div class="card-body">
                             <form method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        {{ form.first_name|as_crispy_field }}
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" value="Sarah">
                                     </div>
-                                    <div class="col-md-6">
-                                        {{ form.last_name|as_crispy_field }}
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" value="Johnson">
                                     </div>
                                 </div>
                                 
-                                {{ form.email|as_crispy_field }}
-                                {{ form.phone_number|as_crispy_field }}
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" value="sarah.johnson@example.com">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" value="(555) 123-4567">
+                                </div>
                                 
                                 <div class="mb-3">
                                     <label class="form-label">Profile Picture</label>
-                                    {{ form.profile_picture }}
-                                    {% if form.profile_picture.errors %}
-                                        <div class="invalid-feedback d-block">
-                                            {{ form.profile_picture.errors }}
-                                        </div>
-                                    {% endif %}
+                                    <input type="file" class="form-control" id="profilePicture">
+                                    <div class="form-text">Upload a profile picture (JPG, PNG, max 5MB)</div>
                                 </div>
 
                                 <div class="d-grid">
@@ -89,33 +271,24 @@
                             </h5>
                         </div>
                         <div class="card-body">
-                            {% if user.emergency_contact_name %}
-                                <div class="emergency-contact">
-                                    <div class="contact-item">
-                                        <i class="fas fa-user text-primary me-3"></i>
-                                        <div>
-                                            <strong>{{ user.emergency_contact_name }}</strong>
-                                            <p class="text-muted mb-0">{{ user.emergency_contact_phone }}</p>
-                                        </div>
+                            <div class="emergency-contact">
+                                <div class="contact-item">
+                                    <i class="fas fa-user text-primary me-3"></i>
+                                    <div>
+                                        <strong>Michael Johnson</strong>
+                                        <p class="text-muted mb-0">(555) 987-6543</p>
                                     </div>
                                 </div>
-                            {% else %}
-                                <div class="text-center py-3">
-                                    <i class="fas fa-phone-slash fa-2x text-muted mb-3"></i>
-                                    <p class="text-muted mb-0">No emergency contact set</p>
-                                    <small class="text-muted">Add an emergency contact for safety</small>
-                                </div>
-                            {% endif %}
+                            </div>
                             <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#emergencyContactModal">
-                                <i class="fas fa-plus me-2"></i>Add Emergency Contact
+                                <i class="fas fa-edit me-2"></i>Edit Emergency Contact
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pregnancy Information (for mothers) -->
+                <!-- Pregnancy Information -->
                 <div class="col-lg-6">
-                    {% if user.role == 'mother' %}
                     <div class="card mb-4">
                         <div class="card-header">
                             <h5 class="card-title mb-0">
@@ -123,76 +296,58 @@
                             </h5>
                         </div>
                         <div class="card-body">
-                            {% if pregnancy_profile %}
-                                <div class="pregnancy-info">
-                                    <div class="info-item">
-                                        <i class="fas fa-calendar text-primary me-3"></i>
-                                        <div>
-                                            <strong>Last Menstrual Period</strong>
-                                            <p class="mb-0">{{ pregnancy_profile.last_menstrual_period|date:"F j, Y" }}</p>
-                                        </div>
+                            <div class="pregnancy-info">
+                                <div class="info-item">
+                                    <i class="fas fa-calendar text-primary me-3"></i>
+                                    <div>
+                                        <strong>Last Menstrual Period</strong>
+                                        <p class="mb-0">March 15, 2023</p>
                                     </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-birthday-cake text-success me-3"></i>
-                                        <div>
-                                            <strong>Estimated Due Date</strong>
-                                            <p class="mb-0">{{ pregnancy_profile.estimated_due_date|date:"F j, Y" }}</p>
-                                        </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-birthday-cake text-success me-3"></i>
+                                    <div>
+                                        <strong>Estimated Due Date</strong>
+                                        <p class="mb-0">December 20, 2023</p>
                                     </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-heartbeat text-danger me-3"></i>
-                                        <div>
-                                            <strong>Blood Type</strong>
-                                            <p class="mb-0">{{ pregnancy_profile.blood_type|default:"Not specified" }}</p>
-                                        </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-heartbeat text-danger me-3"></i>
+                                    <div>
+                                        <strong>Blood Type</strong>
+                                        <p class="mb-0">A+</p>
                                     </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-chart-line text-info me-3"></i>
-                                        <div>
-                                            <strong>Current Trimester</strong>
-                                            <p class="mb-0">{{ pregnancy_profile.get_current_trimester_display }}</p>
-                                        </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-chart-line text-info me-3"></i>
+                                    <div>
+                                        <strong>Current Trimester</strong>
+                                        <p class="mb-0">Second Trimester</p>
                                     </div>
-                                    
-                                    {% if pregnancy_profile.known_allergies %}
-                                    <div class="info-item">
-                                        <i class="fas fa-allergies text-warning me-3"></i>
-                                        <div>
-                                            <strong>Known Allergies</strong>
-                                            <p class="mb-0">{{ pregnancy_profile.known_allergies }}</p>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if pregnancy_profile.pre_existing_conditions %}
-                                    <div class="info-item">
-                                        <i class="fas fa-file-medical text-secondary me-3"></i>
-                                        <div>
-                                            <strong>Pre-existing Conditions</strong>
-                                            <p class="mb-0">{{ pregnancy_profile.pre_existing_conditions }}</p>
-                                        </div>
-                                    </div>
-                                    {% endif %}
                                 </div>
                                 
-                                <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#pregnancyProfileModal">
-                                    <i class="fas fa-edit me-2"></i>Edit Pregnancy Information
-                                </button>
-                            {% else %}
-                                <div class="text-center py-4">
-                                    <i class="fas fa-baby fa-3x text-muted mb-3"></i>
-                                    <h5>Complete Your Pregnancy Profile</h5>
-                                    <p class="text-muted mb-3">
-                                        Add your pregnancy details to unlock all features and get personalized tracking.
-                                    </p>
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pregnancyProfileModal">
-                                        <i class="fas fa-plus me-2"></i>Add Pregnancy Information
-                                    </button>
+                                <div class="info-item">
+                                    <i class="fas fa-allergies text-warning me-3"></i>
+                                    <div>
+                                        <strong>Known Allergies</strong>
+                                        <p class="mb-0">Penicillin, Pollen</p>
+                                    </div>
                                 </div>
-                            {% endif %}
+                                
+                                <div class="info-item">
+                                    <i class="fas fa-file-medical text-secondary me-3"></i>
+                                    <div>
+                                        <strong>Pre-existing Conditions</strong>
+                                        <p class="mb-0">Mild asthma</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#pregnancyProfileModal">
+                                <i class="fas fa-edit me-2"></i>Edit Pregnancy Information
+                            </button>
                         </div>
                     </div>
-                    {% endif %}
 
                     <!-- Account Settings -->
                     <div class="card">
@@ -203,7 +358,7 @@
                         </div>
                         <div class="card-body">
                             <div class="settings-list">
-                                <a href="{% url 'password_reset' %}" class="settings-item">
+                                <a href="#" class="settings-item">
                                     <i class="fas fa-key text-warning"></i>
                                     <div>
                                         <strong>Change Password</strong>
@@ -258,45 +413,25 @@
                     <div class="row text-center">
                         <div class="col-md-3 mb-3">
                             <div class="stat">
-                                <h3 class="text-primary mb-1">
-                                    {% if user.role == 'mother' %}
-                                        {{ pregnancy_profile.get_weeks_pregnant|default:0 }}
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                </h3>
+                                <h3 class="text-primary mb-1">18</h3>
                                 <p class="text-muted mb-0">Weeks Pregnant</p>
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <div class="stat">
-                                <h3 class="text-success mb-1">
-                                    {% if user.role == 'mother' %}
-                                        {{ user.mother_appointments.count }}
-                                    {% else %}
-                                        {{ user.clinician_appointments.count }}
-                                    {% endif %}
-                                </h3>
+                                <h3 class="text-success mb-1">5</h3>
                                 <p class="text-muted mb-0">Total Appointments</p>
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <div class="stat">
-                                <h3 class="text-info mb-1">
-                                    {{ user.sent_messages.count }}
-                                </h3>
+                                <h3 class="text-info mb-1">12</h3>
                                 <p class="text-muted mb-0">Messages Sent</p>
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <div class="stat">
-                                <h3 class="text-warning mb-1">
-                                    {% if user.role == 'mother' %}
-                                        {{ user.vitalsrecord_set.count }}
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                </h3>
+                                <h3 class="text-warning mb-1">8</h3>
                                 <p class="text-muted mb-0">Vitals Records</p>
                             </div>
                         </div>
@@ -312,7 +447,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Emergency Contact</h5>
+                <h5 class="modal-title">Edit Emergency Contact</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -320,17 +455,23 @@
                     <div class="mb-3">
                         <label for="contactName" class="form-label">Contact Name</label>
                         <input type="text" class="form-control" id="contactName" 
-                               value="{{ user.emergency_contact_name|default:'' }}"
+                               value="Michael Johnson"
                                placeholder="Enter full name">
                     </div>
                     <div class="mb-3">
                         <label for="contactPhone" class="form-label">Phone Number</label>
                         <input type="tel" class="form-control" id="contactPhone"
-                               value="{{ user.emergency_contact_phone|default:'' }}"
+                               value="(555) 987-6543"
                                placeholder="Enter phone number">
                     </div>
+                    <div class="mb-3">
+                        <label for="contactRelationship" class="form-label">Relationship</label>
+                        <input type="text" class="form-control" id="contactRelationship"
+                               value="Partner"
+                               placeholder="Enter relationship">
+                    </div>
                     <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="primaryContact">
+                        <input class="form-check-input" type="checkbox" id="primaryContact" checked>
                         <label class="form-check-label" for="primaryContact">
                             Set as primary emergency contact
                         </label>
@@ -346,26 +487,22 @@
 </div>
 
 <!-- Pregnancy Profile Modal -->
-{% if user.role == 'mother' %}
 <div class="modal fade" id="pregnancyProfileModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">
-                    {% if pregnancy_profile %}Edit{% else %}Add{% endif %} Pregnancy Information
-                </h5>
+                <h5 class="modal-title">Edit Pregnancy Information</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="pregnancyProfileForm" method="post" action="{% url 'profile' %}">
-                    {% csrf_token %}
+                <form id="pregnancyProfileForm">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="lastMenstrualPeriod" class="form-label">Last Menstrual Period</label>
                                 <input type="date" class="form-control" id="lastMenstrualPeriod" 
                                        name="last_menstrual_period"
-                                       value="{{ pregnancy_profile.last_menstrual_period|date:'Y-m-d'|default:'' }}">
+                                       value="2023-03-15">
                                 <div class="form-text">
                                     First day of your last menstrual period
                                 </div>
@@ -376,14 +513,14 @@
                                 <label for="bloodType" class="form-label">Blood Type</label>
                                 <select class="form-select" id="bloodType" name="blood_type">
                                     <option value="">Select blood type</option>
-                                    <option value="A+" {% if pregnancy_profile.blood_type == "A+" %}selected{% endif %}>A+</option>
-                                    <option value="A-" {% if pregnancy_profile.blood_type == "A-" %}selected{% endif %}>A-</option>
-                                    <option value="B+" {% if pregnancy_profile.blood_type == "B+" %}selected{% endif %}>B+</option>
-                                    <option value="B-" {% if pregnancy_profile.blood_type == "B-" %}selected{% endif %}>B-</option>
-                                    <option value="AB+" {% if pregnancy_profile.blood_type == "AB+" %}selected{% endif %}>AB+</option>
-                                    <option value="AB-" {% if pregnancy_profile.blood_type == "AB-" %}selected{% endif %}>AB-</option>
-                                    <option value="O+" {% if pregnancy_profile.blood_type == "O+" %}selected{% endif %}>O+</option>
-                                    <option value="O-" {% if pregnancy_profile.blood_type == "O-" %}selected{% endif %}>O-</option>
+                                    <option value="A+" selected>A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
                                 </select>
                             </div>
                         </div>
@@ -392,182 +529,38 @@
                     <div class="mb-3">
                         <label for="knownAllergies" class="form-label">Known Allergies</label>
                         <textarea class="form-control" id="knownAllergies" name="known_allergies" 
-                                  rows="3" placeholder="List any known allergies...">{{ pregnancy_profile.known_allergies|default:'' }}</textarea>
+                                  rows="3" placeholder="List any known allergies...">Penicillin, Pollen</textarea>
                     </div>
                     
                     <div class="mb-3">
                         <label for="preExistingConditions" class="form-label">Pre-existing Medical Conditions</label>
                         <textarea class="form-control" id="preExistingConditions" name="pre_existing_conditions" 
-                                  rows="3" placeholder="List any pre-existing medical conditions...">{{ pregnancy_profile.pre_existing_conditions|default:'' }}</textarea>
+                                  rows="3" placeholder="List any pre-existing medical conditions...">Mild asthma</textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button type="submit" form="pregnancyProfileForm" class="btn btn-primary">
-                    {% if pregnancy_profile %}Update{% else %}Save{% endif %} Information
+                    Update Information
                 </button>
             </div>
         </div>
     </div>
 </div>
-{% endif %}
-{% endblock %}
 
-{% block extra_css %}
-<style>
-.profile-header {
-    position: relative;
-}
+<footer class="footer">
+  <div class="container text-center">
+    <p>&copy; 2023 LindaMama. All rights reserved.</p>
+    <p class="text-muted">Your trusted pregnancy companion</p>
+  </div>
+</footer>
 
-.profile-avatar {
-    position: relative;
-    display: inline-block;
-}
-
-.avatar-img, .avatar-placeholder {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.avatar-placeholder {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    font-weight: 600;
-}
-
-.avatar-overlay {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    width: 35px;
-    height: 35px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.profile-avatar:hover .avatar-overlay {
-    opacity: 1;
-}
-
-.profile-name {
-    color: var(--dark-color);
-    margin-bottom: 0.5rem;
-}
-
-.info-item, .contact-item {
-    display: flex;
-    align-items: flex-start;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.info-item:last-child, .contact-item:last-child {
-    border-bottom: none;
-}
-
-.info-item i, .contact-item i {
-    font-size: 1.2rem;
-    margin-top: 0.25rem;
-    width: 24px;
-}
-
-.settings-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.settings-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    color: var(--dark-color);
-    transition: background-color 0.3s ease;
-    border: 1px solid transparent;
-}
-
-.settings-item:hover {
-    background-color: #f8f9fa;
-    border-color: #e9ecef;
-    color: var(--dark-color);
-}
-
-.settings-item i:first-child {
-    font-size: 1.2rem;
-    width: 24px;
-    margin-right: 1rem;
-}
-
-.settings-item div {
-    flex: 1;
-}
-
-.settings-item i:last-child {
-    margin-left: auto;
-}
-
-.stat {
-    padding: 1rem;
-}
-
-.stat h3 {
-    font-weight: 700;
-}
-
-.emergency-contact {
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    border-radius: 10px;
-    padding: 1rem;
-}
-
-@media (max-width: 768px) {
-    .avatar-img, .avatar-placeholder {
-        width: 100px;
-        height: 100px;
-        font-size: 2rem;
-    }
-    
-    .profile-name {
-        font-size: 1.5rem;
-    }
-    
-    .info-item, .contact-item {
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-    }
-    
-    .info-item i, .contact-item i {
-        margin-bottom: 0.5rem;
-    }
-}
-</style>
-{% endblock %}
-
-{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Profile picture upload
-    const profilePictureInput = document.getElementById('id_profile_picture');
+    const profilePictureInput = document.getElementById('profilePicture');
     const avatarOverlay = document.querySelector('.avatar-overlay');
     
     if (avatarOverlay && profilePictureInput) {
@@ -577,10 +570,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         profilePictureInput.addEventListener('change', function() {
             if (this.files && this.files[0]) {
-                const form = this.closest('form');
-                if (form) {
-                    form.submit();
-                }
+                alert('Profile picture updated successfully!');
+                // In a real application, you would submit the form here
             }
         });
     }
@@ -597,8 +588,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Here you would typically make an AJAX call to save the emergency contact
-            // For now, we'll just close the modal and show a success message
+            // Close the modal and show success message
             const modal = bootstrap.Modal.getInstance(document.getElementById('emergencyContactModal'));
             modal.hide();
             
@@ -610,20 +600,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Dark mode toggle
     const darkModeSwitch = document.getElementById('darkModeSwitch');
     if (darkModeSwitch) {
-        // Check for saved theme preference
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            darkModeSwitch.checked = true;
-        }
-        
         darkModeSwitch.addEventListener('change', function() {
             if (this.checked) {
                 document.body.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark');
+                alert('Dark mode enabled!');
             } else {
                 document.body.classList.remove('dark-mode');
-                localStorage.setItem('theme', 'light');
+                alert('Dark mode disabled!');
             }
         });
     }
@@ -632,14 +615,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const pregnancyForm = document.getElementById('pregnancyProfileForm');
     if (pregnancyForm) {
         pregnancyForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             const lmp = document.getElementById('lastMenstrualPeriod').value;
             if (!lmp) {
-                e.preventDefault();
                 alert('Please enter your last menstrual period.');
                 return false;
             }
+            
+            // Close modal and show success message
+            const modal = bootstrap.Modal.getInstance(document.getElementById('pregnancyProfileModal'));
+            modal.hide();
+            
+            alert('Pregnancy information updated successfully!');
         });
     }
 });
 </script>
-{% endblock %}
+</body>
+</html>
