@@ -59,8 +59,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <!-- Simulating logged out state -->
-        <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="/login/">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="/signup/">Register</a></li>
         <!-- Uncomment below to simulate logged in state -->
         <!--
         <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
@@ -79,7 +79,7 @@
   <div class="hero-section text-center">
     <h1 class="display-4 fw-bold mb-4">Welcome to LindaMama</h1>
     <p class="lead mb-4">Your trusted companion throughout your pregnancy journey</p>
-    <a href="#" class="btn btn-primary btn-lg">Get Started</a>
+    <a href="/signup/" class="btn btn-primary btn-lg">Get Started</a>
   </div>
   
   <div class="row g-4 mb-5">
@@ -89,6 +89,7 @@
           <div class="feature-icon">📅</div>
           <h5 class="card-title">Pregnancy Tracker</h5>
           <p class="card-text">Track your pregnancy week by week with personalized insights and milestones.</p>
+          <button class="btn btn-outline-primary btn-action" data-action="track progress">Track Progress</button>
         </div>
       </div>
     </div>
@@ -98,6 +99,7 @@
           <div class="feature-icon">🍎</div>
           <h5 class="card-title">Nutrition Guide</h5>
           <p class="card-text">Get personalized nutrition advice and meal plans for each trimester.</p>
+          <button class="btn btn-outline-primary btn-action" data-action="nutrition guide">View Guide</button>
         </div>
       </div>
     </div>
@@ -107,6 +109,7 @@
           <div class="feature-icon">💬</div>
           <h5 class="card-title">Community Support</h5>
           <p class="card-text">Connect with other expecting mothers and share experiences.</p>
+          <button class="btn btn-outline-primary btn-action" data-action="community">Join Community</button>
         </div>
       </div>
     </div>
@@ -122,9 +125,26 @@
         <li>Symptom tracker and when to consult your doctor</li>
         <li>Preparation checklist for each trimester</li>
       </ul>
+      <div class="mt-4">
+        <button class="btn btn-primary btn-action me-2" data-action="book appointment">Book Appointment</button>
+        <button class="btn btn-outline-primary btn-action" data-action="get advice">Get Advice</button>
+      </div>
     </div>
     <div class="col-md-6">
       <img src="https://via.placeholder.com/500x300/f8f9fa/6c757d?text=Pregnancy+Journey" alt="Pregnancy journey" class="img-fluid rounded">
+    </div>
+  </div>
+
+  <!-- Emergency Section -->
+  <div class="row mb-5">
+    <div class="col-12 text-center">
+      <div class="card border-warning">
+        <div class="card-body">
+          <h5 class="card-title text-warning">🚨 Emergency Assistance</h5>
+          <p class="card-text">If you're experiencing any emergency symptoms, get help immediately.</p>
+          <button class="btn btn-warning emergency-btn">Emergency Help</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -137,5 +157,20 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Load LindaMama JavaScript Files -->
+<script>
+  // Simple CSRF token function for demo (replace with Django's actual CSRF token)
+  function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+  }
+</script>
+<script src="/static/js/utils.js"></script>
+<script src="/static/js/auth.js"></script>
+<script src="/static/js/navigation.js"></script>
+<script src="/static/js/actions.js"></script>
+<script src="/static/js/dashboard.js"></script>
+<script src="/static/js/main.js"></script>
+
 </body>
 </html>
