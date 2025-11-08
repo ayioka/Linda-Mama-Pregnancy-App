@@ -77,6 +77,21 @@
       color: #e83e8c;
       font-weight: 600;
     }
+    .message-item {
+      border-bottom: 1px solid #e9ecef;
+      padding: 1rem 0;
+    }
+    .message-item:last-child {
+      border-bottom: none;
+    }
+    .message-sender {
+      font-weight: 600;
+      color: #e83e8c;
+    }
+    .message-time {
+      font-size: 0.875rem;
+      color: #6c757d;
+    }
   </style>
 </head>
 <body class="bg-light">
@@ -132,16 +147,30 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="card-title mb-0">Your Pregnancy Progress</h5>
-            <span id="current-week" class="week-indicator">Week 18</span>
+            {% if profile.due_date %}
+              <span id="current-week" class="week-indicator">Week {{ current_week }}</span>
+            {% else %}
+              <span class="week-indicator">Set due date in profile</span>
+            {% endif %}
           </div>
+          {% if profile.due_date %}
           <div class="progress mb-2">
-            <div id="pregnancy-progress" class="progress-bar" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+            <div id="pregnancy-progress" class="progress-bar" role="progressbar" style="width: {{ progress_percentage }}%;" aria-valuenow="{{ progress_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="d-flex justify-content-between text-muted small">
             <span>Week 1</span>
-            <span>2nd Trimester</span>
+            <span>{{ current_trimester }}</span>
             <span>Week 40</span>
           </div>
+          <div class="mt-2 text-center">
+            <small class="text-muted">Due Date: {{ profile.due_date|date:"F d, Y" }}</small>
+          </div>
+          {% else %}
+          <div class="text-center py-3">
+            <p class="text-muted mb-3">Set your due date to track your pregnancy progress</p>
+            <a href="{% url 'profile' %}" class="btn btn-primary">Update Profile</a>
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -150,8 +179,13 @@
         <div class="card-body text-center">
           <div style="font-size: 4rem; color: #e83e8c;">👶</div>
           <h5>Baby Development</h5>
-          <p class="small">Your baby is about the size of a bell pepper this week!</p>
-          <a href="{% url 'baby_development' %}" class="btn btn-outline-primary btn-sm">Learn More</a>
+          {% if profile.due_date %}
+            <p class="small">Your baby is growing rapidly this week!</p>
+            <a href="{% url 'baby_development' %}" class="btn btn-outline-primary btn-sm">Learn More</a>
+          {% else %}
+            <p class="small">Set your due date to see baby development info</p>
+            <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">Set Due Date</a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -164,8 +198,13 @@
         <div class="card-body">
           <div class="feature-icon">📅</div>
           <h5>Trimester</h5>
-          <p class="card-text">2nd Trimester</p>
-          <small class="text-muted">You're in the golden trimester!</small>
+          {% if profile.due_date %}
+            <p class="card-text">{{ current_trimester }}</p>
+            <small class="text-muted">{{ trimester_message }}</small>
+          {% else %}
+            <p class="card-text">Not set</p>
+            <small class="text-muted">Update your profile</small>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -224,6 +263,52 @@
             <div style="font-size: 2rem; color: #e83e8c;">📚</div>
             <span class="d-block mt-2">Resources</span>
           </a>
+        </div>
+      </div>
+
+      <!-- Messages Section -->
+      <div class="card dashboard-card shadow-sm mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">Messages</h5>
+            <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+          </div>
+          
+          <div class="message-item">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <span class="message-sender">Dr. Johnson</span>
+                <p class="mb-1 small">Your recent test results look great! Let's discuss them at your next appointment.</p>
+              </div>
+              <span class="message-time">2 hours ago</span>
+            </div>
+          </div>
+          
+          <div class="message-item">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <span class="message-sender">Nurse Sarah</span>
+                <p class="mb-1 small">Reminder: Don't forget to take your prenatal vitamin today.</p>
+              </div>
+              <span class="message-time">1 day ago</span>
+            </div>
+          </div>
+          
+          <div class="message-item">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <span class="message-sender">LindaMama Support</span>
+                <p class="mb-1 small">New educational resources available about second trimester nutrition.</p>
+              </div>
+              <span class="message-time">3 days ago</span>
+            </div>
+          </div>
+          
+          <div class="mt-3">
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#newMessageModal">
+              <i class="fas fa-plus me-2"></i>New Message
+            </button>
+          </div>
         </div>
       </div>
 
@@ -301,6 +386,43 @@
           <p class="card-text">Immediate medical help when you need it most.</p>
           <a href="{% url 'emergency' %}" class="btn btn-warning">Emergency Help</a>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Message Modal -->
+<div class="modal fade" id="newMessageModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Message</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient" class="form-label">To</label>
+            <select class="form-select" id="recipient">
+              <option value="">Select recipient</option>
+              <option value="dr_johnson">Dr. Johnson</option>
+              <option value="nurse_sarah">Nurse Sarah</option>
+              <option value="support">LindaMama Support</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="messageSubject" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="messageSubject">
+          </div>
+          <div class="mb-3">
+            <label for="messageContent" class="form-label">Message</label>
+            <textarea class="form-control" id="messageContent" rows="4"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Send Message</button>
       </div>
     </div>
   </div>
