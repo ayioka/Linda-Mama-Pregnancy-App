@@ -16,7 +16,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('dashboard/', views.dashboard, name='dashboard'),
     
-    # Include pregnancy app URLs
+    # Pregnancy app URLs
     path('pregnancy/', include('pregnancy.urls')),
 ]
 
