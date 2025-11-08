@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -201,6 +202,45 @@
       transform: translateY(-50%);
       color: #6c757d;
     }
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: #000;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+    }
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(232, 62, 140, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      color: white;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .video-play-btn:hover {
+      background: #e83e8c;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    .user-welcome {
+      color: #e83e8c;
+      font-weight: 600;
+    }
     @media (max-width: 768px) {
       .content-header {
         padding: 1.5rem;
@@ -217,19 +257,31 @@
 <body class="bg-light">
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand" href="#">LindaMama</a>
+    <a class="navbar-brand" href="{% url 'home' %}">LindaMama</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Progress</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'week_tracker' %}">Progress</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Vitals</a></li>
-        <li class="nav-item"><a class="nav-link active" href="#">Resources</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'health_metrics' %}">Vitals</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'resources' %}">Resources</a></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <span class="navbar-text user-welcome me-3">
+            Welcome, {{ user.first_name|default:user.username }}!
+          </span>
+        </li>
+        <li class="nav-item">
+          <form method="post" action="{% url 'logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+          </form>
+        </li>
       </ul>
     </div>
   </div>
@@ -453,12 +505,18 @@
             </div>
 
             <div class="row g-4" id="contentGrid">
-                <!-- Resource 1 -->
-                <div class="col-xl-4 col-lg-6 content-item" data-trimester="first" data-type="article">
+                <!-- Resource 1 - Video -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="first" data-type="video">
                     <div class="content-card h-100">
-                        <div class="content-image">
-                            <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="First Trimester">
-                            <span class="content-badge badge bg-article">Article</span>
+                        <div class="video-container">
+                            <video poster="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button class="video-play-btn" onclick="playVideo(this)">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <span class="content-badge badge bg-video">Video</span>
                         </div>
                         <div class="content-body">
                             <div class="content-meta mb-2">
@@ -472,18 +530,24 @@
                             <p class="content-excerpt">Learn about common early pregnancy symptoms and when to contact your healthcare provider.</p>
                             <div class="content-footer mt-auto">
                                 <div class="read-info">
-                                    <i class="far fa-clock me-1"></i>5 min read
+                                    <i class="far fa-clock me-1"></i>5 min watch
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Resource 2 -->
+                <!-- Resource 2 - Video -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="second" data-type="video">
                     <div class="content-card h-100">
-                        <div class="content-image">
-                            <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Baby Development">
+                        <div class="video-container">
+                            <video poster="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button class="video-play-btn" onclick="playVideo(this)">
+                                <i class="fas fa-play"></i>
+                            </button>
                             <span class="content-badge badge bg-video">Video</span>
                         </div>
                         <div class="content-body">
@@ -505,7 +569,7 @@
                     </div>
                 </div>
 
-                <!-- Resource 3 -->
+                <!-- Resource 3 - Infographic -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="third" data-type="infographic">
                     <div class="content-card h-100">
                         <div class="content-image">
@@ -531,7 +595,7 @@
                     </div>
                 </div>
 
-                <!-- Resource 4 -->
+                <!-- Resource 4 - Tip -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="all" data-type="tip">
                     <div class="content-card h-100">
                         <div class="content-image">
@@ -557,7 +621,7 @@
                     </div>
                 </div>
 
-                <!-- Resource 5 -->
+                <!-- Resource 5 - Guide -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="postpartum" data-type="guide">
                     <div class="content-card h-100">
                         <div class="content-image">
@@ -583,7 +647,7 @@
                     </div>
                 </div>
 
-                <!-- Resource 6 -->
+                <!-- Resource 6 - Article -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="first" data-type="article">
                     <div class="content-card h-100">
                         <div class="content-image">
@@ -603,6 +667,90 @@
                             <div class="content-footer mt-auto">
                                 <div class="read-info">
                                     <i class="far fa-clock me-1"></i>7 min read
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource 7 - Video -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="third" data-type="video">
+                    <div class="content-card h-100">
+                        <div class="video-container">
+                            <video poster="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button class="video-play-btn" onclick="playVideo(this)">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <span class="content-badge badge bg-video">Video</span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">Third Trimester</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Preparing for Labor and Delivery
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">Learn about the stages of labor, pain management options, and what to expect during delivery.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>15 min watch
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource 8 - Article -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="second" data-type="article">
+                    <div class="content-card h-100">
+                        <div class="content-image">
+                            <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Mental Health">
+                            <span class="content-badge badge bg-article">Article</span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">Second Trimester</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Mental Health During Pregnancy
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">Understanding emotional changes and maintaining mental wellness throughout your pregnancy journey.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>6 min read
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource 9 - Infographic -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="all" data-type="infographic">
+                    <div class="content-card h-100">
+                        <div class="content-image">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Nutrition Chart">
+                            <span class="content-badge badge bg-infographic">Infographic</span>
+                        </div>
+                        <div class="content-body">
+                            <div class="content-meta mb-2">
+                                <span class="trimester-badge">All Trimesters</span>
+                            </div>
+                            <h5 class="content-title">
+                                <a href="#" class="text-decoration-none">
+                                    Pregnancy Nutrition Chart
+                                </a>
+                            </h5>
+                            <p class="content-excerpt">Visual guide to essential nutrients and their food sources for each trimester.</p>
+                            <div class="content-footer mt-auto">
+                                <div class="read-info">
+                                    <i class="far fa-clock me-1"></i>3 min read
                                 </div>
                             </div>
                         </div>
@@ -683,8 +831,47 @@ function setTypeFilter(type) {
     filterContent();
 }
 
+function playVideo(button) {
+    const videoContainer = button.parentElement;
+    const video = videoContainer.querySelector('video');
+    const playBtn = videoContainer.querySelector('.video-play-btn');
+    
+    if (video.paused) {
+        video.play();
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        playBtn.style.opacity = '0.7';
+    } else {
+        video.pause();
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playBtn.style.opacity = '0.9';
+    }
+    
+    // Reset play button when video ends
+    video.onended = function() {
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playBtn.style.opacity = '0.9';
+    };
+}
+
 // Add event listeners for real-time search
 document.getElementById('searchInput').addEventListener('input', filterContent);
+
+// Pause all other videos when one plays
+document.addEventListener('play', function(e) {
+    if (e.target.tagName === 'VIDEO') {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            if (video !== e.target && !video.paused) {
+                video.pause();
+                const playBtn = video.parentElement.querySelector('.video-play-btn');
+                if (playBtn) {
+                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    playBtn.style.opacity = '0.9';
+                }
+            }
+        });
+    }
+}, true);
 </script>
 </body>
-</html>
+      </html>
