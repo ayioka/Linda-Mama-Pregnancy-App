@@ -36,7 +36,7 @@ class PregnancyProfile(models.Model):
     ]
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    mother = models.OneToOneField(User, on_delete=models.CASCADE, limit_choices_to={'role': 'mother'})
+    mother = models.OneToOneField('pregnancy.User', on_delete=models.CASCADE, limit_choices_to={'role': 'mother'})
     last_menstrual_period = models.DateField()
     estimated_due_date = models.DateField()
     current_trimester = models.CharField(max_length=20, choices=TRIMESTER_CHOICES, default='first')
