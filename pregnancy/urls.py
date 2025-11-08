@@ -56,4 +56,7 @@ urlpatterns = [
     # Error handlers
     path('404/', views.handler404, name='404'),
     path('500/', views.handler500, name='500'),
+      path('profile/update-pregnancy/', views.update_pregnancy_profile, name='update_pregnancy_profile'),
+    path('appointments/create/', views.create_appointment, name='create_appointment'),
+    path('messages/conversation/<uuid:user_id>/', views.conversation, name='conversation'),
 ]
