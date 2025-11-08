@@ -3824,3 +3824,196 @@ WARNING 2025-11-08 21:33:13,572 basehttp 21500 19932 "GET /api/auth/status/ HTTP
 WARNING 2025-11-08 21:33:13,624 log 21500 19932 Not Found: /sw.js
 WARNING 2025-11-08 21:33:13,626 basehttp 21500 19932 "GET /sw.js HTTP/1.1" 404 3510
 INFO 2025-11-08 21:34:32,180 autoreload 7280 8268 Watching for file changes with StatReloader
+INFO 2025-11-08 21:34:36,615 basehttp 7280 17440 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-08 21:34:37,311 log 7280 17440 Not Found: /api/auth/status/
+WARNING 2025-11-08 21:34:37,345 basehttp 7280 17440 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-08 21:34:37,446 log 7280 17440 Not Found: /sw.js
+WARNING 2025-11-08 21:34:37,453 basehttp 7280 17440 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 21:34:42,820 basehttp 7280 17440 "GET /login/ HTTP/1.1" 302 0
+INFO 2025-11-08 21:34:42,871 basehttp 7280 17440 "GET /dashboard/ HTTP/1.1" 200 11191
+INFO 2025-11-08 21:34:48,654 basehttp 7280 17440 "GET /pregnancy/resources/ HTTP/1.1" 200 37604
+INFO 2025-11-08 21:35:24,556 basehttp 7280 17440 "GET /pregnancy/week-tracker/ HTTP/1.1" 200 26102
+INFO 2025-11-08 21:36:36,244 basehttp 7280 16796 "GET /profile/ HTTP/1.1" 200 27265
+INFO 2025-11-08 21:36:39,506 basehttp 7280 16796 "GET /pregnancy/resources/ HTTP/1.1" 200 37604
+INFO 2025-11-08 21:41:28,211 basehttp 7280 21416 "GET /pregnancy/health-metrics/ HTTP/1.1" 200 26625
+INFO 2025-11-08 21:51:09,938 basehttp 7280 20620 "GET /pregnancy/week-tracker/ HTTP/1.1" 200 26102
+INFO 2025-11-08 21:52:06,448 basehttp 7280 20620 "GET /profile/ HTTP/1.1" 200 27265
+INFO 2025-11-08 21:52:27,422 basehttp 7280 20620 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-08 21:52:27,726 log 7280 20620 Not Found: /api/auth/status/
+WARNING 2025-11-08 21:52:27,731 basehttp 7280 20620 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-08 21:52:27,812 log 7280 20620 Not Found: /sw.js
+WARNING 2025-11-08 21:52:27,813 basehttp 7280 20620 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:02:20,142 autoreload 14272 14592 Watching for file changes with StatReloader
+INFO 2025-11-08 22:02:25,616 basehttp 14272 5760 "GET / HTTP/1.1" 200 11195
+INFO 2025-11-08 22:02:25,873 basehttp 14272 5760 "GET /static/js/utils.js HTTP/1.1" 304 0
+INFO 2025-11-08 22:02:25,874 basehttp 14272 8488 "GET /static/js/auth.js HTTP/1.1" 304 0
+INFO 2025-11-08 22:02:25,889 basehttp 14272 17476 "GET /static/js/dashboard.js HTTP/1.1" 304 0
+INFO 2025-11-08 22:02:25,907 basehttp 14272 17448 "GET /static/js/actions.js HTTP/1.1" 304 0
+INFO 2025-11-08 22:02:25,909 basehttp 14272 10036 "GET /static/js/navigation.js HTTP/1.1" 304 0
+INFO 2025-11-08 22:02:25,921 basehttp 14272 6488 "GET /static/js/main.js HTTP/1.1" 304 0
+WARNING 2025-11-08 22:02:26,479 log 14272 6488 Not Found: /api/auth/status/
+WARNING 2025-11-08 22:02:26,481 basehttp 14272 6488 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-08 22:02:26,621 log 14272 6488 Not Found: /sw.js
+WARNING 2025-11-08 22:02:26,625 basehttp 14272 6488 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:02:29,664 basehttp 14272 6488 "GET /login/ HTTP/1.1" 302 0
+ERROR 2025-11-08 22:02:29,793 log 14272 6488 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 98, in dashboard
+    if profile.due_date:
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'UserProfile' object has no attribute 'due_date'
+ERROR 2025-11-08 22:02:29,803 basehttp 14272 6488 "GET /dashboard/ HTTP/1.1" 500 77650
+WARNING 2025-11-08 22:02:35,171 log 14272 6488 Not Found: /sw.js
+WARNING 2025-11-08 22:02:35,172 basehttp 14272 6488 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:02:37,288 basehttp 14272 6488 "GET /signup/ HTTP/1.1" 302 0
+ERROR 2025-11-08 22:02:37,504 log 14272 6488 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 98, in dashboard
+    if profile.due_date:
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'UserProfile' object has no attribute 'due_date'
+ERROR 2025-11-08 22:02:37,524 basehttp 14272 6488 "GET /dashboard/ HTTP/1.1" 500 77650
+WARNING 2025-11-08 22:02:43,283 log 14272 6488 Not Found: /sw.js
+WARNING 2025-11-08 22:02:43,285 basehttp 14272 6488 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:02:48,338 basehttp 14272 18140 "GET /login/ HTTP/1.1" 302 0
+ERROR 2025-11-08 22:02:48,429 log 14272 18140 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 98, in dashboard
+    if profile.due_date:
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'UserProfile' object has no attribute 'due_date'
+ERROR 2025-11-08 22:02:48,443 basehttp 14272 18140 "GET /dashboard/ HTTP/1.1" 500 77650
+WARNING 2025-11-08 22:04:01,957 log 14272 20964 Not Found: /sw.js
+WARNING 2025-11-08 22:04:01,958 basehttp 14272 20964 "GET /sw.js HTTP/1.1" 404 3510
+WARNING 2025-11-08 22:04:06,291 log 14272 20964 Not Found: /nutrition/
+WARNING 2025-11-08 22:04:06,295 basehttp 14272 20964 "GET /nutrition/ HTTP/1.1" 404 3525
+WARNING 2025-11-08 22:04:08,489 log 14272 20964 Not Found: /sw.js
+WARNING 2025-11-08 22:04:08,499 basehttp 14272 20964 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:04:11,439 basehttp 14272 20964 "GET /login/ HTTP/1.1" 302 0
+ERROR 2025-11-08 22:04:11,541 log 14272 20964 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 98, in dashboard
+    if profile.due_date:
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'UserProfile' object has no attribute 'due_date'
+ERROR 2025-11-08 22:04:11,546 basehttp 14272 20964 "GET /dashboard/ HTTP/1.1" 500 77650
+WARNING 2025-11-08 22:04:16,269 log 14272 20964 Not Found: /sw.js
+WARNING 2025-11-08 22:04:16,274 basehttp 14272 20964 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:08:39,693 autoreload 5456 20204 Watching for file changes with StatReloader
+INFO 2025-11-08 22:08:43,418 basehttp 5456 6612 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-08 22:08:44,149 log 5456 13488 Not Found: /api/auth/status/
+WARNING 2025-11-08 22:08:44,159 basehttp 5456 13488 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-08 22:08:44,281 log 5456 13488 Not Found: /sw.js
+WARNING 2025-11-08 22:08:44,285 basehttp 5456 13488 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:08:45,760 basehttp 5456 13488 "GET /login/ HTTP/1.1" 302 0
+ERROR 2025-11-08 22:08:45,886 log 5456 13488 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 98, in dashboard
+    if profile.due_date:
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'UserProfile' object has no attribute 'due_date'
+ERROR 2025-11-08 22:08:45,898 basehttp 5456 13488 "GET /dashboard/ HTTP/1.1" 500 77650
+INFO 2025-11-08 22:22:35,609 autoreload 20256 756 Watching for file changes with StatReloader
+INFO 2025-11-08 22:30:12,939 autoreload 17752 19460 Watching for file changes with StatReloader
+INFO 2025-11-08 22:30:17,203 basehttp 17752 21268 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-08 22:30:17,892 log 17752 21268 Not Found: /api/auth/status/
+WARNING 2025-11-08 22:30:17,906 basehttp 17752 21268 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-08 22:30:17,982 log 17752 21268 Not Found: /sw.js
+WARNING 2025-11-08 22:30:17,985 basehttp 17752 21268 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:30:21,606 basehttp 17752 21032 "GET /login/ HTTP/1.1" 302 0
+ERROR 2025-11-08 22:30:21,796 log 17752 21032 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 98, in dashboard
+    if profile.due_date:
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'UserProfile' object has no attribute 'due_date'
+ERROR 2025-11-08 22:30:21,805 basehttp 17752 21032 "GET /dashboard/ HTTP/1.1" 500 77650
+INFO 2025-11-08 22:30:28,128 basehttp 17752 21032 "GET /signup/ HTTP/1.1" 302 0
+ERROR 2025-11-08 22:30:28,227 log 17752 21032 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 98, in dashboard
+    if profile.due_date:
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'UserProfile' object has no attribute 'due_date'
+ERROR 2025-11-08 22:30:28,243 basehttp 17752 21032 "GET /dashboard/ HTTP/1.1" 500 77650
+WARNING 2025-11-08 22:30:33,677 log 17752 18116 Not Found: /sw.js
+WARNING 2025-11-08 22:30:33,680 basehttp 17752 18116 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:34:14,515 autoreload 4276 8128 Watching for file changes with StatReloader
+INFO 2025-11-08 22:34:18,100 basehttp 4276 10208 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-08 22:34:18,728 log 4276 10208 Not Found: /api/auth/status/
+WARNING 2025-11-08 22:34:18,768 basehttp 4276 10208 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-08 22:34:18,848 log 4276 10208 Not Found: /sw.js
+WARNING 2025-11-08 22:34:18,854 basehttp 4276 10208 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:34:20,252 basehttp 4276 10208 "GET /login/ HTTP/1.1" 302 0
+INFO 2025-11-08 22:34:20,336 basehttp 4276 10208 "GET /dashboard/ HTTP/1.1" 200 14776
+INFO 2025-11-08 22:34:29,387 basehttp 4276 10208 "GET /profile/ HTTP/1.1" 200 27265
+INFO 2025-11-08 22:34:33,441 basehttp 4276 10208 "GET /pregnancy/resources/ HTTP/1.1" 200 42857
+INFO 2025-11-08 22:34:55,156 basehttp 4276 10208 "GET /pregnancy/health-metrics/ HTTP/1.1" 200 26625
+INFO 2025-11-08 22:35:11,274 basehttp 4276 10208 "GET /dashboard/ HTTP/1.1" 200 14776
+INFO 2025-11-08 22:35:14,837 basehttp 4276 10208 "GET /profile/ HTTP/1.1" 200 27265
+INFO 2025-11-08 22:35:31,969 basehttp 4276 10208 "POST /profile/ HTTP/1.1" 302 0
+INFO 2025-11-08 22:35:32,040 basehttp 4276 10208 "GET /profile/ HTTP/1.1" 200 27498
+INFO 2025-11-08 22:36:03,730 basehttp 4276 10208 "POST /profile/ HTTP/1.1" 302 0
+INFO 2025-11-08 22:36:03,783 basehttp 4276 10208 "GET /profile/ HTTP/1.1" 200 27513
+INFO 2025-11-08 22:36:09,844 basehttp 4276 10208 "GET /dashboard/ HTTP/1.1" 200 15160
+INFO 2025-11-08 22:36:34,209 basehttp 4276 10208 "GET /pregnancy/baby-development/ HTTP/1.1" 200 9050
+INFO 2025-11-08 22:36:43,460 basehttp 4276 10208 "GET /pregnancy/baby-development/ HTTP/1.1" 200 9050
+INFO 2025-11-08 22:36:45,521 basehttp 4276 10208 "GET /profile/ HTTP/1.1" 200 27299
+INFO 2025-11-08 22:36:55,657 basehttp 4276 10208 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-08 22:36:56,030 log 4276 10208 Not Found: /api/auth/status/
+WARNING 2025-11-08 22:36:56,032 basehttp 4276 10208 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-08 22:36:56,093 log 4276 10208 Not Found: /sw.js
+WARNING 2025-11-08 22:36:56,095 basehttp 4276 10208 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:36:58,235 basehttp 4276 10208 "GET /signup/ HTTP/1.1" 302 0
+INFO 2025-11-08 22:36:58,295 basehttp 4276 10208 "GET /dashboard/ HTTP/1.1" 200 15160
+INFO 2025-11-08 22:37:04,354 basehttp 4276 10208 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-08 22:37:04,556 log 4276 10208 Not Found: /api/auth/status/
+WARNING 2025-11-08 22:37:04,562 basehttp 4276 10208 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-08 22:37:04,623 log 4276 10208 Not Found: /sw.js
+WARNING 2025-11-08 22:37:04,627 basehttp 4276 10208 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-08 22:37:07,648 basehttp 4276 10208 "GET /login/ HTTP/1.1" 302 0
+INFO 2025-11-08 22:37:07,691 basehttp 4276 10208 "GET /dashboard/ HTTP/1.1" 200 15160
+INFO 2025-11-08 22:37:18,707 basehttp 4276 10208 "GET /pregnancy/appointments/ HTTP/1.1" 200 31850
+INFO 2025-11-08 22:47:55,701 autoreload 4276 8128 C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy_tracker\settings.py changed, reloading.
