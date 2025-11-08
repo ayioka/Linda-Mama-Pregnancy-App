@@ -99,3 +99,35 @@ Traceback (most recent call last):
   File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
 ModuleNotFoundError: No module named 'pregnancy.context_processors'
 ERROR 2025-11-08 14:40:32,505 basehttp 11972 18584 "GET / HTTP/1.1" 500 127872
+INFO 2025-11-08 17:12:34,004 autoreload 7960 1616 Watching for file changes with StatReloader
+INFO 2025-11-08 17:12:41,835 basehttp 7960 13120 "GET / HTTP/1.1" 200 11195
+INFO 2025-11-08 17:12:42,352 basehttp 7960 10960 "GET /static/js/auth.js HTTP/1.1" 200 4462
+INFO 2025-11-08 17:12:42,482 basehttp 7960 3984 "GET /static/js/navigation.js HTTP/1.1" 200 1689
+INFO 2025-11-08 17:12:42,621 basehttp 7960 13120 "GET /static/js/utils.js HTTP/1.1" 200 5011
+INFO 2025-11-08 17:12:42,641 basehttp 7960 14408 "GET /static/js/actions.js HTTP/1.1" 200 6440
+INFO 2025-11-08 17:12:42,654 basehttp 7960 9348 "GET /static/js/dashboard.js HTTP/1.1" 200 5579
+INFO 2025-11-08 17:12:42,670 basehttp 7960 7428 "GET /static/js/main.js HTTP/1.1" 200 4036
+WARNING 2025-11-08 17:12:42,739 log 7960 7428 Not Found: /api/auth/status/
+WARNING 2025-11-08 17:12:42,743 basehttp 7960 7428 "GET /api/auth/status/ HTTP/1.1" 404 2543
+WARNING 2025-11-08 17:12:42,776 log 7960 7428 Not Found: /sw.js
+WARNING 2025-11-08 17:12:42,777 basehttp 7960 7428 "GET /sw.js HTTP/1.1" 404 2510
+WARNING 2025-11-08 17:12:49,255 log 7960 1288 Not Found: /login/
+WARNING 2025-11-08 17:12:49,260 basehttp 7960 1288 "GET /login/ HTTP/1.1" 404 2513
+WARNING 2025-11-08 17:12:53,067 log 7960 1288 Not Found: /sw.js
+WARNING 2025-11-08 17:12:53,068 basehttp 7960 1288 "GET /sw.js HTTP/1.1" 404 2510
+WARNING 2025-11-08 17:12:54,491 log 7960 1288 Not Found: /signup/
+WARNING 2025-11-08 17:12:54,493 basehttp 7960 1288 "GET /signup/ HTTP/1.1" 404 2516
+WARNING 2025-11-08 17:12:59,426 log 7960 19804 Not Found: /sw.js
+WARNING 2025-11-08 17:12:59,433 basehttp 7960 19804 "GET /sw.js HTTP/1.1" 404 2510
+WARNING 2025-11-08 17:13:08,405 log 7960 13468 Not Found: /signup/
+WARNING 2025-11-08 17:13:08,412 basehttp 7960 13468 "GET /signup/ HTTP/1.1" 404 2516
+WARNING 2025-11-08 17:13:11,192 log 7960 13468 Not Found: /sw.js
+WARNING 2025-11-08 17:13:11,194 basehttp 7960 13468 "GET /sw.js HTTP/1.1" 404 2510
+WARNING 2025-11-08 17:13:16,078 log 7960 16388 Not Found: /signup/
+WARNING 2025-11-08 17:13:16,079 basehttp 7960 16388 "GET /signup/ HTTP/1.1" 404 2516
+WARNING 2025-11-08 17:14:21,895 log 7960 21492 Not Found: /sw.js
+WARNING 2025-11-08 17:14:21,897 basehttp 7960 21492 "GET /sw.js HTTP/1.1" 404 2510
+WARNING 2025-11-08 17:14:25,014 log 7960 21492 Not Found: /login/
+WARNING 2025-11-08 17:14:25,015 basehttp 7960 21492 "GET /login/ HTTP/1.1" 404 2513
+WARNING 2025-11-08 17:17:43,815 log 7960 12024 Not Found: /sw.js
+WARNING 2025-11-08 17:17:43,818 basehttp 7960 12024 "GET /sw.js HTTP/1.1" 404 2510
