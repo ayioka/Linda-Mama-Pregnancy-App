@@ -2,20 +2,13 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('about/', views.about, name='about'),
-    path('services/', views.services, name='services'),
-    path('contact/', views.contact, name='contact'),
-    path('register/', views.register, name='register'),
-    path('dashboard/', views.dashboard, name='dashboard'),
-    path('track-progress/', views.track_progress, name='track_progress'),
-    path('log-vitals/', views.log_vitals, name='log_vitals'),
-    path('educational-content/', views.educational_content, name='educational_content'),
-    path('content/<slug:slug>/', views.content_detail, name='content_detail'),
+    path('resources/', views.resources, name='resources'),
+    path('week-tracker/', views.week_tracker, name='week_tracker'),
+    path('health-metrics/', views.health_metrics, name='health_metrics'),
     path('appointments/', views.appointments, name='appointments'),
-    path('appointments/create/', views.create_appointment, name='create_appointment'),
-    path('messaging/', views.messaging, name='messaging'),
-    path('conversation/<int:user_id>/', views.conversation, name='conversation'),
-    path('emergency-alert/', views.emergency_alert, name='emergency_alert'),
-    path('profile/', views.profile, name='profile'),
+    path('emergency/', views.emergency, name='emergency'),
+    path('nutrition/', views.nutrition, name='nutrition'),
+    path('exercise/', views.exercise, name='exercise'),
+    path('mental-health/', views.mental_health, name='mental_health'),
+    path('baby-development/', views.baby_development, name='baby_development'),
 ]
