@@ -6,8 +6,8 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    # Set the default Django settings module
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lindamama.settings')
+    # Set the default Django settings module - UPDATED to pregnancy_tracker
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pregnancy_tracker.settings')
     
     try:
         from django.core.management import execute_from_command_line
