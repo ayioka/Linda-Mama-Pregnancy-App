@@ -1,0 +1,290 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LindaMama - Baby Development</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #e83e8c !important;
+    }
+    .btn-primary {
+      background-color: #e83e8c;
+      border-color: #e83e8c;
+    }
+    .btn-primary:hover {
+      background-color: #d81b7e;
+      border-color: #d81b7e;
+    }
+    .development-card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .development-card:hover {
+      transform: translateY(-5px);
+    }
+    .week-indicator {
+      background: linear-gradient(135deg, #e83e8c, #ff9ec0);
+      color: white;
+      border-radius: 20px;
+      padding: 5px 15px;
+      font-weight: 500;
+    }
+    .milestone-item {
+      border-left: 3px solid #e83e8c;
+      padding-left: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .size-comparison {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    .user-welcome {
+      color: #e83e8c;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">LindaMama</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'baby_development' %}">Baby Development</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'resources' %}">Resources</a></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <span class="navbar-text user-welcome me-3">
+            Welcome, {{ user.first_name|default:user.username }}!
+          </span>
+        </li>
+        <li class="nav-item">
+          <form method="post" action="{% url 'logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card development-card">
+        <div class="card-body text-center">
+          <h1 class="display-4 mb-3">👶</h1>
+          <h2 class="card-title">Baby Development</h2>
+          {% if profile.due_date %}
+            <p class="lead">Week {{ current_week }} of Your Pregnancy Journey</p>
+            <span class="week-indicator">{{ current_trimester }}</span>
+          {% else %}
+            <p class="lead">Set your due date to see personalized baby development information</p>
+            <a href="{% url 'profile' %}" class="btn btn-primary">Set Due Date</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if profile.due_date %}
+  <!-- Current Week Development -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card development-card">
+        <div class="card-header bg-white">
+          <h4 class="mb-0">
+            <i class="fas fa-baby me-2"></i>This Week's Development
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <h5 class="text-primary">Amazing Changes Happening Now</h5>
+              <div class="milestone-item">
+                <h6>Size & Weight</h6>
+                <p class="mb-2">Your baby is now about the size of a {{ baby_size_comparison }}</p>
+                <small class="text-muted">Approximately {{ baby_weight }} and {{ baby_length }} long</small>
+              </div>
+              
+              <div class="milestone-item">
+                <h6>Key Developments</h6>
+                <ul class="mb-2">
+                  {% for development in key_developments %}
+                  <li>{{ development }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              
+              <div class="milestone-item">
+                <h6>What You Might Feel</h6>
+                <p class="mb-2">{{ maternal_changes }}</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="size-comparison">
+                <div class="display-1 mb-3">📏</div>
+                <h5>Size Comparison</h5>
+                <h3 class="text-primary">{{ baby_size_comparison }}</h3>
+                <p class="text-muted">That's how big your baby is this week!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Development Timeline -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card development-card">
+        <div class="card-header bg-white">
+          <h4 class="mb-0">
+            <i class="fas fa-road me-2"></i>Pregnancy Timeline
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- First Trimester -->
+            <div class="col-md-4 mb-4">
+              <div class="text-center p-3 border rounded">
+                <div class="h1 mb-3">1️⃣</div>
+                <h5>First Trimester</h5>
+                <p class="text-muted">Weeks 1-13</p>
+                <ul class="text-start small">
+                  <li>Baby's major organs form</li>
+                  <li>Heart begins beating</li>
+                  <li>Fingers and toes develop</li>
+                </ul>
+                {% if current_week <= 13 %}
+                <span class="badge bg-primary">Current Stage</span>
+                {% endif %}
+              </div>
+            </div>
+            
+            <!-- Second Trimester -->
+            <div class="col-md-4 mb-4">
+              <div class="text-center p-3 border rounded">
+                <div class="h1 mb-3">2️⃣</div>
+                <h5>Second Trimester</h5>
+                <p class="text-muted">Weeks 14-26</p>
+                <ul class="text-start small">
+                  <li>Baby begins moving</li>
+                  <li>Hearing develops</li>
+                  <li>Rapid growth phase</li>
+                </ul>
+                {% if current_week > 13 and current_week <= 26 %}
+                <span class="badge bg-primary">Current Stage</span>
+                {% endif %}
+              </div>
+            </div>
+            
+            <!-- Third Trimester -->
+            <div class="col-md-4 mb-4">
+              <div class="text-center p-3 border rounded">
+                <div class="h1 mb-3">3️⃣</div>
+                <h5>Third Trimester</h5>
+                <p class="text-muted">Weeks 27-40</p>
+                <ul class="text-start small">
+                  <li>Brain development peaks</li>
+                  <li>Lungs mature</li>
+                  <li>Baby gains weight rapidly</li>
+                </ul>
+                {% if current_week > 26 %}
+                <span class="badge bg-primary">Current Stage</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Next Steps -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card development-card">
+        <div class="card-header bg-white">
+          <h4 class="mb-0">
+            <i class="fas fa-forward me-2"></i>What's Next
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Coming Up in the Next Few Weeks</h6>
+              <ul>
+                {% for milestone in upcoming_milestones %}
+                <li>{{ milestone }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6>Tips for This Stage</h6>
+              <ul>
+                {% for tip in current_tips %}
+                <li>{{ tip }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <!-- No Due Date Set -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card development-card">
+        <div class="card-body text-center py-5">
+          <div class="h1 mb-3">📅</div>
+          <h4>Personalize Your Experience</h4>
+          <p class="text-muted mb-4">Set your due date to get personalized baby development information and track your pregnancy progress.</p>
+          <a href="{% url 'profile' %}" class="btn btn-primary btn-lg">Set Due Date in Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<footer class="footer">
+  <div class="container text-center">
+    <p>&copy; 2023 LindaMama. All rights reserved.</p>
+    <p class="text-muted">Your trusted pregnancy companion</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
