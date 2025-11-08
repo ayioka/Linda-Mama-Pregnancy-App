@@ -5,13 +5,14 @@ from django.utils import timezone
 from datetime import timedelta
 import uuid
 
+
 class User(AbstractUser):
     ROLE_CHOICES = [
         ('mother', 'Expectant Mother'),
         ('clinician', 'Healthcare Provider'),
         ('admin', 'System Administrator'),
     ]
-    
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='mother')
     phone_number = models.CharField(max_length=15, blank=True)
@@ -21,12 +22,13 @@ class User(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f"{self.get_full_name() or self.username} ({self.get_role_display()})"
-    
+
     class Meta:
         ordering = ['-created_at']
+
 
 class PregnancyProfile(models.Model):
     TRIMESTER_CHOICES = [
@@ -34,23 +36,23 @@ class PregnancyProfile(models.Model):
         ('second', 'Second Trimester (13-26 weeks)'),
         ('third', 'Third Trimester (27-40 weeks)'),
     ]
-    
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     mother = models.OneToOneField('pregnancy.User', on_delete=models.CASCADE, limit_choices_to={'role': 'mother'})
     last_menstrual_period = models.DateField()
-    estimated_due_date = models.DateField()
+    estimated_due_date = models.DateField(blank=True, null=True)
     current_trimester = models.CharField(max_length=20, choices=TRIMESTER_CHOICES, default='first')
     blood_type = models.CharField(max_length=5, blank=True)
     known_allergies = models.TextField(blank=True)
     pre_existing_conditions = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def save(self, *args, **kwargs):
         # Calculate due date if not provided (40 weeks from LMP)
         if not self.estimated_due_date and self.last_menstrual_period:
             self.estimated_due_date = self.last_menstrual_period + timedelta(weeks=40)
-        
+
         # Update current trimester based on weeks pregnant
         if self.last_menstrual_period:
             weeks_pregnant = self.get_weeks_pregnant()
@@ -60,23 +62,24 @@ class PregnancyProfile(models.Model):
                 self.current_trimester = 'second'
             else:
                 self.current_trimester = 'third'
-        
+
         super().save(*args, **kwargs)
-    
+
     def get_weeks_pregnant(self):
         if self.last_menstrual_period:
             days_pregnant = (timezone.now().date() - self.last_menstrual_period).days
             return days_pregnant // 7
         return 0
-    
+
     def get_days_until_due(self):
         if self.estimated_due_date:
             days_until = (self.estimated_due_date - timezone.now().date()).days
             return max(0, days_until)
         return None
-    
+
     def __str__(self):
-        return f"Pregnancy Profile - {self.mother.get_full_name()}"
+        return f"Pregnancy Profile - {self.mother.get_full_name() or self.mother.username}"
+
 
 class VitalsRecord(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -90,14 +93,15 @@ class VitalsRecord(models.Model):
     symptoms = models.TextField(blank=True)
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         ordering = ['-record_date']
         verbose_name = 'Vitals Record'
         verbose_name_plural = 'Vitals Records'
-    
+
     def __str__(self):
         return f"Vitals - {self.mother.username} - {self.record_date.strftime('%Y-%m-%d')}"
+
 
 class Appointment(models.Model):
     STATUS_CHOICES = [
@@ -107,7 +111,7 @@ class Appointment(models.Model):
         ('cancelled', 'Cancelled'),
         ('no_show', 'No Show'),
     ]
-    
+
     TYPE_CHOICES = [
         ('antenatal', 'Antenatal Checkup'),
         ('ultrasound', 'Ultrasound Scan'),
@@ -116,7 +120,7 @@ class Appointment(models.Model):
         ('emergency', 'Emergency Visit'),
         ('other', 'Other'),
     ]
-    
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     mother = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mother_appointments', limit_choices_to={'role': 'mother'})
     clinician = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clinician_appointments', limit_choices_to={'role': 'clinician'})
@@ -130,12 +134,13 @@ class Appointment(models.Model):
     reminder_sent = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ['scheduled_date']
-    
+
     def __str__(self):
         return f"{self.get_appointment_type_display()} - {self.mother.username} - {self.scheduled_date.strftime('%Y-%m-%d %H:%M')}"
+
 
 class EducationalContent(models.Model):
     CONTENT_TYPE_CHOICES = [
@@ -145,7 +150,7 @@ class EducationalContent(models.Model):
         ('tip', 'Daily Tip'),
         ('guide', 'Guide'),
     ]
-    
+
     TRIMESTER_TARGET = [
         ('all', 'All Trimesters'),
         ('first', 'First Trimester'),
@@ -153,7 +158,7 @@ class EducationalContent(models.Model):
         ('third', 'Third Trimester'),
         ('postpartum', 'Postpartum'),
     ]
-    
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
@@ -169,14 +174,15 @@ class EducationalContent(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ['-created_at']
         verbose_name = 'Educational Content'
         verbose_name_plural = 'Educational Content'
-    
+
     def __str__(self):
         return self.title
+
 
 class Message(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -188,12 +194,13 @@ class Message(models.Model):
     is_urgent = models.BooleanField(default=False)
     parent_message = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         ordering = ['-created_at']
-    
+
     def __str__(self):
         return f"Message: {self.subject} - {self.sender.username} to {self.receiver.username}"
+
 
 class EmergencyAlert(models.Model):
     URGENCY_LEVELS = [
@@ -202,7 +209,7 @@ class EmergencyAlert(models.Model):
         ('high', 'High Urgency'),
         ('critical', 'Critical Emergency'),
     ]
-    
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     mother = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'mother'})
     urgency_level = models.CharField(max_length=20, choices=URGENCY_LEVELS, default='medium')
@@ -214,9 +221,9 @@ class EmergencyAlert(models.Model):
     responded_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ['-created_at']
-    
+
     def __str__(self):
         return f"Emergency Alert - {self.mother.username} - {self.get_urgency_level_display()}"
