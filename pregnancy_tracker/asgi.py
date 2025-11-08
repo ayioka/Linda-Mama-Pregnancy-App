@@ -12,7 +12,7 @@ import django
 from django.core.asgi import get_asgi_application
 
 # Set the default Django settings module
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lindamama.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pregnancy_tracker.settings')
 
 # Initialize Django
 django.setup()
@@ -73,3 +73,4 @@ try:
 except ImportError:
     # Security headers middleware not installed
     pass
+
