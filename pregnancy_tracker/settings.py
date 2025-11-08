@@ -82,8 +82,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # Updated context processor path
-                'pregnancy.context_processors.global_settings',
+                # Temporarily commented out until we create the context processor
+                # 'pregnancy.context_processors.global_settings',
             ],
         },
     },
@@ -299,7 +299,7 @@ PREGNANCY_TRACKER_CONFIG = {
 # Whitenoise configuration for static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Cache configuration (for production) - FIXED SYNTAX
+# Cache configuration (for production)
 if not DEBUG:
     CACHES = {
         'default': {
@@ -313,6 +313,4 @@ else:
             'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
             'LOCATION': 'unique-snowflake',
         }
-    }  # Fixed: Added missing closing brace
-
-# REMOVED DUPLICATE SETTINGS BELOW THIS LINE
+    }
