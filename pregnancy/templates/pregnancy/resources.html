@@ -215,39 +215,16 @@
       height: 100%;
       border: none;
     }
-    .video-thumbnail {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-      background-size: cover;
-      background-position: center;
-    }
-    .video-play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(232, 62, 140, 0.9);
-      border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      color: white;
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .video-play-btn:hover {
-      background: #e83e8c;
-      transform: translate(-50%, -50%) scale(1.1);
-    }
     .user-welcome {
       color: #e83e8c;
       font-weight: 600;
+    }
+    .article-link {
+      text-decoration: none;
+      color: inherit;
+    }
+    .article-link:hover {
+      color: inherit;
     }
     @media (max-width: 768px) {
       .content-header {
@@ -425,80 +402,80 @@
             </div>
             
             <div class="row g-4">
-                <!-- Featured Content 1 -->
+                <!-- Featured Content 1 - Nutrition Guide -->
                 <div class="col-lg-6">
-                    <div class="featured-content-card">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <div class="featured-image">
-                                    <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Nutrition Guide">
-                                    <div class="featured-badge">
-                                        <i class="fas fa-star"></i> Featured
+                    <a href="https://www.healthline.com/health/pregnancy/second-trimester-diet-nutrition" target="_blank" class="article-link">
+                        <div class="featured-content-card">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="featured-image">
+                                        <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Nutrition Guide">
+                                        <div class="featured-badge">
+                                            <i class="fas fa-star"></i> Featured
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="featured-body">
-                                    <div class="content-meta mb-2">
-                                        <span class="content-type-badge badge bg-article">Article</span>
-                                        <span class="trimester-badge">Second Trimester</span>
-                                    </div>
-                                    <h5 class="content-title">
-                                        <a href="#" class="text-decoration-none">
-                                            Complete Nutrition Guide for Second Trimester
-                                        </a>
-                                    </h5>
-                                    <p class="content-excerpt">Essential nutrients, meal planning, and foods to support your baby's development during this crucial growth period.</p>
-                                    <div class="content-footer">
-                                        <div class="read-info">
-                                            <i class="far fa-clock me-1"></i>8 min read
+                                <div class="col-md-8">
+                                    <div class="featured-body">
+                                        <div class="content-meta mb-2">
+                                            <span class="content-type-badge badge bg-article">Article</span>
+                                            <span class="trimester-badge">Second Trimester</span>
                                         </div>
-                                        <a href="#" class="btn btn-sm btn-primary">
-                                            Read More <i class="fas fa-arrow-right ms-1"></i>
-                                        </a>
+                                        <h5 class="content-title">
+                                            Complete Nutrition Guide for Second Trimester
+                                        </h5>
+                                        <p class="content-excerpt">Essential nutrients, meal planning, and foods to support your baby's development during this crucial growth period.</p>
+                                        <div class="content-footer">
+                                            <div class="read-info">
+                                                <i class="far fa-clock me-1"></i>8 min read
+                                            </div>
+                                            <span class="btn btn-sm btn-primary">
+                                                Read More <i class="fas fa-arrow-right ms-1"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 
-                <!-- Featured Content 2 -->
+                <!-- Featured Content 2 - Exercise Guide -->
                 <div class="col-lg-6">
-                    <div class="featured-content-card">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <div class="featured-image">
-                                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Exercise Guide">
-                                    <div class="featured-badge">
-                                        <i class="fas fa-star"></i> Featured
+                    <a href="https://www.healthline.com/health/pregnancy/pregnancy-workouts" target="_blank" class="article-link">
+                        <div class="featured-content-card">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="featured-image">
+                                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Exercise Guide">
+                                        <div class="featured-badge">
+                                            <i class="fas fa-star"></i> Featured
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="featured-body">
-                                    <div class="content-meta mb-2">
-                                        <span class="content-type-badge badge bg-guide">Guide</span>
-                                        <span class="trimester-badge">All Trimesters</span>
-                                    </div>
-                                    <h5 class="content-title">
-                                        <a href="#" class="text-decoration-none">
-                                            Safe Pregnancy Exercises for Every Trimester
-                                        </a>
-                                    </h5>
-                                    <p class="content-excerpt">Learn which exercises are safe, how to modify your routine, and stay active throughout your pregnancy journey.</p>
-                                    <div class="content-footer">
-                                        <div class="read-info">
-                                            <i class="far fa-clock me-1"></i>6 min read
+                                <div class="col-md-8">
+                                    <div class="featured-body">
+                                        <div class="content-meta mb-2">
+                                            <span class="content-type-badge badge bg-guide">Guide</span>
+                                            <span class="trimester-badge">All Trimesters</span>
                                         </div>
-                                        <a href="#" class="btn btn-sm btn-primary">
-                                            Read More <i class="fas fa-arrow-right ms-1"></i>
-                                        </a>
+                                        <h5 class="content-title">
+                                            Safe Pregnancy Exercises for Every Trimester
+                                        </h5>
+                                        <p class="content-excerpt">Learn which exercises are safe, how to modify your routine, and stay active throughout your pregnancy journey.</p>
+                                        <div class="content-footer">
+                                            <div class="read-info">
+                                                <i class="far fa-clock me-1"></i>6 min read
+                                            </div>
+                                            <span class="btn btn-sm btn-primary">
+                                                Read More <i class="fas fa-arrow-right ms-1"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -518,7 +495,7 @@
                     <div class="content-card h-100">
                         <div class="video-container">
                             <iframe 
-                                src="https://www.youtube.com/embed/y5CTeq7wrqY?rel=0" 
+                                src="https://www.youtube.com/embed/y5CTeq7wrqY?rel=0&autoplay=0" 
                                 title="Understanding Early Pregnancy Symptoms"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen>
@@ -549,7 +526,7 @@
                     <div class="content-card h-100">
                         <div class="video-container">
                             <iframe 
-                                src="https://www.youtube.com/embed/p1ACIrNXA3E?rel=0" 
+                                src="https://www.youtube.com/embed/p1ACIrNXA3E?rel=0&autoplay=0" 
                                 title="Baby Development: Weeks 13-27"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen>
@@ -575,85 +552,85 @@
                     </div>
                 </div>
 
-                <!-- Resource 3 - Infographic -->
-                <div class="col-xl-4 col-lg-6 content-item" data-trimester="third" data-type="infographic">
-                    <div class="content-card h-100">
-                        <div class="content-image">
-                            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Hospital Bag">
-                            <span class="content-badge badge bg-infographic">Infographic</span>
-                        </div>
-                        <div class="content-body">
-                            <div class="content-meta mb-2">
-                                <span class="trimester-badge">Third Trimester</span>
+                <!-- Resource 3 - Hospital Bag Checklist -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="third" data-type="guide">
+                    <a href="https://www.thebump.com/a/checklist-packing-a-hospital-bag" target="_blank" class="article-link">
+                        <div class="content-card h-100">
+                            <div class="content-image">
+                                <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Hospital Bag">
+                                <span class="content-badge badge bg-guide">Guide</span>
                             </div>
-                            <h5 class="content-title">
-                                <a href="#" class="text-decoration-none">
+                            <div class="content-body">
+                                <div class="content-meta mb-2">
+                                    <span class="trimester-badge">Third Trimester</span>
+                                </div>
+                                <h5 class="content-title">
                                     Hospital Bag Checklist
-                                </a>
-                            </h5>
-                            <p class="content-excerpt">Everything you need to pack for your hospital stay - for you, your partner, and your baby.</p>
-                            <div class="content-footer mt-auto">
-                                <div class="read-info">
-                                    <i class="far fa-clock me-1"></i>2 min read
+                                </h5>
+                                <p class="content-excerpt">Everything you need to pack for your hospital stay - for you, your partner, and your baby.</p>
+                                <div class="content-footer mt-auto">
+                                    <div class="read-info">
+                                        <i class="far fa-clock me-1"></i>2 min read
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <!-- Resource 4 - Tip -->
-                <div class="col-xl-4 col-lg-6 content-item" data-trimester="all" data-type="tip">
-                    <div class="content-card h-100">
-                        <div class="content-image">
-                            <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Hydration">
-                            <span class="content-badge badge bg-tip">Daily Tip</span>
-                        </div>
-                        <div class="content-body">
-                            <div class="content-meta mb-2">
-                                <span class="trimester-badge">All Trimesters</span>
+                <!-- Resource 4 - Staying Hydrated -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="all" data-type="article">
+                    <a href="https://www.fraserhealth.ca/news/2017/Jun/staying-hydrated-during-pregnancy" target="_blank" class="article-link">
+                        <div class="content-card h-100">
+                            <div class="content-image">
+                                <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Hydration">
+                                <span class="content-badge badge bg-article">Article</span>
                             </div>
-                            <h5 class="content-title">
-                                <a href="#" class="text-decoration-none">
+                            <div class="content-body">
+                                <div class="content-meta mb-2">
+                                    <span class="trimester-badge">All Trimesters</span>
+                                </div>
+                                <h5 class="content-title">
                                     Staying Hydrated During Pregnancy
-                                </a>
-                            </h5>
-                            <p class="content-excerpt">Why hydration is crucial and creative ways to ensure you're drinking enough water throughout the day.</p>
-                            <div class="content-footer mt-auto">
-                                <div class="read-info">
-                                    <i class="far fa-clock me-1"></i>3 min read
+                                </h5>
+                                <p class="content-excerpt">Why hydration is crucial and creative ways to ensure you're drinking enough water throughout the day.</p>
+                                <div class="content-footer mt-auto">
+                                    <div class="read-info">
+                                        <i class="far fa-clock me-1"></i>3 min read
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <!-- Resource 5 - Guide -->
+                <!-- Resource 5 - Postpartum Recovery Guide -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="postpartum" data-type="guide">
-                    <div class="content-card h-100">
-                        <div class="content-image">
-                            <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65db9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Postpartum Recovery">
-                            <span class="content-badge badge bg-guide">Guide</span>
-                        </div>
-                        <div class="content-body">
-                            <div class="content-meta mb-2">
-                                <span class="trimester-badge">Postpartum</span>
+                    <a href="https://americanpregnancy.org/healthy-pregnancy/first-year-of-life/postpartum-recovery/" target="_blank" class="article-link">
+                        <div class="content-card h-100">
+                            <div class="content-image">
+                                <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65db9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Postpartum Recovery">
+                                <span class="content-badge badge bg-guide">Guide</span>
                             </div>
-                            <h5 class="content-title">
-                                <a href="#" class="text-decoration-none">
+                            <div class="content-body">
+                                <div class="content-meta mb-2">
+                                    <span class="trimester-badge">Postpartum</span>
+                                </div>
+                                <h5 class="content-title">
                                     Postpartum Recovery Guide
-                                </a>
-                            </h5>
-                            <p class="content-excerpt">What to expect in the first weeks after delivery and how to support your body's recovery.</p>
-                            <div class="content-footer mt-auto">
-                                <div class="read-info">
-                                    <i class="far fa-clock me-1"></i>10 min read
+                                </h5>
+                                <p class="content-excerpt">What to expect in the first weeks after delivery and how to support your body's recovery.</p>
+                                <div class="content-footer mt-auto">
+                                    <div class="read-info">
+                                        <i class="far fa-clock me-1"></i>10 min read
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <!-- Resource 6 - Article -->
+                <!-- Resource 6 - Prenatal Vitamins -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="first" data-type="article">
                     <div class="content-card h-100">
                         <div class="content-image">
@@ -684,7 +661,7 @@
                     <div class="content-card h-100">
                         <div class="video-container">
                             <iframe 
-                                src="https://www.youtube.com/embed/Q6213lkGvyc?rel=0" 
+                                src="https://www.youtube.com/embed/Q6213lkGvyc?rel=0&autoplay=0" 
                                 title="Preparing for Labor and Delivery"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen>
@@ -710,56 +687,56 @@
                     </div>
                 </div>
 
-                <!-- Resource 8 - Article -->
+                <!-- Resource 8 - Mental Health During Pregnancy -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="second" data-type="article">
-                    <div class="content-card h-100">
-                        <div class="content-image">
-                            <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Mental Health">
-                            <span class="content-badge badge bg-article">Article</span>
-                        </div>
-                        <div class="content-body">
-                            <div class="content-meta mb-2">
-                                <span class="trimester-badge">Second Trimester</span>
+                    <a href="https://kidshealth.org/en/parents/pregnant-mental-health.html" target="_blank" class="article-link">
+                        <div class="content-card h-100">
+                            <div class="content-image">
+                                <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Mental Health">
+                                <span class="content-badge badge bg-article">Article</span>
                             </div>
-                            <h5 class="content-title">
-                                <a href="#" class="text-decoration-none">
+                            <div class="content-body">
+                                <div class="content-meta mb-2">
+                                    <span class="trimester-badge">Second Trimester</span>
+                                </div>
+                                <h5 class="content-title">
                                     Mental Health During Pregnancy
-                                </a>
-                            </h5>
-                            <p class="content-excerpt">Understanding emotional changes and maintaining mental wellness throughout your pregnancy journey.</p>
-                            <div class="content-footer mt-auto">
-                                <div class="read-info">
-                                    <i class="far fa-clock me-1"></i>6 min read
+                                </h5>
+                                <p class="content-excerpt">Understanding emotional changes and maintaining mental wellness throughout your pregnancy journey.</p>
+                                <div class="content-footer mt-auto">
+                                    <div class="read-info">
+                                        <i class="far fa-clock me-1"></i>6 min read
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <!-- Resource 9 - Infographic -->
-                <div class="col-xl-4 col-lg-6 content-item" data-trimester="all" data-type="infographic">
-                    <div class="content-card h-100">
-                        <div class="content-image">
-                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Nutrition Chart">
-                            <span class="content-badge badge bg-infographic">Infographic</span>
-                        </div>
-                        <div class="content-body">
-                            <div class="content-meta mb-2">
-                                <span class="trimester-badge">All Trimesters</span>
+                <!-- Resource 9 - Pregnancy Nutrition Chart -->
+                <div class="col-xl-4 col-lg-6 content-item" data-trimester="all" data-type="guide">
+                    <a href="https://hospitals.aku.edu/pakistan/patients-families/Documents/Nutrition%20During%20Pregnancy.pdf" target="_blank" class="article-link">
+                        <div class="content-card h-100">
+                            <div class="content-image">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Nutrition Chart">
+                                <span class="content-badge badge bg-guide">Guide</span>
                             </div>
-                            <h5 class="content-title">
-                                <a href="#" class="text-decoration-none">
+                            <div class="content-body">
+                                <div class="content-meta mb-2">
+                                    <span class="trimester-badge">All Trimesters</span>
+                                </div>
+                                <h5 class="content-title">
                                     Pregnancy Nutrition Chart
-                                </a>
-                            </h5>
-                            <p class="content-excerpt">Visual guide to essential nutrients and their food sources for each trimester.</p>
-                            <div class="content-footer mt-auto">
-                                <div class="read-info">
-                                    <i class="far fa-clock me-1"></i>3 min read
+                                </h5>
+                                <p class="content-excerpt">Visual guide to essential nutrients and their food sources for each trimester.</p>
+                                <div class="content-footer mt-auto">
+                                    <div class="read-info">
+                                        <i class="far fa-clock me-1"></i>3 min read
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -791,7 +768,7 @@ function filterContent() {
     contentItems.forEach(item => {
         const trimester = item.getAttribute('data-trimester');
         const type = item.getAttribute('data-type');
-        const title = item.querySelector('.content-title a').textContent.toLowerCase();
+        const title = item.querySelector('.content-title').textContent.toLowerCase();
         const excerpt = item.querySelector('.content-excerpt').textContent.toLowerCase();
         
         const matchesTrimester = trimesterFilter === 'all' || trimester === trimesterFilter;
@@ -824,20 +801,5 @@ function filterContent() {
                 <h4>No resources found</h4>
                 <p class="text-muted">Try adjusting your filters or search terms</p>
             `;
-            contentGrid.appendChild(noResultsMessage);
-        }
-    } else if (noResultsMessage) {
-        noResultsMessage.remove();
-    }
-}
-
-function setTypeFilter(type) {
-    document.getElementById('typeFilter').value = type;
-    filterContent();
-}
-
-// Add event listeners for real-time search
-document.getElementById('searchInput').addEventListener('input', filterContent);
-</script>
-</body>
-</html>
+            contentGrid.appendChild(
+  
