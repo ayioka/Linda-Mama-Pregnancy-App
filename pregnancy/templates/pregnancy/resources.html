@@ -210,10 +210,18 @@
       border-radius: 12px 12px 0 0;
       overflow: hidden;
     }
-    .video-container video {
+    .video-container iframe {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      border: none;
+    }
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
     }
     .video-play-btn {
       position: absolute;
@@ -505,17 +513,16 @@
             </div>
 
             <div class="row g-4" id="contentGrid">
-                <!-- Resource 1 - Video -->
+                <!-- Resource 1 - Video: Understanding Early Pregnancy Symptoms -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="first" data-type="video">
                     <div class="content-card h-100">
                         <div class="video-container">
-                            <video poster="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
-                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <button class="video-play-btn" onclick="playVideo(this)">
-                                <i class="fas fa-play"></i>
-                            </button>
+                            <iframe 
+                                src="https://www.youtube.com/embed/y5CTeq7wrqY?rel=0" 
+                                title="Understanding Early Pregnancy Symptoms"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
                             <span class="content-badge badge bg-video">Video</span>
                         </div>
                         <div class="content-body">
@@ -523,7 +530,7 @@
                                 <span class="trimester-badge">First Trimester</span>
                             </div>
                             <h5 class="content-title">
-                                <a href="#" class="text-decoration-none">
+                                <a href="https://www.youtube.com/watch?v=y5CTeq7wrqY" target="_blank" class="text-decoration-none">
                                     Understanding Early Pregnancy Symptoms
                                 </a>
                             </h5>
@@ -537,17 +544,16 @@
                     </div>
                 </div>
 
-                <!-- Resource 2 - Video -->
+                <!-- Resource 2 - Video: Baby Development Weeks 13-27 -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="second" data-type="video">
                     <div class="content-card h-100">
                         <div class="video-container">
-                            <video poster="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
-                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <button class="video-play-btn" onclick="playVideo(this)">
-                                <i class="fas fa-play"></i>
-                            </button>
+                            <iframe 
+                                src="https://www.youtube.com/embed/p1ACIrNXA3E?rel=0" 
+                                title="Baby Development: Weeks 13-27"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
                             <span class="content-badge badge bg-video">Video</span>
                         </div>
                         <div class="content-body">
@@ -555,8 +561,8 @@
                                 <span class="trimester-badge">Second Trimester</span>
                             </div>
                             <h5 class="content-title">
-                                <a href="#" class="text-decoration-none">
-                                    Baby's Development: Weeks 13-27
+                                <a href="https://www.youtube.com/watch?v=p1ACIrNXA3E" target="_blank" class="text-decoration-none">
+                                    Baby Development: Weeks 13-27
                                 </a>
                             </h5>
                             <p class="content-excerpt">Watch how your baby grows and develops during the second trimester of pregnancy.</p>
@@ -673,17 +679,16 @@
                     </div>
                 </div>
 
-                <!-- Resource 7 - Video -->
+                <!-- Resource 7 - Video: Preparing for Labor and Delivery -->
                 <div class="col-xl-4 col-lg-6 content-item" data-trimester="third" data-type="video">
                     <div class="content-card h-100">
                         <div class="video-container">
-                            <video poster="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
-                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <button class="video-play-btn" onclick="playVideo(this)">
-                                <i class="fas fa-play"></i>
-                            </button>
+                            <iframe 
+                                src="https://www.youtube.com/embed/Q6213lkGvyc?rel=0" 
+                                title="Preparing for Labor and Delivery"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
                             <span class="content-badge badge bg-video">Video</span>
                         </div>
                         <div class="content-body">
@@ -691,7 +696,7 @@
                                 <span class="trimester-badge">Third Trimester</span>
                             </div>
                             <h5 class="content-title">
-                                <a href="#" class="text-decoration-none">
+                                <a href="https://www.youtube.com/watch?v=Q6213lkGvyc" target="_blank" class="text-decoration-none">
                                     Preparing for Labor and Delivery
                                 </a>
                             </h5>
@@ -831,47 +836,8 @@ function setTypeFilter(type) {
     filterContent();
 }
 
-function playVideo(button) {
-    const videoContainer = button.parentElement;
-    const video = videoContainer.querySelector('video');
-    const playBtn = videoContainer.querySelector('.video-play-btn');
-    
-    if (video.paused) {
-        video.play();
-        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        playBtn.style.opacity = '0.7';
-    } else {
-        video.pause();
-        playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        playBtn.style.opacity = '0.9';
-    }
-    
-    // Reset play button when video ends
-    video.onended = function() {
-        playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        playBtn.style.opacity = '0.9';
-    };
-}
-
 // Add event listeners for real-time search
 document.getElementById('searchInput').addEventListener('input', filterContent);
-
-// Pause all other videos when one plays
-document.addEventListener('play', function(e) {
-    if (e.target.tagName === 'VIDEO') {
-        const videos = document.querySelectorAll('video');
-        videos.forEach(video => {
-            if (video !== e.target && !video.paused) {
-                video.pause();
-                const playBtn = video.parentElement.querySelector('.video-play-btn');
-                if (playBtn) {
-                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                    playBtn.style.opacity = '0.9';
-                }
-            }
-        });
-    }
-}, true);
 </script>
 </body>
-      </html>
+</html>
