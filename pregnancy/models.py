@@ -14,21 +14,17 @@ class User(AbstractUser):
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='mother')        
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='mother')
     phone_number = models.CharField(max_length=15, blank=True)
     emergency_contact_name = models.CharField(max_length=100, blank=True)
     emergency_contact_phone = models.CharField(max_length=15, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True) 
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-<<<<<<< HEAD
-        return f\"{self.get_full_name() or self.username} ({self.get_role_display()})\"     
-=======
         return f"{self.get_full_name() or self.username} ({self.get_role_display()})"
->>>>>>> 6991180c23a0b3df487949f7deeee69a63444ca5
 
     class Meta:
         ordering = ['-created_at']
@@ -42,7 +38,6 @@ class PregnancyProfile(models.Model):
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    # FIXED: Use string reference instead of direct User model
     mother = models.OneToOneField('pregnancy.User', on_delete=models.CASCADE, limit_choices_to={'role': 'mother'})
     last_menstrual_period = models.DateField()
     estimated_due_date = models.DateField(blank=True, null=True)
@@ -54,15 +49,9 @@ class PregnancyProfile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        # Calculate due date if not provided (40 weeks from LMP)
         if not self.estimated_due_date and self.last_menstrual_period:
-<<<<<<< HEAD
-            self.estimated_due_date = self.last_menstrual_period + timedelta(weeks=40)    
-=======
             self.estimated_due_date = self.last_menstrual_period + timedelta(weeks=40)
->>>>>>> 6991180c23a0b3df487949f7deeee69a63444ca5
 
-        # Update current trimester based on weeks pregnant
         if self.last_menstrual_period:
             weeks_pregnant = self.get_weeks_pregnant()
             if weeks_pregnant < 13:
@@ -85,11 +74,6 @@ class PregnancyProfile(models.Model):
             days_until = (self.estimated_due_date - timezone.now().date()).days
             return max(0, days_until)
         return None
-<<<<<<< HEAD
-
-    def __str__(self):
-        return f\"Pregnancy Profile - {self.mother.get_full_name()}\"
-=======
 
     def __str__(self):
         return f"Pregnancy Profile - {self.mother.get_full_name() or self.mother.username}"
@@ -241,4 +225,3 @@ class EmergencyAlert(models.Model):
 
     def __str__(self):
         return f"Emergency Alert - {self.mother.username} - {self.get_urgency_level_display()}"
->>>>>>> 6991180c23a0b3df487949f7deeee69a63444ca5
