@@ -9,6 +9,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+
 class UserProfile(models.Model):
     BLOOD_TYPES = [
         ('A+', 'A+'),
@@ -28,6 +29,7 @@ class UserProfile(models.Model):
     emergency_contact = models.CharField(max_length=100, blank=True)
     blood_type = models.CharField(max_length=3, choices=BLOOD_TYPES, blank=True)
     allergies = models.TextField(blank=True)
+    due_date = models.DateField(null=True, blank=True)  # ✅ Added this line
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
