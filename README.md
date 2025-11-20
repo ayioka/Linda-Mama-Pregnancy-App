@@ -1,6 +1,6 @@
 # Linda Mama Pregnancy App 🤰
 
-A comprehensive web-based maternal health tracking system I built to support pregnant mothers throughout their pregnancy journey from conception to delivery. This is my Flask-based web application that bridges healthcare gaps for expectant mothers in Kenya and across Africa.
+This is a comprehensive web-based maternal health tracking system I built to support pregnant mothers throughout their pregnancy journey from conception to delivery. This is my Flask-based web application that bridges healthcare gaps for expectant mothers in Kenya and across Africa.
 
 ![Linda Mama](https://img.shields.io/badge/Linda-Mama-pink) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue) ![Flask](https://img.shields.io/badge/Flask-2.3.3-green) ![License](https://img.shields.io/badge/License-MIT-yellow) ![Live](https://img.shields.io/badge/Live-Demo-success)
 
