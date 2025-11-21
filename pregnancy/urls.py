@@ -7,7 +7,6 @@ urlpatterns = [
     path('login/', views.custom_login, name='login'),
     path('logout/', views.custom_logout, name='logout'),
     path('register/', views.signup, name='register'),
-    path('signup/', views.signup, name='signup'),  # ALIAS
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
 
     # Role-based Dashboard URLs
@@ -42,6 +41,10 @@ urlpatterns = [
     path('baby-development/', views.baby_development, name='baby_development'),
     path('week-tracker/', views.week_tracker, name='week_tracker'),
     path('messaging/', views.messaging, name='messaging'),
+    
+    # ADDED NEW URLS FOR NUTRITION AND EXERCISE
+    path('nutrition/', views.nutrition, name='nutrition'),
+    path('exercise/', views.exercise, name='exercise'),
 
     # Clinician-specific URLs
     path('clinician/patients/', views.clinician_patients, name='clinician_patients'),
