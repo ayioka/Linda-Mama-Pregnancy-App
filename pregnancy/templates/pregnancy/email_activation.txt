@@ -1,0 +1,30 @@
+Hello {{ user.first_name }} {{ user.user.last_name }},
+
+Welcome to Linda Mama Pregnancy Tracker!
+
+Thank you for registering with Linda Mama Pregnancy Tracker. We're excited to help you track your pregnancy journey and provide you with valuable resources and support.
+
+ACTIVATE YOUR ACCOUNT:
+To complete your registration and start using your account, please click the link below:
+
+{{ activation_link }}
+
+This activation link will expire in 24 hours for security reasons.
+
+Once your account is activated, you'll be able to:
+- Track your pregnancy week by week
+- Monitor baby development milestones
+- Access educational resources
+- Track your health metrics
+- Connect with healthcare information
+
+NEED HELP?
+If you have any questions or need assistance, please contact our support team at support@lindamama.com
+
+If you did not register for this account, please ignore this email.
+
+Best regards,
+The Linda Mama Team
+---
+Linda Mama Pregnancy Tracker
+Your trusted companion for a healthy pregnancy
