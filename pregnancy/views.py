@@ -505,6 +505,25 @@ def messaging(request, profile):
     }
     return render(request, 'pregnancy/messaging.html', context)
 
+# ADDED NUTRITION AND EXERCISE VIEWS
+@login_required
+@get_user_profile
+def nutrition(request, profile):
+    """Nutrition information view"""
+    context = {
+        'profile': profile,
+    }
+    return render(request, 'pregnancy/nutrition.html', context)
+
+@login_required
+@get_user_profile
+def exercise(request, profile):
+    """Exercise information view"""
+    context = {
+        'profile': profile,
+    }
+    return render(request, 'pregnancy/exercise.html', context)
+
 @login_required
 def clinician_patients(request):
     """Clinician's patient list"""
