@@ -455,6 +455,56 @@ def milestone_detail(request, profile, week):
     }
     return render(request, 'pregnancy/milestone_detail.html', context)
 
+# ADDED MISSING VIEWS TO MATCH YOUR TEMPLATE FILES
+
+@login_required
+@get_user_profile
+def resources(request, profile):
+    """Educational resources view"""
+    context = {
+        'profile': profile,
+    }
+    return render(request, 'pregnancy/resources.html', context)
+
+@login_required
+@get_user_profile
+def baby_development(request, profile):
+    """Baby development information view"""
+    milestones = PregnancyMilestone.objects.all()
+    current_milestone = profile.get_current_milestone()
+    
+    context = {
+        'profile': profile,
+        'milestones': milestones,
+        'current_milestone': current_milestone,
+    }
+    return render(request, 'pregnancy/baby_development.html', context)
+
+@login_required
+@get_user_profile
+def week_tracker(request, profile):
+    """Week-by-week pregnancy tracker view"""
+    pregnancy_data = profile.calculate_pregnancy_week()
+    milestones = PregnancyMilestone.objects.all()
+    current_milestone = profile.get_current_milestone()
+    
+    context = {
+        'profile': profile,
+        'pregnancy_data': pregnancy_data,
+        'milestones': milestones,
+        'current_milestone': current_milestone,
+    }
+    return render(request, 'pregnancy/week_tracker.html', context)
+
+@login_required
+@get_user_profile
+def messaging(request, profile):
+    """Messaging view"""
+    context = {
+        'profile': profile,
+    }
+    return render(request, 'pregnancy/messaging.html', context)
+
 @login_required
 def clinician_patients(request):
     """Clinician's patient list"""
