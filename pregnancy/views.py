@@ -83,15 +83,12 @@ def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            try:
-                send_activation_email(request, user)
-                messages.success(request, 'Account created! Please check your email to activate your account.')
-                logger.info(f"Activation email sent to {user.email}")
-            except Exception as e:
-                logger.error(f"Failed to send activation email to {user.email}: {str(e)}")
-                messages.warning(request, 'Account created but we could not send activation email. Please contact support.')
-            return redirect('login')
+            user = form.save(commit=False)
+            user.is_active = True  # Allow immediate login without email activation
+            user.save()
+            login(request, user)
+            messages.success(request, f'Welcome, {user.get_full_name() or user.username}!')
+            return redirect_to_role_based_dashboard(user)
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
