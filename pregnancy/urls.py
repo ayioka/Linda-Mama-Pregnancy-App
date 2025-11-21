@@ -45,6 +45,9 @@ urlpatterns = [
     # ADDED NEW URLS FOR NUTRITION AND EXERCISE
     path('nutrition/', views.nutrition, name='nutrition'),
     path('exercise/', views.exercise, name='exercise'),
+    
+    # ADDED EMERGENCY URL
+    path('emergency/', views.emergency, name='emergency'),
 
     # Clinician-specific URLs
     path('clinician/patients/', views.clinician_patients, name='clinician_patients'),
