@@ -1,0 +1,68 @@
+{% extends 'pregnancy/base.html' %}
+
+{% block title %}Emergency Assistance - Linda Mama{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card border-warning">
+        <div class="card-header bg-warning text-white">
+            <h1 class="card-title mb-0">🚨 Emergency Assistance</h1>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <h4 class="alert-heading">Medical Emergency</h4>
+                <p class="mb-0">If you are experiencing a medical emergency, please call emergency services immediately.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Emergency Contacts</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Emergency Services:</strong> 911 or 112</li>
+                                <li><strong>Poison Control:</strong> 1-800-222-1222</li>
+                                <li><strong>Your Hospital:</strong> [Hospital Phone Number]</li>
+                                <li><strong>Your Doctor:</strong> [Doctor's Phone Number]</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">When to Seek Emergency Care</h5>
+                            <ul>
+                                <li>Severe abdominal pain</li>
+                                <li>Vaginal bleeding</li>
+                                <li>Severe headaches</li>
+                                <li>Vision changes</li>
+                                <li>Decreased fetal movement</li>
+                                <li>Contractions before 37 weeks</li>
+                                <li>Water breaking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Quick Actions</h5>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <a href="tel:911" class="btn btn-danger me-md-2">
+                            <i class="fas fa-phone"></i> Call 911
+                        </a>
+                        <a href="tel:[Your-Doctor-Number]" class="btn btn-warning me-md-2">
+                            <i class="fas fa-user-md"></i> Call Your Doctor
+                        </a>
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
