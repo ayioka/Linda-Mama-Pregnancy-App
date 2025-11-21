@@ -36,6 +36,10 @@ path('pregnancy-milestones/week/<int:week>/', views.milestone_detail, name='mile
 # Clinician-specific URLs
 path('clinician/patients/', views.clinician_patients, name='clinician_patients'),
 path('clinician/patients/<int:patient_id>/', views.clinician_patient_detail, name='clinician_patient_detail'),
+
+# Error handlers
+path('404/', views.handler404, name='404'),
+path('500/', views.handler500, name='500'),
 ```
 
 ]
