@@ -88,18 +88,18 @@ class CustomUserCreationForm(UserCreationForm):
         return username
     
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.is_active = False  # Require email activation
-        
-        if commit:
-            user.save()
-            # Create user profile
-            UserProfile.objects.create(user=user)
-        
-        return user
+    user = super().save(commit=False)
+    user.email = self.cleaned_data['email']
+    user.first_name = self.cleaned_data['first_name']
+    user.last_name = self.cleaned_data['last_name']
+    user.is_active = False  # Require email activation
+    
+    if commit:
+        user.save()
+        # Create user profile only if it doesn't exist
+        UserProfile.objects.get_or_create(user=user)
+    
+    return user
 
 
 class CustomAuthenticationForm(AuthenticationForm):
