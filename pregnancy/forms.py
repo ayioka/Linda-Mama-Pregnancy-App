@@ -1,10 +1,9 @@
-```python
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from .models import UserProfile, Appointment, HealthMetric, PregnancyMilestone
 
 User = get_user_model()
@@ -536,4 +535,3 @@ class AppointmentStatusForm(forms.ModelForm):
             'is_completed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
-```
