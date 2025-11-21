@@ -1,11 +1,11 @@
 # pregnancy/context_processors.py
 
-def global_settings(request):
+from django.conf import settings
+
+def app_settings(request):
     """
     Makes global settings available in all templates
     """
-    from django.conf import settings
-    
     return {
         'APP_NAME': 'Linda Mama Pregnancy Tracker',
         'DEBUG': settings.DEBUG,
