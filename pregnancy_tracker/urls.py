@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth import views as auth_views
 from pregnancy import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -11,10 +10,12 @@ urlpatterns = [
     
     # Authentication URLs
     path('login/', views.custom_login, name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    path('logout/', views.custom_logout, name='logout'),
     path('signup/', views.signup, name='signup'),
-    path('profile/', views.profile, name='profile'),
-    path('dashboard/', views.dashboard, name='dashboard'),
+    
+    # Profile & Dashboard URLs
+    path('profile/', views.profile_view, name='profile'),  # updated
+    path('dashboard/', views.patient_dashboard, name='dashboard'),  # updated
     
     # Pregnancy app URLs
     path('pregnancy/', include('pregnancy.urls')),
