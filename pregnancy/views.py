@@ -524,6 +524,16 @@ def exercise(request, profile):
     }
     return render(request, 'pregnancy/exercise.html', context)
 
+# ADDED EMERGENCY VIEW
+@login_required
+@get_user_profile
+def emergency(request, profile):
+    """Emergency assistance view"""
+    context = {
+        'profile': profile,
+    }
+    return render(request, 'pregnancy/emergency.html', context)
+
 @login_required
 def clinician_patients(request):
     """Clinician's patient list"""
