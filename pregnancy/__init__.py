@@ -6,3 +6,6 @@ week-by-week development information.
 """
 
 default_app_config = 'pregnancy.apps.PregnancyConfig'
+
+# Import signals
+from . import signals
