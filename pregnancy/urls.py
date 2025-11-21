@@ -32,6 +32,12 @@ urlpatterns = [
     path('pregnancy-milestones/', views.pregnancy_milestones, name='pregnancy_milestones'),
     path('pregnancy-milestones/week/<int:week>/', views.milestone_detail, name='milestone_detail'),
 
+    # ADDED MISSING URL PATTERNS FOR YOUR TEMPLATES
+    path('resources/', views.resources, name='resources'),
+    path('baby-development/', views.baby_development, name='baby_development'),
+    path('week-tracker/', views.week_tracker, name='week_tracker'),
+    path('messaging/', views.messaging, name='messaging'),
+
     # Clinician-specific URLs
     path('clinician/patients/', views.clinician_patients, name='clinician_patients'),
     path('clinician/patients/<int:patient_id>/', views.clinician_patient_detail, name='clinician_patient_detail'),
