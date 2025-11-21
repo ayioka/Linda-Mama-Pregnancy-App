@@ -13,12 +13,11 @@ urlpatterns = [
     path('logout/', views.custom_logout, name='logout'),
     path('signup/', views.signup, name='signup'),
     
-    # Profile & Dashboard URLs
-    path('profile/', views.profile_view, name='profile'),  # updated
-    path('dashboard/', views.patient_dashboard, name='dashboard'),  # updated
+    # Activation URL
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
     
-    # Pregnancy app URLs
-    path('pregnancy/', include('pregnancy.urls')),
+    # Pregnancy app URLs - this will include all other URLs
+    path('', include('pregnancy.urls')),
 ]
 
 if settings.DEBUG:
