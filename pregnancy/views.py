@@ -83,12 +83,14 @@ def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = True  # Allow immediate login without email activation
-            user.save()
-            login(request, user)
-            messages.success(request, f'Welcome, {user.get_full_name() or user.username}!')
-            return redirect_to_role_based_dashboard(user)
+            user = form.save()
+            
+            # Don't log in the user immediately - redirect to login page with success message
+            messages.success(
+                request, 
+                'Account created successfully! Please log in to continue.'
+            )
+            return redirect('login')
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
@@ -129,7 +131,11 @@ def activate(request, uidb64, token):
             user.is_active = True
             user.save()
         profile, created = UserProfile.objects.get_or_create(user=user)
+        
+        # Set the backend attribute before login
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
         login(request, user)
+        
         try:
             send_welcome_email(request, user)
         except Exception as e:
