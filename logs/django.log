@@ -4017,3 +4017,211 @@ INFO 2025-11-08 22:37:07,648 basehttp 4276 10208 "GET /login/ HTTP/1.1" 302 0
 INFO 2025-11-08 22:37:07,691 basehttp 4276 10208 "GET /dashboard/ HTTP/1.1" 200 15160
 INFO 2025-11-08 22:37:18,707 basehttp 4276 10208 "GET /pregnancy/appointments/ HTTP/1.1" 200 31850
 INFO 2025-11-08 22:47:55,701 autoreload 4276 8128 C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy_tracker\settings.py changed, reloading.
+WARNING 2025-11-21 15:19:34,582 apps 608 7104 Could not import pregnancy signals: No module named 'pregnancy.signals'
+ERROR 2025-11-21 15:19:34,642 apps 608 7104 Error initializing default data: no such table: pregnancy_milestone
+INFO 2025-11-21 15:19:34,642 apps 608 7104 Pregnancy app admin setup completed
+WARNING 2025-11-21 15:19:37,180 apps 9412 20208 Could not import pregnancy signals: No module named 'pregnancy.signals'
+ERROR 2025-11-21 15:19:37,186 apps 9412 20208 Error initializing default data: no such table: pregnancy_milestone
+INFO 2025-11-21 15:19:37,187 apps 9412 20208 Pregnancy app admin setup completed
+WARNING 2025-11-21 15:19:52,048 apps 9616 15556 Could not import pregnancy signals: No module named 'pregnancy.signals'
+INFO 2025-11-21 15:19:52,102 apps 9616 15556 Default pregnancy milestones created
+INFO 2025-11-21 15:19:52,103 apps 9616 15556 Pregnancy app admin setup completed
+WARNING 2025-11-21 15:19:53,001 apps 12428 420 Could not import pregnancy signals: No module named 'pregnancy.signals'
+INFO 2025-11-21 15:19:53,009 apps 12428 420 Pregnancy app admin setup completed
+INFO 2025-11-21 15:19:53,046 autoreload 12428 420 Watching for file changes with StatReloader
+WARNING 2025-11-21 15:20:31,133 apps 6112 14544 Could not import pregnancy signals: No module named 'pregnancy.signals'
+INFO 2025-11-21 15:20:31,141 apps 6112 14544 Pregnancy app admin setup completed
+WARNING 2025-11-21 15:20:32,000 apps 21388 11528 Could not import pregnancy signals: No module named 'pregnancy.signals'
+INFO 2025-11-21 15:20:32,007 apps 21388 11528 Pregnancy app admin setup completed
+INFO 2025-11-21 15:20:32,050 autoreload 21388 11528 Watching for file changes with StatReloader
+INFO 2025-11-21 15:20:44,451 basehttp 21388 18320 "GET / HTTP/1.1" 200 11195
+INFO 2025-11-21 15:20:44,769 basehttp 21388 3204 "GET /static/js/navigation.js HTTP/1.1" 200 1689
+INFO 2025-11-21 15:20:44,871 basehttp 21388 11900 "GET /static/js/actions.js HTTP/1.1" 200 6440
+INFO 2025-11-21 15:20:44,871 basehttp 21388 8128 "GET /static/js/dashboard.js HTTP/1.1" 200 5579
+INFO 2025-11-21 15:20:44,871 basehttp 21388 18320 "GET /static/js/utils.js HTTP/1.1" 200 5011
+INFO 2025-11-21 15:20:44,890 basehttp 21388 3204 "GET /static/js/main.js HTTP/1.1" 200 4036
+INFO 2025-11-21 15:20:44,893 basehttp 21388 80 "GET /static/js/auth.js HTTP/1.1" 200 4462
+WARNING 2025-11-21 15:20:45,481 basehttp 21388 80 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 15:20:45,531 basehttp 21388 80 "GET /sw.js HTTP/1.1" 404 3510
+WARNING 2025-11-21 15:20:45,799 basehttp 21388 80 "GET /favicon.ico HTTP/1.1" 404 3528
+INFO 2025-11-21 15:20:48,354 basehttp 21388 80 "GET /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 15:20:48,397 basehttp 21388 80 "GET /pregnancy/dashboard/ HTTP/1.1" 200 15203
+INFO 2025-11-21 15:20:53,199 basehttp 21388 80 "GET /pregnancy/ HTTP/1.1" 200 11195
+WARNING 2025-11-21 15:20:53,554 basehttp 21388 80 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 15:20:53,594 basehttp 21388 80 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-21 15:20:55,053 basehttp 21388 80 "GET /signup/ HTTP/1.1" 302 0
+INFO 2025-11-21 15:20:55,082 basehttp 21388 80 "GET /pregnancy/dashboard/ HTTP/1.1" 200 15203
+INFO 2025-11-21 15:25:56,931 basehttp 21388 11944 "GET /pregnancy/resources/ HTTP/1.1" 200 42897
+INFO 2025-11-21 15:26:00,902 basehttp 21388 11944 "GET /pregnancy/week-tracker/ HTTP/1.1" 200 26102
+INFO 2025-11-21 15:26:21,896 basehttp 21388 11944 "POST /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 15:26:21,905 basehttp 21388 11944 "GET /pregnancy/ HTTP/1.1" 200 11195
+WARNING 2025-11-21 15:26:22,313 basehttp 21388 11944 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 15:26:22,419 basehttp 21388 11944 "GET /sw.js HTTP/1.1" 404 3510
+ERROR 2025-11-21 15:26:24,469 basehttp 21388 11944 "GET /signup/ HTTP/1.1" 500 92502
+WARNING 2025-11-21 15:27:05,428 basehttp 21388 11944 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-21 15:27:10,024 basehttp 21388 11944 "GET /login/ HTTP/1.1" 200 4965
+INFO 2025-11-21 15:27:25,878 basehttp 21388 11944 "GET /pregnancy/login/ HTTP/1.1" 200 4965
+INFO 2025-11-21 15:27:41,068 basehttp 21388 11944 "POST /pregnancy/login/ HTTP/1.1" 302 0
+INFO 2025-11-21 15:27:41,097 basehttp 21388 11944 "GET /pregnancy/dashboard/ HTTP/1.1" 200 15409
+WARNING 2025-11-21 15:31:15,670 apps 8976 10836 Could not import pregnancy signals: No module named 'pregnancy.signals'
+INFO 2025-11-21 15:31:15,676 apps 8976 10836 Pregnancy app admin setup completed
+WARNING 2025-11-21 15:34:33,835 apps 19920 9856 Could not import pregnancy signals: No module named 'pregnancy.signals'
+INFO 2025-11-21 15:34:33,841 apps 19920 9856 Pregnancy app admin setup completed
+WARNING 2025-11-21 15:36:25,906 apps 976 14612 Could not import pregnancy signals: No module named 'pregnancy.signals'
+INFO 2025-11-21 15:36:25,912 apps 976 14612 Pregnancy app admin setup completed
+WARNING 2025-11-21 15:41:41,414 apps 6552 19088 Could not import pregnancy signals: No module named 'pregnancy.signals'
+ERROR 2025-11-21 15:41:41,415 apps 6552 19088 Error initializing default data: cannot import name 'PregnancyMilestone' from 'pregnancy.models' (C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\models.py)
+INFO 2025-11-21 15:41:41,415 apps 6552 19088 Pregnancy app admin setup completed
+WARNING 2025-11-21 16:14:48,808 apps 9444 2188 Could not import pregnancy signals: No module named 'pregnancy.signals'
+INFO 2025-11-21 16:14:48,832 apps 9444 2188 Pregnancy app admin setup completed
+INFO 2025-11-21 16:40:50,691 apps 14380 16188 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:44:46,948 apps 7576 2032 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:47:04,018 apps 18416 12524 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:51:35,582 apps 17328 18564 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:54:50,038 apps 11564 9844 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:55:21,049 apps 11588 17420 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:55:58,523 apps 13808 6208 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:56:25,845 apps 14564 8608 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:56:26,593 apps 14436 3512 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:56:26,628 autoreload 14436 3512 Watching for file changes with StatReloader
+ERROR 2025-11-21 16:56:39,215 basehttp 14436 9376 "GET / HTTP/1.1" 500 173084
+INFO 2025-11-21 16:57:47,295 apps 11360 20964 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:59:20,982 apps 20992 13876 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:59:31,945 apps 13480 14248 Pregnancy app signals imported successfully
+INFO 2025-11-21 16:59:51,635 apps 9604 10680 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:00:30,587 apps 5848 1340 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:00:31,307 apps 8948 124 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:00:31,341 autoreload 8948 124 Watching for file changes with StatReloader
+INFO 2025-11-21 17:00:41,990 basehttp 8948 16192 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-21 17:00:42,528 basehttp 8948 16192 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 17:00:42,625 basehttp 8948 16192 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-21 17:00:46,886 basehttp 8948 16192 "GET /login/ HTTP/1.1" 200 4965
+INFO 2025-11-21 17:00:58,980 basehttp 8948 16192 "POST /login/ HTTP/1.1" 200 5509
+INFO 2025-11-21 17:01:10,863 basehttp 8948 16192 "POST /login/ HTTP/1.1" 200 5509
+ERROR 2025-11-21 17:01:13,322 basehttp 8948 16192 "GET /signup/ HTTP/1.1" 500 92719
+INFO 2025-11-21 17:08:35,675 basehttp 8948 736 "POST /login/ HTTP/1.1" 200 5509
+ERROR 2025-11-21 17:08:46,705 basehttp 8948 736 "GET /signup/ HTTP/1.1" 500 92719
+INFO 2025-11-21 17:10:27,886 apps 19656 18468 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:10:28,592 apps 12672 19500 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:10:28,625 autoreload 12672 19500 Watching for file changes with StatReloader
+INFO 2025-11-21 17:10:34,870 basehttp 12672 7936 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-21 17:10:35,527 basehttp 12672 7936 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 17:10:35,598 basehttp 12672 7936 "GET /sw.js HTTP/1.1" 404 3510
+ERROR 2025-11-21 17:10:37,354 basehttp 12672 7936 "GET /signup/ HTTP/1.1" 500 129092
+INFO 2025-11-21 17:19:17,326 apps 17588 13104 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:19:18,122 apps 12944 6112 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:19:18,156 autoreload 12944 6112 Watching for file changes with StatReloader
+INFO 2025-11-21 17:19:23,558 basehttp 12944 6124 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-21 17:19:24,239 basehttp 12944 6124 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 17:19:24,382 basehttp 12944 6124 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-21 17:19:27,557 basehttp 12944 6124 "GET /signup/ HTTP/1.1" 200 12937
+WARNING 2025-11-21 17:19:28,142 basehttp 12944 6124 "GET /static/images/favicon.ico HTTP/1.1" 404 1868
+INFO 2025-11-21 17:20:06,007 basehttp 12944 8352 "POST /signup/ HTTP/1.1" 200 12952
+ERROR 2025-11-21 17:20:57,359 basehttp 12944 8352 "POST /signup/ HTTP/1.1" 500 186915
+ERROR 2025-11-21 17:24:38,447 basehttp 12944 8352 "POST /signup/ HTTP/1.1" 500 187020
+INFO 2025-11-21 17:25:12,803 basehttp 12944 8352 "GET /pregnancy/login/ HTTP/1.1" 200 4965
+INFO 2025-11-21 17:25:29,467 basehttp 12944 8352 "POST /pregnancy/login/ HTTP/1.1" 200 5509
+INFO 2025-11-21 17:25:50,818 basehttp 12944 8352 "POST /pregnancy/login/ HTTP/1.1" 200 5507
+INFO 2025-11-21 17:35:27,220 apps 21192 10876 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:35:28,006 apps 18500 10184 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:35:28,043 autoreload 18500 10184 Watching for file changes with StatReloader
+INFO 2025-11-21 17:38:35,153 apps 14896 21240 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:38:35,862 apps 3900 7008 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:38:35,894 autoreload 3900 7008 Watching for file changes with StatReloader
+INFO 2025-11-21 17:45:17,791 apps 16324 17112 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:45:18,501 apps 7804 19452 Pregnancy app signals imported successfully
+INFO 2025-11-21 17:45:18,534 autoreload 7804 19452 Watching for file changes with StatReloader
+INFO 2025-11-21 17:45:25,473 basehttp 7804 3160 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-21 17:45:26,146 basehttp 7804 3160 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 17:45:26,242 basehttp 7804 3160 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-21 17:45:28,034 basehttp 7804 3160 "GET /signup/ HTTP/1.1" 200 12937
+INFO 2025-11-21 17:46:19,128 basehttp 7804 17100 "POST /signup/ HTTP/1.1" 200 12954
+INFO 2025-11-21 17:46:47,879 basehttp 7804 12160 "POST /signup/ HTTP/1.1" 200 13085
+ERROR 2025-11-21 17:47:16,194 basehttp 7804 12160 "POST /signup/ HTTP/1.1" 500 90089
+INFO 2025-11-21 17:52:15,155 basehttp 7804 20232 "GET /pregnancy/login/ HTTP/1.1" 200 4965
+INFO 2025-11-21 17:52:26,847 basehttp 7804 19804 "POST /pregnancy/login/ HTTP/1.1" 200 5509
+INFO 2025-11-21 17:53:12,494 basehttp 7804 17400 "GET /signup/ HTTP/1.1" 200 12937
+INFO 2025-11-21 17:53:20,033 basehttp 7804 17400 "GET /pregnancy/login/ HTTP/1.1" 200 4965
+INFO 2025-11-21 17:54:52,554 basehttp 7804 21004 "POST /signup/ HTTP/1.1" 200 12954
+INFO 2025-11-21 17:55:18,928 basehttp 7804 17592 "POST /signup/ HTTP/1.1" 200 13119
+ERROR 2025-11-21 17:55:51,388 basehttp 7804 7828 "POST /signup/ HTTP/1.1" 500 90108
+INFO 2025-11-21 18:01:07,728 apps 4888 6140 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:01:08,556 apps 13148 19372 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:01:08,589 autoreload 13148 19372 Watching for file changes with StatReloader
+INFO 2025-11-21 18:01:18,583 basehttp 13148 22164 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-21 18:01:19,329 basehttp 13148 22164 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 18:01:19,354 basehttp 13148 22164 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-21 18:01:22,484 basehttp 13148 22164 "GET /signup/ HTTP/1.1" 200 12937
+INFO 2025-11-21 18:02:14,935 basehttp 13148 17476 "POST /signup/ HTTP/1.1" 200 12959
+INFO 2025-11-21 18:03:08,989 basehttp 13148 7496 "POST /signup/ HTTP/1.1" 302 0
+INFO 2025-11-21 18:03:08,999 basehttp 13148 7496 "GET /pregnancy/login/ HTTP/1.1" 200 5247
+INFO 2025-11-21 18:03:57,450 basehttp 13148 7496 "POST /pregnancy/login/ HTTP/1.1" 200 5509
+INFO 2025-11-21 18:05:18,897 apps 10676 20044 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:07:29,115 apps 21156 11148 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:07:49,444 apps 10264 20636 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:08:15,993 apps 3408 12136 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:08:16,801 apps 17928 17192 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:08:16,836 autoreload 17928 17192 Watching for file changes with StatReloader
+INFO 2025-11-21 18:08:23,559 basehttp 17928 21312 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-21 18:08:24,139 basehttp 17928 21312 "GET /api/auth/status/ HTTP/1.1" 404 3543
+WARNING 2025-11-21 18:08:24,245 basehttp 17928 21312 "GET /sw.js HTTP/1.1" 404 3510
+INFO 2025-11-21 18:08:27,260 basehttp 17928 21312 "GET /login/ HTTP/1.1" 200 4965
+INFO 2025-11-21 18:08:54,136 basehttp 17928 3816 "POST /login/ HTTP/1.1" 302 0
+ERROR 2025-11-21 18:08:54,203 basehttp 17928 3816 "GET /pregnancy/dashboard/ HTTP/1.1" 500 105022
+INFO 2025-11-21 18:10:58,582 apps 10216 9856 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:10:59,359 apps 11148 18672 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:10:59,391 autoreload 11148 18672 Watching for file changes with StatReloader
+INFO 2025-11-21 18:11:04,891 basehttp 11148 4212 "GET / HTTP/1.1" 302 0
+ERROR 2025-11-21 18:11:05,162 basehttp 11148 4212 "GET /pregnancy/dashboard/ HTTP/1.1" 500 143332
+INFO 2025-11-21 18:26:50,146 apps 8212 21288 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:26:50,873 apps 10604 13192 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:26:50,907 autoreload 10604 13192 Watching for file changes with StatReloader
+INFO 2025-11-21 18:26:58,988 basehttp 10604 5564 "GET / HTTP/1.1" 302 0
+ERROR 2025-11-21 18:26:59,243 basehttp 10604 5564 "GET /dashboard/ HTTP/1.1" 500 143128
+INFO 2025-11-21 18:30:56,045 apps 22072 18940 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:30:56,788 apps 12424 6760 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:30:56,823 autoreload 12424 6760 Watching for file changes with StatReloader
+INFO 2025-11-21 18:31:13,653 basehttp 12424 14960 "GET / HTTP/1.1" 302 0
+ERROR 2025-11-21 18:31:13,889 basehttp 12424 14960 "GET /dashboard/ HTTP/1.1" 500 142427
+INFO 2025-11-21 18:34:08,693 apps 11720 924 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:34:09,456 apps 17832 19160 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:34:09,491 autoreload 17832 19160 Watching for file changes with StatReloader
+INFO 2025-11-21 18:34:15,684 basehttp 17832 1668 "GET / HTTP/1.1" 302 0
+ERROR 2025-11-21 18:34:15,933 basehttp 17832 1668 "GET /dashboard/ HTTP/1.1" 500 142222
+INFO 2025-11-21 18:45:55,817 apps 14868 14592 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:45:56,537 apps 14552 15932 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:45:56,573 autoreload 14552 15932 Watching for file changes with StatReloader
+INFO 2025-11-21 18:46:01,856 basehttp 14552 14220 "GET / HTTP/1.1" 302 0
+ERROR 2025-11-21 18:46:02,101 basehttp 14552 14220 "GET /dashboard/ HTTP/1.1" 500 141702
+INFO 2025-11-21 18:54:31,687 apps 7672 8364 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:54:32,407 apps 11352 19768 Pregnancy app signals imported successfully
+INFO 2025-11-21 18:54:32,440 autoreload 11352 19768 Watching for file changes with StatReloader
+INFO 2025-11-21 18:54:37,822 basehttp 11352 12636 "GET / HTTP/1.1" 302 0
+INFO 2025-11-21 18:54:37,874 basehttp 11352 12636 "GET /dashboard/ HTTP/1.1" 200 14687
+INFO 2025-11-21 18:54:44,981 basehttp 11352 12636 "GET /profile/ HTTP/1.1" 200 27276
+INFO 2025-11-21 18:54:51,358 basehttp 11352 12636 "GET /dashboard/ HTTP/1.1" 200 14687
+INFO 2025-11-21 18:54:54,372 basehttp 11352 12636 "GET /resources/ HTTP/1.1" 200 42807
+INFO 2025-11-21 18:55:00,536 basehttp 11352 12636 "POST /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 18:55:00,543 basehttp 11352 12636 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-21 18:55:00,791 basehttp 11352 12636 "GET /api/auth/status/ HTTP/1.1" 404 11743
+WARNING 2025-11-21 18:55:00,884 basehttp 11352 12636 "GET /sw.js HTTP/1.1" 404 11710
+INFO 2025-11-21 19:08:51,023 basehttp 11352 15860 "GET / HTTP/1.1" 200 11195
+WARNING 2025-11-21 19:08:51,679 basehttp 11352 15860 "GET /api/auth/status/ HTTP/1.1" 404 11743
+WARNING 2025-11-21 19:08:51,810 basehttp 11352 15860 "GET /sw.js HTTP/1.1" 404 11710
+INFO 2025-11-21 19:08:53,488 basehttp 11352 15860 "GET /login/ HTTP/1.1" 200 5209
+INFO 2025-11-21 19:09:06,436 basehttp 11352 15860 "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 19:09:06,455 basehttp 11352 15860 "GET /dashboard/ HTTP/1.1" 200 14893
+INFO 2025-11-21 19:13:11,844 basehttp 11352 15860 "GET /resources/ HTTP/1.1" 200 42807
+INFO 2025-11-21 19:13:15,092 basehttp 11352 15860 "GET /health-metrics/ HTTP/1.1" 200 26625
+INFO 2025-11-21 19:13:25,286 basehttp 11352 15860 "GET /dashboard/ HTTP/1.1" 200 14687
+INFO 2025-11-21 19:13:32,338 basehttp 11352 15860 "GET /exercise/ HTTP/1.1" 200 6502
+INFO 2025-11-21 19:13:45,076 basehttp 11352 15860 "GET /dashboard/ HTTP/1.1" 200 14687
+INFO 2025-11-21 19:13:48,411 basehttp 11352 15860 "GET /nutrition/ HTTP/1.1" 200 6502
+INFO 2025-11-21 19:13:56,221 basehttp 11352 15860 "GET /nutrition/ HTTP/1.1" 200 6502
+INFO 2025-11-21 19:13:58,422 basehttp 11352 15860 "GET /dashboard/ HTTP/1.1" 200 14687
+INFO 2025-11-22 15:40:14,252 basehttp 11352 23384 "GET / HTTP/1.1" 302 0
+INFO 2025-11-22 15:40:14,383 basehttp 11352 23384 "GET /dashboard/ HTTP/1.1" 200 14687
+WARNING 2025-11-22 15:40:15,569 basehttp 11352 23384 "GET /favicon.ico HTTP/1.1" 404 11728
+INFO 2025-11-22 15:40:24,671 basehttp 11352 23384 "GET /dashboard/ HTTP/1.1" 200 14687
+INFO 2025-11-22 15:40:25,633 basehttp 11352 23384 "GET /profile/ HTTP/1.1" 200 27249
+INFO 2025-11-22 15:41:25,516 basehttp 11352 23384 "GET /resources/ HTTP/1.1" 200 42807

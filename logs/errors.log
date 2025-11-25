@@ -1,0 +1,623 @@
+ERROR 2025-11-21 15:26:24,457 log 21388 11944 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 91, in signup
+    return render(request, 'pregnancy/register.html', {'form': form})
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: pregnancy/register.html
+ERROR 2025-11-21 15:26:24,469 basehttp 21388 11944 "GET /signup/ HTTP/1.1" 500 92502
+ERROR 2025-11-21 16:56:39,201 log 14436 9376 Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: pregnancy_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 35, in home
+    if request.user.is_authenticated:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\utils\functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+                    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\middleware.py", line 40, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\middleware.py", line 20, in get_user
+    request._cached_user = auth.get_user(request)
+                           ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\__init__.py", line 311, in get_user
+    user = backend.get_user(user_id)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\backends.py", line 232, in get_user
+    user = UserModel._default_manager.get(pk=user_id)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\query.py", line 631, in get
+    num = len(clone)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\query.py", line 368, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\query.py", line 1954, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\query.py", line 93, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: pregnancy_user
+ERROR 2025-11-21 16:56:39,215 basehttp 14436 9376 "GET / HTTP/1.1" 500 173084
+ERROR 2025-11-21 17:01:13,315 log 8948 16192 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 100, in signup
+    return render(request, 'pregnancy/register.html', {'form': form})
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: pregnancy/register.html
+ERROR 2025-11-21 17:01:13,322 basehttp 8948 16192 "GET /signup/ HTTP/1.1" 500 92719
+ERROR 2025-11-21 17:08:46,699 log 8948 736 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 100, in signup
+    return render(request, 'pregnancy/register.html', {'form': form})
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: pregnancy/register.html
+ERROR 2025-11-21 17:08:46,705 basehttp 8948 736 "GET /signup/ HTTP/1.1" 500 92719
+ERROR 2025-11-21 17:10:37,339 log 12672 7936 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 100, in signup
+    return render(request, 'pregnancy/register.html', {'form': form})
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'emergency' not found. 'emergency' is not a valid view function or pattern name.
+ERROR 2025-11-21 17:10:37,354 basehttp 12672 7936 "GET /signup/ HTTP/1.1" 500 129092
+ERROR 2025-11-21 17:20:57,338 log 12944 8352 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: user_profile.user_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 86, in signup
+    user = form.save()
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\forms.py", line 100, in save
+    UserProfile.objects.create(user=user)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\query.py", line 665, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\models.py", line 150, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1882, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: user_profile.user_id
+ERROR 2025-11-21 17:20:57,359 basehttp 12944 8352 "POST /signup/ HTTP/1.1" 500 186915
+ERROR 2025-11-21 17:24:38,438 log 12944 8352 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: user_profile.user_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 86, in signup
+    user = form.save()
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\forms.py", line 100, in save
+    UserProfile.objects.create(user=user)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\query.py", line 665, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\models.py", line 150, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1882, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: user_profile.user_id
+ERROR 2025-11-21 17:24:38,447 basehttp 12944 8352 "POST /signup/ HTTP/1.1" 500 187020
+ERROR 2025-11-21 17:47:16,187 log 7804 12160 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\__init__.py", line 57, in _get_backend_from_user
+    backend = backend or user.backend
+                         ^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'backend'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 89, in signup
+    login(request, user)
+    ~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\__init__.py", line 189, in login
+    backend = _get_backend_from_user(user=user, backend=backend)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\__init__.py", line 63, in _get_backend_from_user
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: You have multiple authentication backends configured and therefore must provide the `backend` argument or set the `backend` attribute on the user.
+ERROR 2025-11-21 17:47:16,194 basehttp 7804 12160 "POST /signup/ HTTP/1.1" 500 90089
+ERROR 2025-11-21 17:55:51,383 log 7804 7828 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\__init__.py", line 57, in _get_backend_from_user
+    backend = backend or user.backend
+                         ^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'backend'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 89, in signup
+    login(request, user)
+    ~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\__init__.py", line 189, in login
+    backend = _get_backend_from_user(user=user, backend=backend)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\__init__.py", line 63, in _get_backend_from_user
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: You have multiple authentication backends configured and therefore must provide the `backend` argument or set the `backend` attribute on the user.
+ERROR 2025-11-21 17:55:51,388 basehttp 7804 7828 "POST /signup/ HTTP/1.1" 500 90108
+ERROR 2025-11-21 18:08:54,198 log 17928 3816 Internal Server Error: /pregnancy/dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 30, in wrapper
+    return view_func(request, profile, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 200, in patient_dashboard
+    return render(request, 'pregnancy/patient_dashboard.html', context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: pregnancy/patient_dashboard.html
+ERROR 2025-11-21 18:08:54,203 basehttp 17928 3816 "GET /pregnancy/dashboard/ HTTP/1.1" 500 105022
+ERROR 2025-11-21 18:11:05,137 log 11148 4212 Internal Server Error: /pregnancy/dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 30, in wrapper
+    return view_func(request, profile, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 200, in patient_dashboard
+    return render(request, 'pregnancy/patient_dashboard.html', context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'resources' not found. 'resources' is not a valid view function or pattern name.
+ERROR 2025-11-21 18:11:05,162 basehttp 11148 4212 "GET /pregnancy/dashboard/ HTTP/1.1" 500 143332
+ERROR 2025-11-21 18:26:59,219 log 10604 5564 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 30, in wrapper
+    return view_func(request, profile, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 200, in patient_dashboard
+    return render(request, 'pregnancy/patient_dashboard.html', context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashboard' is not a valid view function or pattern name.
+ERROR 2025-11-21 18:26:59,243 basehttp 10604 5564 "GET /dashboard/ HTTP/1.1" 500 143128
+ERROR 2025-11-21 18:31:13,868 log 12424 14960 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 30, in wrapper
+    return view_func(request, profile, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 200, in patient_dashboard
+    return render(request, 'pregnancy/patient_dashboard.html', context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'appointments' not found. 'appointments' is not a valid view function or pattern name.
+ERROR 2025-11-21 18:31:13,889 basehttp 12424 14960 "GET /dashboard/ HTTP/1.1" 500 142427
+ERROR 2025-11-21 18:34:15,922 log 17832 1668 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 30, in wrapper
+    return view_func(request, profile, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 200, in patient_dashboard
+    return render(request, 'pregnancy/patient_dashboard.html', context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'nutrition' not found. 'nutrition' is not a valid view function or pattern name.
+ERROR 2025-11-21 18:34:15,933 basehttp 17832 1668 "GET /dashboard/ HTTP/1.1" 500 142222
+ERROR 2025-11-21 18:46:02,081 log 14552 14220 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 30, in wrapper
+    return view_func(request, profile, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\pregnancy\views.py", line 200, in patient_dashboard
+    return render(request, 'pregnancy/patient_dashboard.html', context)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\peace\Linda-Mama-Pregrancy-App\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'emergency' not found. 'emergency' is not a valid view function or pattern name.
+ERROR 2025-11-21 18:46:02,101 basehttp 14552 14220 "GET /dashboard/ HTTP/1.1" 500 141702
