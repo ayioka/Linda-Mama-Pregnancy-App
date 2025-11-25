@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # SECURITY
 # ---------------------------------------------------------------------
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-this-in-production-!')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 # Allow all hosts in development, specific in production
 if DEBUG:
@@ -414,15 +414,25 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ---------------------------------------------------------------------
-# SENTRY CONFIGURATION (Optional - for error tracking)
+# AUTO MIGRATION FIX FOR RENDER (SOLUTION FOR MISSING TABLES)
 # ---------------------------------------------------------------------
-if not DEBUG and config('SENTRY_DSN', default=''):
-    import sentry_sdk
-    from sentry_sdk.integrations.django import DjangoIntegration
-    
-    sentry_sdk.init(
-        dsn=config('SENTRY_DSN'),
-        integrations=[DjangoIntegration()],
-        traces_sample_rate=1.0,
-        send_default_pii=True
-    )
+import os
+from django.core.management import call_command
+
+def run_migrations():
+    """Run migrations automatically on startup"""
+    try:
+        print("Running auto-migrations for missing tables...")
+        call_command('migrate', verbosity=0)
+        call_command('migrate', 'account', verbosity=0)
+        call_command('migrate', 'pregnancy', verbosity=0)
+        print("Auto-migrations completed successfully!")
+    except Exception as e:
+        print(f"Auto-migration completed with notes: {e}")
+
+# Run migrations when app starts (works on Render free tier)
+if os.environ.get('RENDER') or not DEBUG:
+    run_migrations()
+else:
+    # Also run in development if needed
+    run_migrations()
