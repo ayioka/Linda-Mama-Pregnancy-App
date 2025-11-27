@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>LindaMama - Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -92,6 +93,9 @@
       font-size: 0.875rem;
       color: #6c757d;
     }
+    .trimester-1 { background: linear-gradient(135deg, #4CAF50, #8BC34A); }
+    .trimester-2 { background: linear-gradient(135deg, #FF9800, #FFC107); }
+    .trimester-3 { background: linear-gradient(135deg, #F44336, #E91E63); }
   </style>
 </head>
 <body class="bg-light">
@@ -147,27 +151,46 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="card-title mb-0">Your Pregnancy Progress</h5>
-            {% if profile.due_date %}
-              <span id="current-week" class="week-indicator">Week {{ current_week }}</span>
+            {% if profile and profile.last_menstrual_period %}
+              {% with week_data=profile.calculate_pregnancy_week %}
+                <span class="week-indicator">Week {{ week_data.week|default:"0" }}</span>
+              {% endwith %}
             {% else %}
-              <span class="week-indicator">Set due date in profile</span>
+              <span class="week-indicator bg-secondary">Set LMP in profile</span>
             {% endif %}
           </div>
-          {% if profile.due_date %}
-          <div class="progress mb-2">
-            <div id="pregnancy-progress" class="progress-bar" role="progressbar" style="width: {{ progress_percentage }}%;" aria-valuenow="{{ progress_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-          <div class="d-flex justify-content-between text-muted small">
-            <span>Week 1</span>
-            <span>{{ current_trimester }}</span>
-            <span>Week 40</span>
-          </div>
-          <div class="mt-2 text-center">
-            <small class="text-muted">Due Date: {{ profile.due_date|date:"F d, Y" }}</small>
-          </div>
+          
+          {% if profile and profile.last_menstrual_period %}
+            {% with progress=profile.get_pregnancy_progress week_data=profile.calculate_pregnancy_week trimester=profile.get_trimester %}
+            <div class="progress mb-2">
+              <div class="progress-bar" role="progressbar" 
+                   style="width: {{ progress }}%;" 
+                   aria-valuenow="{{ progress }}" 
+                   aria-valuemin="0" aria-valuemax="100">
+              </div>
+            </div>
+            <div class="d-flex justify-content-between text-muted small">
+              <span>Week 1</span>
+              <span>
+                {% if trimester %}
+                  {{ trimester.name }}
+                {% else %}
+                  Trimester
+                {% endif %}
+              </span>
+              <span>Week 40</span>
+            </div>
+            <div class="mt-2 text-center">
+              <small class="text-muted">
+                Due Date: {{ profile.due_date|date:"F d, Y"|default:"Calculating..." }} | 
+                {{ progress|floatformat:0 }}% Complete | 
+                Week {{ week_data.week }} Day {{ week_data.day }}
+              </small>
+            </div>
+            {% endwith %}
           {% else %}
           <div class="text-center py-3">
-            <p class="text-muted mb-3">Set your due date to track your pregnancy progress</p>
+            <p class="text-muted mb-3">Set your Last Menstrual Period (LMP) to track your pregnancy progress</p>
             <a href="{% url 'profile' %}" class="btn btn-primary">Update Profile</a>
           </div>
           {% endif %}
@@ -179,12 +202,14 @@
         <div class="card-body text-center">
           <div style="font-size: 4rem; color: #e83e8c;">👶</div>
           <h5>Baby Development</h5>
-          {% if profile.due_date %}
-            <p class="small">Your baby is growing rapidly this week!</p>
-            <a href="{% url 'baby_development' %}" class="btn btn-outline-primary btn-sm">Learn More</a>
+          {% if profile and profile.last_menstrual_period %}
+            {% with week_data=profile.calculate_pregnancy_week %}
+              <p class="small">Your baby is growing in Week {{ week_data.week }}!</p>
+              <a href="{% url 'baby_development' %}" class="btn btn-outline-primary btn-sm">Learn More</a>
+            {% endwith %}
           {% else %}
-            <p class="small">Set your due date to see baby development info</p>
-            <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">Set Due Date</a>
+            <p class="small">Set your LMP to see baby development info</p>
+            <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">Set LMP</a>
           {% endif %}
         </div>
       </div>
@@ -198,12 +223,19 @@
         <div class="card-body">
           <div class="feature-icon">📅</div>
           <h5>Trimester</h5>
-          {% if profile.due_date %}
-            <p class="card-text">{{ current_trimester }}</p>
-            <small class="text-muted">{{ trimester_message }}</small>
+          {% if profile and profile.last_menstrual_period %}
+            {% with trimester=profile.get_trimester %}
+              {% if trimester %}
+                <p class="card-text">{{ trimester.name }}</p>
+                <small class="text-muted">{{ trimester.message }}</small>
+              {% else %}
+                <p class="card-text">Calculating...</p>
+                <small class="text-muted">Update your profile</small>
+              {% endif %}
+            {% endwith %}
           {% else %}
             <p class="card-text">Not set</p>
-            <small class="text-muted">Update your profile</small>
+            <small class="text-muted">Set LMP in profile</small>
           {% endif %}
         </div>
       </div>
@@ -213,10 +245,19 @@
         <div class="card-body">
           <div class="feature-icon">🏥</div>
           <h5>Next Appointment</h5>
-          <p id="next-appointment" class="card-text">Not scheduled</p>
-          <small class="text-muted">Schedule your next checkup</small>
+          {% if upcoming_appointments %}
+            {% with next_appointment=upcoming_appointments.0 %}
+              <p class="card-text">{{ next_appointment.date_time|date:"M d, Y" }}</p>
+              <small class="text-muted">{{ next_appointment.healthcare_provider }}</small>
+            {% endwith %}
+          {% else %}
+            <p class="card-text">Not scheduled</p>
+            <small class="text-muted">Schedule your next checkup</small>
+          {% endif %}
           <br>
-          <a href="{% url 'appointments' %}" class="btn btn-outline-primary btn-sm mt-2">Book Appointment</a>
+          <a href="{% url 'appointments' %}" class="btn btn-outline-primary btn-sm mt-2">
+            {% if upcoming_appointments %}Manage{% else %}Book{% endif %} Appointment
+          </a>
         </div>
       </div>
     </div>
@@ -224,11 +265,18 @@
       <div class="card dashboard-card shadow-sm h-100">
         <div class="card-body">
           <div class="feature-icon">⏰</div>
-          <h5>Reminders</h5>
-          <p class="card-text">Take prenatal vitamin</p>
-          <small class="text-muted">Daily reminder</small>
+          <h5>Health Metrics</h5>
+          {% if recent_vitals %}
+            <p class="card-text">{{ recent_vitals.count }} records</p>
+            <small class="text-muted">Last: {{ recent_vitals.0.date|date:"M d" }}</small>
+          {% else %}
+            <p class="card-text">No records yet</p>
+            <small class="text-muted">Start tracking your health</small>
+          {% endif %}
           <br>
-          <a href="#" class="btn btn-outline-primary btn-sm mt-2">View All</a>
+          <a href="{% url 'health_metrics' %}" class="btn btn-outline-primary btn-sm mt-2">
+            {% if recent_vitals %}View{% else %}Add{% endif %} Metrics
+          </a>
         </div>
       </div>
     </div>
@@ -243,19 +291,19 @@
         <div class="col-md-3 mb-3">
           <a href="{% url 'health_metrics' %}" class="quick-action">
             <div style="font-size: 2rem; color: #e83e8c;">📝</div>
-            <span class="d-block mt-2">Symptom Tracker</span>
+            <span class="d-block mt-2">Log Vitals</span>
           </a>
         </div>
         <div class="col-md-3 mb-3">
-          <a href="{% url 'nutrition' %}" class="quick-action">
-            <div style="font-size: 2rem; color: #e83e8c;">🥗</div>
-            <span class="d-block mt-2">Nutrition</span>
+          <a href="{% url 'appointments' %}" class="quick-action">
+            <div style="font-size: 2rem; color: #e83e8c;">📅</div>
+            <span class="d-block mt-2">Appointments</span>
           </a>
         </div>
         <div class="col-md-3 mb-3">
-          <a href="{% url 'exercise' %}" class="quick-action">
-            <div style="font-size: 2rem; color: #e83e8c;">💪</div>
-            <span class="d-block mt-2">Exercise</span>
+          <a href="{% url 'symptom_tracker' %}" class="quick-action">
+            <div style="font-size: 2rem; color: #e83e8c;">🤒</div>
+            <span class="d-block mt-2">Symptoms</span>
           </a>
         </div>
         <div class="col-md-3 mb-3">
@@ -266,124 +314,125 @@
         </div>
       </div>
 
-      <!-- Messages Section -->
+      <!-- Recent Health Metrics -->
       <div class="card dashboard-card shadow-sm mb-4">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="card-title mb-0">Messages</h5>
-            <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+            <h5 class="card-title mb-0">Recent Health Metrics</h5>
+            <a href="{% url 'health_metrics' %}" class="btn btn-sm btn-outline-primary">View All</a>
           </div>
           
-          <div class="message-item">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <span class="message-sender">Dr. Johnson</span>
-                <p class="mb-1 small">Your recent test results look great! Let's discuss them at your next appointment.</p>
+          {% if recent_vitals %}
+            {% for vital in recent_vitals|slice:":3" %}
+            <div class="message-item">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <span class="message-sender">{{ vital.date|date:"M d, Y" }}</span>
+                  <p class="mb-1 small">
+                    {% if vital.weight %}Weight: {{ vital.weight }}kg{% endif %}
+                    {% if vital.blood_pressure_systolic %} | BP: {{ vital.blood_pressure_systolic }}/{{ vital.blood_pressure_diastolic }}{% endif %}
+                    {% if vital.fetal_heart_rate %} | FHR: {{ vital.fetal_heart_rate }}bpm{% endif %}
+                  </p>
+                </div>
               </div>
-              <span class="message-time">2 hours ago</span>
             </div>
-          </div>
-          
-          <div class="message-item">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <span class="message-sender">Nurse Sarah</span>
-                <p class="mb-1 small">Reminder: Don't forget to take your prenatal vitamin today.</p>
-              </div>
-              <span class="message-time">1 day ago</span>
+            {% endfor %}
+          {% else %}
+            <div class="text-center py-3">
+              <p class="text-muted">No health metrics recorded yet</p>
+              <a href="{% url 'health_metrics' %}" class="btn btn-primary btn-sm">Log Your First Metrics</a>
             </div>
-          </div>
-          
-          <div class="message-item">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <span class="message-sender">LindaMama Support</span>
-                <p class="mb-1 small">New educational resources available about second trimester nutrition.</p>
-              </div>
-              <span class="message-time">3 days ago</span>
-            </div>
-          </div>
-          
-          <div class="mt-3">
-            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#newMessageModal">
-              <i class="fas fa-plus me-2"></i>New Message
-            </button>
-          </div>
+          {% endif %}
         </div>
       </div>
 
-      <!-- Recent symptoms -->
+      <!-- Upcoming Appointments -->
       <div class="card dashboard-card shadow-sm mb-4">
         <div class="card-body">
-          <h5 class="card-title">Recent Symptoms</h5>
-          <div class="symptom-item mb-3">
-            <div class="d-flex justify-content-between">
-              <strong>Back pain</strong>
-              <small class="text-muted">2 days ago</small>
+          <h5 class="card-title">Upcoming Appointments</h5>
+          {% if upcoming_appointments %}
+            {% for appointment in upcoming_appointments|slice:":3" %}
+            <div class="symptom-item mb-3">
+              <div class="d-flex justify-content-between">
+                <strong>{{ appointment.get_appointment_type_display }}</strong>
+                <small class="text-muted">{{ appointment.date_time|date:"M d, Y" }}</small>
+              </div>
+              <p class="mb-0 small">
+                {{ appointment.healthcare_provider }} at {{ appointment.location }}
+                {% if appointment.notes %}<br>{{ appointment.notes }}{% endif %}
+              </p>
             </div>
-            <p class="mb-0 small">Mild lower back discomfort in the evenings</p>
-          </div>
-          <div class="symptom-item mb-3">
-            <div class="d-flex justify-content-between">
-              <strong>Increased appetite</strong>
-              <small class="text-muted">Today</small>
+            {% endfor %}
+          {% else %}
+            <div class="text-center py-3">
+              <p class="text-muted">No upcoming appointments</p>
+              <a href="{% url 'appointments' %}" class="btn btn-primary btn-sm">Schedule Appointment</a>
             </div>
-            <p class="mb-0 small">Noticing hunger more frequently throughout the day</p>
-          </div>
-          <div class="symptom-item">
-            <div class="d-flex justify-content-between">
-              <strong>Baby movements</strong>
-              <small class="text-muted">Today</small>
-            </div>
-            <p class="mb-0 small">Feeling light flutters in the lower abdomen</p>
-          </div>
-          <a href="{% url 'health_metrics' %}" class="btn btn-outline-primary btn-sm mt-3">Log New Symptom</a>
+          {% endif %}
+          <a href="{% url 'appointments' %}" class="btn btn-outline-primary btn-sm mt-3">
+            {% if upcoming_appointments %}Manage{% else %}Schedule{% endif %} Appointments
+          </a>
         </div>
       </div>
     </div>
 
     <!-- Right column - Image and tips -->
     <div class="col-md-4">
+      <!-- Weekly Tip -->
       <div class="card dashboard-card shadow-sm mb-4">
         <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Pregnant woman">
         <div class="card-body">
           <h5 class="card-title">Weekly Tip</h5>
-          <p class="card-text">Stay hydrated! Drinking plenty of water can help reduce swelling and prevent urinary tract infections.</p>
+          {% if profile and profile.last_menstrual_period %}
+            {% with week_data=profile.calculate_pregnancy_week %}
+              {% if week_data.week <= 13 %}
+                <p class="card-text">First trimester: Focus on rest and nutrition. Small, frequent meals can help with morning sickness.</p>
+              {% elif week_data.week <= 26 %}
+                <p class="card-text">Second trimester: Enjoy increased energy! This is a great time for light exercise and preparing for baby.</p>
+              {% else %}
+                <p class="card-text">Third trimester: Practice relaxation techniques. Stay hydrated and monitor baby's movements daily.</p>
+              {% endif %}
+            {% endwith %}
+          {% else %}
+            <p class="card-text">Stay hydrated! Drinking plenty of water can help reduce swelling and prevent urinary tract infections.</p>
+          {% endif %}
           <a href="{% url 'resources' %}" class="btn btn-primary btn-sm">More Tips</a>
         </div>
       </div>
 
-      <!-- Community updates -->
-      <div class="card dashboard-card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Community</h5>
-          <div class="d-flex mb-3">
-            <div style="width: 40px; height: 40px; background-color: #e83e8c; border-radius: 50%;" class="d-flex align-items-center justify-content-center text-white me-3">
-              A
-            </div>
-            <div>
-              <p class="mb-0 small"><strong>Anna</strong> shared a new recipe</p>
-              <small class="text-muted">2 hours ago</small>
-            </div>
-          </div>
-          <div class="d-flex mb-3">
-            <div style="width: 40px; height: 40px; background-color: #6f42c1; border-radius: 50%;" class="d-flex align-items-center justify-content-center text-white me-3">
-              M
-            </div>
-            <div>
-              <p class="mb-0 small"><strong>Maria</strong> asked about sleep positions</p>
-              <small class="text-muted">5 hours ago</small>
-            </div>
-          </div>
-          <a href="#" class="btn btn-outline-primary btn-sm w-100">Join Conversation</a>
+      <!-- Pregnancy Milestone -->
+      <div class="card dashboard-card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h5 class="card-title">This Week's Milestone</h5>
+          {% if profile and profile.last_menstrual_period %}
+            {% with week_data=profile.calculate_pregnancy_week milestone=profile.get_current_milestone %}
+              {% if milestone %}
+                <div style="font-size: 3rem; color: #e83e8c;">🌟</div>
+                <h6 class="mt-2">{{ milestone.title }}</h6>
+                <p class="small text-muted">{{ milestone.baby_size }}</p>
+                <a href="{% url 'baby_development' %}" class="btn btn-outline-primary btn-sm">Learn More</a>
+              {% else %}
+                <div style="font-size: 3rem; color: #e83e8c;">👶</div>
+                <p class="small text-muted">Week {{ week_data.week }} development information</p>
+                <a href="{% url 'resources' %}" class="btn btn-outline-primary btn-sm">View Resources</a>
+              {% endif %}
+            {% endwith %}
+          {% else %}
+            <div style="font-size: 3rem; color: #e83e8c;">📅</div>
+            <p class="small text-muted">Set your LMP to see weekly milestones</p>
+            <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">Update Profile</a>
+          {% endif %}
         </div>
       </div>
 
       <!-- Emergency Section -->
-      <div class="card border-warning mt-4">
+      <div class="card border-warning">
         <div class="card-body text-center">
           <h5 class="card-title text-warning">🚨 Emergency Assistance</h5>
           <p class="card-text">Immediate medical help when you need it most.</p>
+          {% if profile.emergency_contact %}
+            <p class="small text-muted">Emergency Contact: {{ profile.emergency_contact }}</p>
+          {% endif %}
           <a href="{% url 'emergency' %}" class="btn btn-warning">Emergency Help</a>
         </div>
       </div>
@@ -391,51 +440,38 @@
   </div>
 </div>
 
-<!-- New Message Modal -->
-<div class="modal fade" id="newMessageModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">New Message</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient" class="form-label">To</label>
-            <select class="form-select" id="recipient">
-              <option value="">Select recipient</option>
-              <option value="dr_johnson">Dr. Johnson</option>
-              <option value="nurse_sarah">Nurse Sarah</option>
-              <option value="support">LindaMama Support</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="messageSubject" class="form-label">Subject</label>
-            <input type="text" class="form-control" id="messageSubject">
-          </div>
-          <div class="mb-3">
-            <label for="messageContent" class="form-label">Message</label>
-            <textarea class="form-control" id="messageContent" rows="4"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary">Send Message</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <footer class="footer">
   <div class="container text-center">
-    <p>&copy; 2023 LindaMama. All rights reserved.</p>
+    <p>&copy; 2024 LindaMama. All rights reserved.</p>
     <p class="text-muted">Your trusted pregnancy companion</p>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Update progress animation
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+        const progress = progressBar.getAttribute('aria-valuenow');
+        progressBar.style.width = '0%';
+        setTimeout(() => {
+            progressBar.style.width = progress + '%';
+        }, 500);
+    }
+
+    // Update trimester card color
+    const trimesterCard = document.querySelector('.card-body h5:contains("Trimester")').closest('.card');
+    const trimesterText = trimesterCard.querySelector('.card-text').textContent.trim();
+    
+    if (trimesterText.includes('First')) {
+        trimesterCard.style.borderLeft = '4px solid #4CAF50';
+    } else if (trimesterText.includes('Second')) {
+        trimesterCard.style.borderLeft = '4px solid #FF9800';
+    } else if (trimesterText.includes('Third')) {
+        trimesterCard.style.borderLeft = '4px solid #F44336';
+    }
+});
+</script>
 </body>
 </html>
-
