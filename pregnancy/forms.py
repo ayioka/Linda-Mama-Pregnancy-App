@@ -134,10 +134,10 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    # Additional fields from User model
+    # Additional fields from User model - ALL MADE OPTIONAL
     first_name = forms.CharField(
         max_length=30, 
-        required=True,
+        required=False,  # CHANGED: Made optional
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'First Name'
@@ -145,14 +145,14 @@ class UserProfileForm(forms.ModelForm):
     )
     last_name = forms.CharField(
         max_length=30, 
-        required=True,
+        required=False,  # CHANGED: Made optional
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Last Name'
         })
     )
     email = forms.EmailField(
-        required=True,
+        required=False,  # CHANGED: Made optional
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'Email Address'
@@ -255,6 +255,10 @@ class UserProfileForm(forms.ModelForm):
             if 'class' not in field.widget.attrs:
                 if field_name != 'has_high_risk':
                     field.widget.attrs['class'] = 'form-control'
+        
+        # Make all model fields optional for the form
+        for field_name in self.fields:
+            self.fields[field_name].required = False
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -270,7 +274,7 @@ class UserProfileForm(forms.ModelForm):
         if dob and dob >= date.today():
             raise ValidationError('Date of birth must be in the past.')
         
-        # Validate minimum age (12 years)
+        # Validate minimum age (12 years) - only if DOB is provided
         if dob:
             min_age_date = date.today() - timedelta(days=12*365)
             if dob > min_age_date:
@@ -279,8 +283,7 @@ class UserProfileForm(forms.ModelForm):
     
     def clean_due_date(self):
         due_date = self.cleaned_data.get('due_date')
-        # FIXED: Remove validation that blocks past due dates
-        # Pregnancy can extend beyond due date, so allow past due dates
+        # Only validate if due_date is provided
         if due_date:
             # Only check if it's too far in the future
             if due_date > date.today() + timedelta(days=320):
@@ -289,13 +292,14 @@ class UserProfileForm(forms.ModelForm):
     
     def clean_last_menstrual_period(self):
         lmp = self.cleaned_data.get('last_menstrual_period')
-        # FIXED: Allow LMP dates up to today (user might be registering today)
+        # Only validate if LMP is provided
         if lmp and lmp > date.today():
             raise ValidationError('Last menstrual period date cannot be in the future.')
         return lmp
     
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
+        # Only validate if phone number is provided
         if phone_number:
             # Basic phone number validation - more lenient
             import re
@@ -305,21 +309,21 @@ class UserProfileForm(forms.ModelForm):
     
     def clean_height(self):
         height = self.cleaned_data.get('height')
-        # FIXED: Make validation more lenient
+        # Only validate if height is provided
         if height and (height < 50 or height > 250):
             raise ValidationError('Please enter a valid height between 50cm and 250cm.')
         return height
     
     def clean_pre_pregnancy_weight(self):
         weight = self.cleaned_data.get('pre_pregnancy_weight')
-        # FIXED: Make validation more lenient
+        # Only validate if weight is provided
         if weight and (weight < 25 or weight > 250):
             raise ValidationError('Please enter a valid weight between 25kg and 250kg.')
         return weight
     
     def clean_gravida(self):
         gravida = self.cleaned_data.get('gravida')
-        # FIXED: Make validation more lenient
+        # Only validate if gravida is provided
         if gravida and (gravida < 1 or gravida > 30):
             raise ValidationError('Please enter a valid number of pregnancies (1-30).')
         return gravida
@@ -327,7 +331,7 @@ class UserProfileForm(forms.ModelForm):
     def clean_para(self):
         para = self.cleaned_data.get('para')
         gravida = self.cleaned_data.get('gravida')
-        # FIXED: Make validation more lenient - para can be equal to gravida
+        # Only validate if both para and gravida are provided
         if para and gravida and para > gravida:
             raise ValidationError('Number of live births cannot exceed total pregnancies.')
         return para
@@ -335,17 +339,26 @@ class UserProfileForm(forms.ModelForm):
     def save(self, commit=True):
         profile = super().save(commit=False)
         
-        # Update User model fields
+        # Update User model fields only if they are provided
         if self.user:
-            self.user.first_name = self.cleaned_data['first_name']
-            self.user.last_name = self.cleaned_data['last_name']
-            self.user.email = self.cleaned_data['email']
+            if self.cleaned_data.get('first_name'):
+                self.user.first_name = self.cleaned_data['first_name']
+            if self.cleaned_data.get('last_name'):
+                self.user.last_name = self.cleaned_data['last_name']
+            if self.cleaned_data.get('email'):
+                self.user.email = self.cleaned_data['email']
             if commit:
                 self.user.save()
         
-        # FIXED: Calculate due date from LMP if not provided
+        # Calculate due date from LMP if not provided but LMP is provided
         if self.cleaned_data.get('last_menstrual_period') and not self.cleaned_data.get('due_date'):
             profile.due_date = self.cleaned_data['last_menstrual_period'] + timedelta(days=280)
+        
+        # Set default values for gravida and para if not provided
+        if not self.cleaned_data.get('gravida'):
+            profile.gravida = 1  # Default to first pregnancy
+        if not self.cleaned_data.get('para'):
+            profile.para = 0  # Default to no live births yet
         
         if commit:
             profile.save()
@@ -397,6 +410,8 @@ class HealthMetricForm(forms.ModelForm):
         for field in self.fields:
             if 'class' not in self.fields[field].widget.attrs:
                 self.fields[field].widget.attrs['class'] = 'form-control'
+            # Make all fields optional
+            self.fields[field].required = False
     
     def clean_blood_pressure_systolic(self):
         systolic = self.cleaned_data.get('blood_pressure_systolic')
