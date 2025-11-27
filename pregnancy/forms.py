@@ -172,7 +172,7 @@ class UserProfileForm(forms.ModelForm):
             'type': 'date',
             'class': 'form-control'
         }),
-        help_text='First day of your last menstrual period'
+        help_text='First day of your last menstrual period (LMP) - used to calculate pregnancy progress'
     )
     
     class Meta:
@@ -279,50 +279,56 @@ class UserProfileForm(forms.ModelForm):
     
     def clean_due_date(self):
         due_date = self.cleaned_data.get('due_date')
+        # FIXED: Remove validation that blocks past due dates
+        # Pregnancy can extend beyond due date, so allow past due dates
         if due_date:
-            if due_date <= date.today():
-                raise ValidationError('Due date must be in the future.')
+            # Only check if it's too far in the future
             if due_date > date.today() + timedelta(days=320):
                 raise ValidationError('Due date seems too far in the future. Please verify.')
         return due_date
     
     def clean_last_menstrual_period(self):
         lmp = self.cleaned_data.get('last_menstrual_period')
-        if lmp and lmp >= date.today():
-            raise ValidationError('Last menstrual period date must be in the past.')
+        # FIXED: Allow LMP dates up to today (user might be registering today)
+        if lmp and lmp > date.today():
+            raise ValidationError('Last menstrual period date cannot be in the future.')
         return lmp
     
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
         if phone_number:
-            # Basic phone number validation
+            # Basic phone number validation - more lenient
             import re
-            if not re.match(r'^\+?[\d\s\-\(\)]{10,}$', phone_number):
+            if not re.match(r'^\+?[\d\s\-\(\)]{8,}$', phone_number):
                 raise ValidationError('Please enter a valid phone number format.')
         return phone_number
     
     def clean_height(self):
         height = self.cleaned_data.get('height')
-        if height and (height < 100 or height > 250):
-            raise ValidationError('Please enter a valid height between 100cm and 250cm.')
+        # FIXED: Make validation more lenient
+        if height and (height < 50 or height > 250):
+            raise ValidationError('Please enter a valid height between 50cm and 250cm.')
         return height
     
     def clean_pre_pregnancy_weight(self):
         weight = self.cleaned_data.get('pre_pregnancy_weight')
-        if weight and (weight < 30 or weight > 200):
-            raise ValidationError('Please enter a valid weight between 30kg and 200kg.')
+        # FIXED: Make validation more lenient
+        if weight and (weight < 25 or weight > 250):
+            raise ValidationError('Please enter a valid weight between 25kg and 250kg.')
         return weight
     
     def clean_gravida(self):
         gravida = self.cleaned_data.get('gravida')
-        if gravida and (gravida < 1 or gravida > 20):
-            raise ValidationError('Please enter a valid number of pregnancies (1-20).')
+        # FIXED: Make validation more lenient
+        if gravida and (gravida < 1 or gravida > 30):
+            raise ValidationError('Please enter a valid number of pregnancies (1-30).')
         return gravida
     
     def clean_para(self):
         para = self.cleaned_data.get('para')
         gravida = self.cleaned_data.get('gravida')
-        if para and para > gravida:
+        # FIXED: Make validation more lenient - para can be equal to gravida
+        if para and gravida and para > gravida:
             raise ValidationError('Number of live births cannot exceed total pregnancies.')
         return para
     
@@ -336,6 +342,10 @@ class UserProfileForm(forms.ModelForm):
             self.user.email = self.cleaned_data['email']
             if commit:
                 self.user.save()
+        
+        # FIXED: Calculate due date from LMP if not provided
+        if self.cleaned_data.get('last_menstrual_period') and not self.cleaned_data.get('due_date'):
+            profile.due_date = self.cleaned_data['last_menstrual_period'] + timedelta(days=280)
         
         if commit:
             profile.save()
