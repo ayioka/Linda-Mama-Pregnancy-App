@@ -125,10 +125,9 @@ class UserProfile(models.Model):
     def clean(self):
         super().clean()
         
-        # Enhanced due date validation
+        # FIXED: Remove due date validation that blocks past dates
+        # Pregnancy can extend beyond due date, so allow past due dates
         if self.due_date:
-            if self.due_date <= date.today():
-                raise ValidationError({'due_date': 'Due date must be in the future.'})
             if self.due_date > date.today() + timedelta(days=320):  # ~46 weeks
                 raise ValidationError({'due_date': 'Due date seems too far in the future.'})
         
@@ -146,6 +145,10 @@ class UserProfile(models.Model):
             raise ValidationError({'phone_number': 'Enter a valid phone number.'})
 
     def save(self, *args, **kwargs):
+        # FIXED: Calculate due date from LMP if not provided
+        if self.last_menstrual_period and not self.due_date:
+            self.due_date = self.last_menstrual_period + timedelta(days=280)
+        
         self.clean()
         super().save(*args, **kwargs)
 
@@ -156,17 +159,12 @@ class UserProfile(models.Model):
         return today.year - self.date_of_birth.year - ((today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day))
 
     def calculate_pregnancy_week(self):
-        """Calculate current pregnancy week with enhanced accuracy"""
-        if not self.due_date and not self.last_menstrual_period:
+        """Calculate current pregnancy week with enhanced accuracy - FIXED VERSION"""
+        if not self.last_menstrual_period:
             return None
         
         today = date.today()
-        
-        # Use LMP if available, otherwise calculate from due date
-        if self.last_menstrual_period:
-            lmp_date = self.last_menstrual_period
-        else:
-            lmp_date = self.due_date - timedelta(days=280)
+        lmp_date = self.last_menstrual_period
         
         if lmp_date > today:
             return None
